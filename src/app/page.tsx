@@ -1,7 +1,5 @@
-export default function Home() {
-  return (
-    <div>
-      <button className="btn-info btn btn-xl">Xlarge</button>
-    </div>
-  );
+export default function Home(){
+  return(
+    <h1>Home</h1>
+  )
 }

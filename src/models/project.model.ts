@@ -3,7 +3,6 @@ import mongoose, { Document, Schema } from "mongoose";
 interface ProjectModel extends Document{
     name: string,
     description: string,
-    companyId: mongoose.Types.ObjectId,
     createdBy: mongoose.Types.ObjectId,
 }
 
@@ -15,11 +14,6 @@ const projectSchema:Schema<ProjectModel> = new Schema({
     description:{
         type:String,
         required:[true , "Description is required! "],
-    },
-    companyId:{
-        type:Schema.Types.ObjectId,
-        ref:"Company",
-        required:[true , "CompanyId is required! "],
     },
     createdBy:{
         type:Schema.Types.ObjectId,

@@ -5,8 +5,6 @@ interface UserModel extends Document{
     email: string,
     password: string,
     isAdmin:boolean,
-    isSuperAdmin:boolean,
-    companyId:mongoose.Types.ObjectId,
 }
 
 const userSchema:Schema<UserModel> = new Schema({
@@ -14,7 +12,6 @@ const userSchema:Schema<UserModel> = new Schema({
         type:String,
         required:[true , "Name is required! "],
         trim:true,
-        unique:true
     },
     email:{
         type:String,
@@ -31,15 +28,6 @@ const userSchema:Schema<UserModel> = new Schema({
         type:Boolean,
         default:false
     },
-    isSuperAdmin:{
-        type:Boolean,
-        default:false
-    },
-    companyId:{
-        type:Schema.Types.ObjectId,
-        ref:"Company",
-        required:true
-    }
 } , {timestamps:true});
 
 const User = (mongoose.models.User as mongoose.Model<UserModel>)|| mongoose.model<UserModel>("User" , userSchema);

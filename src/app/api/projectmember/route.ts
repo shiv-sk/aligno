@@ -6,6 +6,13 @@ export async function POST(req: Request){
     await dbConnect();
     try {
         const { projectId, userId , role } = await req.json();
+        const existProjectUser = await ProjectUser.findOne({$and:[{projectId} , {userId}]});
+        if(existProjectUser){
+            return NextResponse.json({
+                status:400,
+                message:"user is already assigned! "
+            } , {status:400})
+        }
         const newProjectUser = await ProjectUser.create({
             projectId,
             userId,
@@ -15,13 +22,13 @@ export async function POST(req: Request){
             return NextResponse.json({
                 status:500,
                 message:"projectUser is not created! "
-            })
+            } , {status:500})
         }
         return NextResponse.json({
             status:201,
             message:"projectUser is created! ",
             newProjectUser
-        })
+        } , {status:200})
     } catch (err) {
         console.error("error from projectUser!" , err);
         return NextResponse.json({

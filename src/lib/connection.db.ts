@@ -1,3 +1,5 @@
+import User from "@/models/user.model";
+import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 
 type connectionObject = {
@@ -13,9 +15,18 @@ async function dbConnect():Promise<void>{
     }
     try {
         const db = await mongoose.connect(process.env.MONGODB_URI as string, {});
-        console.log("db connection is! " , db);
-        console.log("db connection array is! " , db.connections);
         connection.isConnected = db.connections[0].readyState;
+        const existingSuperAdmin = await User.findOne({isAdmin:true});
+        const hashPassword = await bcrypt.hash("admin123" , 10);
+        if(!existingSuperAdmin){
+            await User.create({
+                name:"admin",
+                email:"admin@email.com",
+                password:hashPassword,
+                isAdmin:true,
+            })
+        }
+        console.log("Admin is already exist! " ); 
         console.log('Database connected successfully');
     } catch (error) {
         console.error('Database connection failed:', error);

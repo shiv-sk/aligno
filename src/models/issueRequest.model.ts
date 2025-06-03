@@ -14,7 +14,7 @@ const IssueRequestSchema:Schema<IssueRequestModel> = new Schema({
     },
     issueId:{
         type:Schema.Types.ObjectId,
-        ref:"Project",
+        ref:"Issue",
         required:[true , "ProjectId is required! "],
     },
     requestedBy:{
