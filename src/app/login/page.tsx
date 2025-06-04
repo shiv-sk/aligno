@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useAuth } from "@/context/authcontext";
@@ -29,8 +30,10 @@ export default function Login(){
             if(response.success){
                 alert("login success!");
             }
-        } catch (error) {
-            console.error("error loginPage! " , error);
+        } catch (error: any) {
+            const errorMessage = error.response?.data?.message || "Server Error!.";
+            // console.error("error loginPage! " , error);
+            alert(errorMessage);
         }finally{
             setIsLoading(false);
         }

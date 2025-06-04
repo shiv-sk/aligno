@@ -27,7 +27,7 @@ export async function POST(req: Request){
                 success:false,
                 status:500,
                 message:"user is not created! "
-            })
+            } , {status:500})
         }
         const {password:_ , ...newUser} = user
         return NextResponse.json({
@@ -35,40 +35,40 @@ export async function POST(req: Request){
             status:201,
             message:"user is created! ",
             newUser
-        })
+        } , {status:201})
     } catch (err) {
         console.error("error from register user!" , err);
         return NextResponse.json({
             success:false,
             status:500,
             message:"company creation error! "
-        })
+        } , {status:500})
     }
 }
 
 export async function GET(){
     await dbConnect();
     try {
-        const users = await User.find();
+        const users = await User.find({isAdmin:{$ne:true}}).select("-password");
         if(users.length === 0){
             return NextResponse.json({
                 success:false,
                 status:404,
                 message:"users not found! "
-            })
+            } , {status:404})
         }
         return NextResponse.json({
             success:true,
             status:200,
             message:"users are! ",
             users
-        })
+        } , {status:200})
     } catch (err) {
         console.error("error from get user!" , err);
         return NextResponse.json({
             success:false,
             status:500,
             message:"user error! "
-        })
+        } , {status:500})
     }
-}
+}   
