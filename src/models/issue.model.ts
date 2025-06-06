@@ -8,7 +8,8 @@ interface IssueModel extends Document{
     assignedBy: mongoose.Types.ObjectId,
     assignedTo: mongoose.Types.ObjectId,
     status:string,
-    priority:string
+    priority:string,
+    duedate:Date,
 }
 
 const IssueSchema:Schema<IssueModel> = new Schema({
@@ -50,6 +51,10 @@ const IssueSchema:Schema<IssueModel> = new Schema({
         enum:["Low" , "Medium" , "High"],
         default:"Low"
     },
+    duedate:{
+        type:Date,
+        required:[true , "Duedate is required! "]
+    }
 } , {timestamps:true});
 
 const Issue = (mongoose.models.Issue as mongoose.Model<IssueModel>) 
