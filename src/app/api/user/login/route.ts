@@ -27,7 +27,7 @@ export async function POST(req: Request){
                 success:false,
                 status:404,
                 messgae:"User is not exists! "
-            })
+            } , {status:404})
         }
         const isPasswordCorrect = await bcrypt.compare(password , user.password);
         if(!isPasswordCorrect){
@@ -35,7 +35,7 @@ export async function POST(req: Request){
                 success:false,
                 status:400,
                 message:"InCorrect password! "
-            })
+            } , {status:400})
         }
         const {password: _, ...foundUser} = user.toObject();
 
@@ -61,6 +61,6 @@ export async function POST(req: Request){
             success:false,
             status:500,
             message:"user login error! "
-        })
+        } , {status:500})
     }
 }

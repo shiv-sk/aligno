@@ -9,7 +9,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}
                 success:false,
                 status:400,
                 message:"issueId is required!"
-            })
+            } , {status:400})
         }
         const unAssignedIssue = await Issue.findByIdAndUpdate(issueId , {status:"Open" , assignedTo:null , assignedBy:null} , {new:true});
         if(!unAssignedIssue){
@@ -31,6 +31,6 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}
             success:false,
             status:500,
             message:"issue unAssign error! "
-        })
+        } , {status:500})
     }
 }

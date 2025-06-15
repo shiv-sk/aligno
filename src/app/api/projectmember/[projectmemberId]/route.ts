@@ -8,7 +8,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{projectuserId:s
             return NextResponse.json({
                 status:400,
                 message:"projectuserId is required!"
-            })
+            } , {status:400})
         }
         const {data} = await req.json();
         const updatedProjectuser = await ProjectUser.findByIdAndUpdate(projectuserId , {...data} , {new:true});
@@ -16,7 +16,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{projectuserId:s
             return NextResponse.json({
                 status:404,
                 message:"projectuser is not found or not updated!"
-            })
+            } , {status:404})
         }
         return NextResponse.json({
             status:200,
@@ -28,7 +28,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{projectuserId:s
         return NextResponse.json({
             status:500,
             message:"projectuser error! "
-        })
+        } , {status:500})
     }
 }
 
@@ -39,25 +39,25 @@ export async function DELETE(req: NextRequest , {params}:{params:{projectuserId:
             return NextResponse.json({
                 status:400,
                 message:"projectuserId is required!"
-            })
+            } , {status:400})
         }
         const deletedProjectuser = await ProjectUser.findByIdAndDelete(projectuserId);
         if(!deletedProjectuser){
             return NextResponse.json({
                 status:404,
                 message:"Projectuser is not found or not deleted!"
-            })
+            } , {status:404})
         }
         return NextResponse.json({
             status:200,
             message:"deleted Projectuser is! ",
             deletedProjectuser
-        })
+        } , {status:200})
     } catch (err) {
-        console.error("delete Company error!" , err);
+        console.error("delete projectUser error!" , err);
         return NextResponse.json({
             status:500,
-            message:"company error! "
-        })
+            message:"projectUser error! "
+        } , {status:500})
     }
 }

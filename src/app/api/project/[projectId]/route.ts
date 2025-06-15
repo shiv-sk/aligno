@@ -9,7 +9,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{projectId:strin
                 success:false,
                 status:400,
                 message:"projectId is required!"
-            })
+            } , {status:400})
         }
         const {data} = await req.json();
         const updatedProject = await Project.findByIdAndUpdate(projectId , {...data} , {new:true});
@@ -17,22 +17,22 @@ export async function PATCH(req: NextRequest , {params}:{params:{projectId:strin
             return NextResponse.json({
                 success:false,
                 status:404,
-                message:"projectuser is not found or not updated!"
-            })
+                message:"project is not found or not updated!"
+            } , {status:404})
         }
         return NextResponse.json({
             success:true,
             status:200,
-            message:"updated projectuser is! ",
+            message:"updated project is! ",
             updatedProject
-        })
+        } , {status:200})
     } catch (err) {
-        console.error("update projectUser error!" , err);
+        console.error("update project error!" , err);
         return NextResponse.json({
             success:false,
             status:500,
-            message:"projectuser error! "
-        })
+            message:"project error! "
+        } , {status:500})
     }
 }
 
@@ -66,7 +66,7 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
             success:false,
             status:500,
             message:"project error! "
-        })
+        } , {status:500})
     }
 }
 
@@ -77,8 +77,8 @@ export async function DELETE(req: NextRequest , {params}:{params:{projectId:stri
             return NextResponse.json({
                 success:false,
                 status:400,
-                message:"projectuserId is required!"
-            })
+                message:"projectId is required!"
+            } , {status:400})
         }
         const deletedProject = await Project.findByIdAndDelete(projectId);
         if(!deletedProject){
@@ -86,20 +86,20 @@ export async function DELETE(req: NextRequest , {params}:{params:{projectId:stri
                 success:false,
                 status:404,
                 message:"Project is not found or not deleted!"
-            })
+            } , {status:404})
         }
         return NextResponse.json({
             success:true,
             status:200,
             message:"deleted Project is! ",
             deletedProject
-        })
+        } , {status:200})
     } catch (err) {
         console.error("delete project error!" , err);
         return NextResponse.json({
             success:false,
             status:500,
             message:"project delete error! "
-        })
+        } , {status:500})
     }
 }

@@ -33,7 +33,7 @@ export async function GET(req: Request){
                 success:false,
                 status:404,
                 messgae:"User is not exists! "
-            })
+            } , {status:404})
         }
         const {password: _, ...foundUser} = user.toObject();
         return NextResponse.json({
@@ -48,6 +48,6 @@ export async function GET(req: Request){
             success:false,
             status:500,
             message:"current user error! "
-        })
+        } , {status:500})
     }
 }

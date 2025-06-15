@@ -9,7 +9,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}
                 success:false,
                 status:400,
                 message:"issueId is required!"
-            })
+            } , {status:400})
         }
         const reopenedIssue = await Issue.findByIdAndUpdate(issueId , {status:"Reopened"} , {new:true});
         if(!reopenedIssue){

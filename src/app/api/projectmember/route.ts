@@ -34,7 +34,7 @@ export async function POST(req: Request){
         return NextResponse.json({
             status:500,
             message:"projectUser creation error! "
-        })
+        } , {status:500})
     }
 }
 
@@ -47,18 +47,18 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
             return NextResponse.json({
                 status:404,
                 message:"projectUsers not found! "
-            })
+            } , {status:404})
         }
         return NextResponse.json({
             status:200,
             message:"projectUsers are! ",
             projectUsers
-        })
+        } , {status:200})
     } catch (err) {
         console.error("error from get projectUsers!" , err);
         return NextResponse.json({
             status:500,
             message:"projectUser error! "
-        })
+        } , {status:500})
     }
 }

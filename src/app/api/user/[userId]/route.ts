@@ -9,7 +9,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{userId:string}}
             return NextResponse.json({
                 status:400,
                 message:"userId is required!"
-            })
+            } , {status:400})
         }
         const {data} = await req.json();
         if(data.password){
@@ -21,19 +21,19 @@ export async function PATCH(req: NextRequest , {params}:{params:{userId:string}}
             return NextResponse.json({
                 status:404,
                 message:"user is not found or not updated!"
-            })
+            } , {status:404})
         }
         return NextResponse.json({
             status:200,
             message:"updated user is! ",
             updatedUser
-        })
+        } , {status:200})
     } catch (err) {
         console.error("update User error!" , err);
         return NextResponse.json({
             status:500,
             message:"User error! "
-        })
+        } , {status:500})
     }
 }
 
@@ -44,25 +44,25 @@ export async function DELETE(req: NextRequest , {params}:{params:{userId:string}
             return NextResponse.json({
                 status:400,
                 message:"userId is required!"
-            })
+            } , {status:400})
         }
         const deletedUser = await User.findByIdAndDelete(userId);
         if(!deletedUser){
             return NextResponse.json({
                 status:404,
                 message:"user is not found or not deleted!"
-            })
+            } , {status:404})
         }
         return NextResponse.json({
             status:200,
             message:"updated user is! ",
             deletedUser
-        })
+        } , {status:200})
     } catch (err) {
         console.error("delete User error!" , err);
         return NextResponse.json({
             status:500,
             message:"User error! "
-        })
+        } , {status:500})
     }
 }

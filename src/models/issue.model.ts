@@ -34,10 +34,12 @@ const IssueSchema:Schema<IssueModel> = new Schema({
     assignedBy:{
         type:Schema.Types.ObjectId,
         ref:"User",
+        default:null
     },
     assignedTo:{
         type:Schema.Types.ObjectId,
         ref:"User",
+        default:null
     },
     status:{
         type:String,

@@ -9,7 +9,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}
                 success:false,
                 status:400,
                 message:"issueId is required!"
-            })
+            } , {status:400})
         }
         const reviewIssue = await Issue.findByIdAndUpdate(issueId , {status:"Review"} , {new:true});
         if(!reviewIssue){

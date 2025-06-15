@@ -16,7 +16,7 @@ export async function POST(req: Request){
                 success:false,
                 status:500,
                 message:"project is not created! "
-            })
+            } , {status:500})
         }
         return NextResponse.json({
             success:true,
@@ -42,12 +42,12 @@ export async function GET(){
             return NextResponse.json({
                 status:404,
                 message:"project not found! "
-            })
+            } , {status:404})
         }
         return NextResponse.json({
             success:true,
             status:200,
-            message:"projecta are! ",
+            message:"projects are! ",
             projects
         } , {status:200})
     } catch (err) {

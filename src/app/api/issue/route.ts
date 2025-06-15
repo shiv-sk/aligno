@@ -38,7 +38,7 @@ export async function POST(req: Request){
                 success:false,
                 status:500,
                 message:"Issue is not created! "
-            })
+            } , {status:500})
         }
         return NextResponse.json({
             success:true,
