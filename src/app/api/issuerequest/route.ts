@@ -1,13 +1,13 @@
 import dbConnect from "@/lib/connection.db";
 import { validateInput } from "@/lib/validate";
-import Issue from "@/models/issue.model";
-import newIssueSchema from "@/schemas/newIssue.schema";
+import IssueRequest from "@/models/issueRequest.model";
+import requestIssueSchema from "@/schemas/issueRequest.schema";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: Request){
     await dbConnect();
     try {
-        const validation = await validateInput(req , newIssueSchema);
+        const validation = await validateInput(req , requestIssueSchema);
         if(!validation.success){
             return NextResponse.json({
                 success:false,
@@ -16,75 +16,72 @@ export async function POST(req: Request){
                 errors:validation.errors
             } , {status:400})
         }
-        const { title , description , duedate , createdBy , projectId , priority } = validation.data;
-        const existIssue = await Issue.findOne({$and:[{title} , {projectId}]});
-        if(existIssue){
+        const { description , issueId , requestedBy } = validation.data;
+        const existIssueRequest = await IssueRequest.findOne({$and:[{issueId} , {requestedBy}]});
+        if(existIssueRequest){
             return NextResponse.json({
                 success:false,
                 status:400,
-                message:"Issue is already exist! "
+                message:"Issue is already requested! "
             } , {status:400})
         }
-        const newIssue = await Issue.create({
-            title,
+        const newIssueRequest = await IssueRequest.create({
             description,
-            createdBy,
-            duedate,
-            projectId,
-            priority
+            requestedBy,
+            issueId,
         })
-        if(!newIssue){
+        if(!newIssueRequest){
             return NextResponse.json({
                 success:false,
                 status:500,
                 message:"Issue is not created! "
-            })
+            } , {status:500})
         }
         return NextResponse.json({
             success:true,
             status:201,
-            message:"issue is created! ",
-            newIssue
+            message:"issueReuest is created! ",
+            newIssueRequest
         } , {status:201})
     } catch (err) {
-        console.error("error from Issue!" , err);
+        console.error("error from IssueRequest!" , err);
         return NextResponse.json({
             success:false,
             status:500,
-            message:"Issue creation error! "
+            message:"IssueRequest creation error! "
         } , {status:500})
     }
 }
 
-export async function GET(req: NextRequest , {params}:{params:{projectId:string}}){
+export async function GET(req: NextRequest , {params}:{params:{issueId:string}}){
     await dbConnect();
     try {
-        const projectId = params.projectId;
-        if(!projectId){
+        const issueId = params.issueId;
+        if(!issueId){
             return NextResponse.json({
                 status:400,
-                message:"projectId is required!"
+                message:"issueId is required!"
             } , {status:400})
         }
-        const issues = await Issue.find({projectId});
-        if(issues.length === 0){
+        const requestedIssues = await IssueRequest.find({issueId});
+        if(requestedIssues.length === 0){
             return NextResponse.json({
                 status:404,
-                message:"issues not found! "
+                message:"requested issues not found! "
             } , {status:404})
         }
         return NextResponse.json({
             success:true,
             status:200,
             message:"issues are! ",
-            issues
+            requestedIssues
         } , {status:200})
     } catch (err) {
-        console.error("error from get Issues!" , err);
+        console.error("error from get requestedIssues!" , err);
         return NextResponse.json({
             success:false,
             status:500,
-            message:"Issues error! "
+            message:"requestedIssues error! "
         } , {status:500})
     }
 }

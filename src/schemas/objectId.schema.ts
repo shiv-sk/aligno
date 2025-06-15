@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { z } from "zod/v4";
+import { z } from "zod";
 const objectIdSchema = z.string().refine((value)=>{
     return mongoose.Types.ObjectId.isValid(value);
 } , "inValid objectId")

@@ -28,7 +28,7 @@ export async function POST(req: Request){
             status:201,
             message:"projectUser is created! ",
             newProjectUser
-        } , {status:200})
+        } , {status:201})
     } catch (err) {
         console.error("error from projectUser!" , err);
         return NextResponse.json({

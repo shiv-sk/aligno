@@ -34,17 +34,15 @@ const IssueSchema:Schema<IssueModel> = new Schema({
     assignedBy:{
         type:Schema.Types.ObjectId,
         ref:"User",
-        required:[true , "UserId is required! "],
     },
     assignedTo:{
         type:Schema.Types.ObjectId,
         ref:"User",
-        required:[true , "UserId is required! "],
     },
     status:{
         type:String,
-        enum:["ToDo" , "InProgress" , "Review" , "Reopened" , "Closed"],
-        default:"ToDo"
+        enum:["Open" , "Assigned" , "Review" , "Reopened" , "Closed"],
+        default:"Open"
     },
     priority:{
         type:String,
