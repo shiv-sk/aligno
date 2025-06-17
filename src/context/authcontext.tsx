@@ -7,7 +7,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 interface User{
     _id:string,
     name:string,
-    role:string,
+    isAdmin:boolean,
 }
 
 interface RegisterData{

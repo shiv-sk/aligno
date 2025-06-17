@@ -12,6 +12,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{projectId:strin
             } , {status:400})
         }
         const {data} = await req.json();
+        console.log("the data is!" , data);
         const updatedProject = await Project.findByIdAndUpdate(projectId , {...data} , {new:true});
         if(!updatedProject){
             return NextResponse.json({

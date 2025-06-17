@@ -22,7 +22,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{projectuserId:s
             status:200,
             message:"updated projectuser is! ",
             updatedProjectuser
-        })
+        } , {status:200})
     } catch (err) {
         console.error("update projectUser error!" , err);
         return NextResponse.json({
