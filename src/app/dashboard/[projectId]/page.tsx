@@ -40,13 +40,13 @@ export default function Dashboard(){
     
     console.log(projectId);
     return(
-        <>
+        <div className="py-5 bg-base-300 min-h-screen">
             {
                 isLoading ? "Loading..." :
-                role === "TeamLead" ? <TeamLeadDashboard/> : 
-                role === "Manager" ? <ManagerDashboard/> : 
-                role === "Employee" ? <EmployeeDashboard/> : <p>No Dashboard!</p>
+                role === "TeamLead" ? <TeamLeadDashboard projectId={projectId as string}/> : 
+                role === "Manager" ? <ManagerDashboard projectId={projectId as string}/> : 
+                role === "Employee" ? <EmployeeDashboard projectId={projectId as string}/> : <p>No Dashboard!</p>
             }
-        </>
+        </div>
     )
 }

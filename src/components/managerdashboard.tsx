@@ -4,7 +4,7 @@ import Link from "next/link";
 import AssignedusersTable from "./assigneduserstable";
 import { GiHamburgerMenu } from "react-icons/gi";
 
-export default function ManagerDashboard(){
+export default function ManagerDashboard({ projectId }: { projectId: string }){
     return(
         <div className="min-h-screen">
             <div className="flex flex-col items-center pt-6 pb-16 gap-6">
@@ -44,7 +44,7 @@ export default function ManagerDashboard(){
                     </div>
                 </ul>
                 <div className="">
-                    <AssignedusersTable/>
+                    <AssignedusersTable projectId={projectId}/>
                 </div>
             </div>
         </div>

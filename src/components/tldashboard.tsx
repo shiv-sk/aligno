@@ -4,7 +4,7 @@ import Link from "next/link";
 import AssignedusersTable from "./assigneduserstable";
 import { GiHamburgerMenu } from "react-icons/gi";
 
-export default function TeamLeadDashboard(){
+export default function TeamLeadDashboard({ projectId }: { projectId: string }){
     return(
         <div className="min-h-screen">
             <div className="flex flex-col items-center pt-6 pb-16 gap-6">
@@ -40,7 +40,7 @@ export default function TeamLeadDashboard(){
                     </div>
                 </ul>
                 <div className="">
-                    <AssignedusersTable/>
+                    <AssignedusersTable projectId={projectId}/>
                 </div>
             </div>
         </div>
