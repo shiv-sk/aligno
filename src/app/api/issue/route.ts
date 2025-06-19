@@ -1,4 +1,5 @@
 import dbConnect from "@/lib/connection.db";
+import { authorizeRole } from "@/lib/middleware/authorizerole";
 import { validateInput } from "@/lib/validate";
 import Issue from "@/models/issue.model";
 import newIssueSchema from "@/schemas/newIssue.schema";
@@ -17,6 +18,10 @@ export async function POST(req: Request){
             } , {status:400})
         }
         const { title , description , duedate , createdBy , projectId , priority } = validation.data;
+        const authorizedUser = await authorizeRole(["Manager"])(projectId);
+        if("status" in authorizedUser){
+            return authorizedUser;
+        }
         const existIssue = await Issue.findOne({$and:[{title} , {projectId}]});
         if(existIssue){
             return NextResponse.json({

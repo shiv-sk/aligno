@@ -1,3 +1,4 @@
+import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -10,6 +11,19 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}
                 status:400,
                 message:"issueId is required!"
             } , {status:400})
+        }
+        const issue = await Issue.findById(issueId);
+        if(!issue){
+            return NextResponse.json({
+                success:false,
+                status:404,
+                message:"Issue is not found!"
+            } , {status:404})
+        }
+        const {projectId} = issue;
+        const authorizedUser = await authorizeRole(["Manager"])(projectId.toString());
+        if("status" in authorizedUser){
+            return authorizedUser;
         }
         const reopenedIssue = await Issue.findByIdAndUpdate(issueId , {status:"Reopened"} , {new:true});
         if(!reopenedIssue){

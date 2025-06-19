@@ -14,7 +14,7 @@ export async function GET(){
         user
         } , {status:200})
     } catch (err: any) {
-        console.error("error from fetching user!" , err);
+        console.error("error from fetching user!" , err.message);
         return NextResponse.json({
         success:false,
         status:401,

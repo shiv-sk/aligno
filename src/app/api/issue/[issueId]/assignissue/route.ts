@@ -1,3 +1,4 @@
+import { authorizeRole } from "@/lib/middleware/authorizerole";
 import { validateInput } from "@/lib/validate";
 import Issue from "@/models/issue.model";
 import assignIssueSchema from "@/schemas/assignIssue.schema";
@@ -21,6 +22,19 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}
                 message:"Invalid Input",
                 errors:validation.errors
             } , {status:400})
+        }
+        const issue = await Issue.findById(issueId);
+        if(!issue){
+            return NextResponse.json({
+                success:false,
+                status:404,
+                message:"Issue is not found!"
+            } , {status:400})
+        }
+        const {projectId} = issue;
+        const authorizedUser = await authorizeRole(["TeamLead"])(projectId.toString());
+        if("status" in authorizedUser){
+            return authorizedUser;
         }
         const {requestedBy , assignedBy} = validation.data;
         const assignedIssue = await Issue.findByIdAndUpdate(issueId , {status:"Assigned" , assignedTo:requestedBy , assignedBy} , {new:true});
