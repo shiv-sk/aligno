@@ -38,7 +38,7 @@ export default function AssignedusersTable({ projectId }: { projectId: string })
         getAssignedUsers();
     } , [projectId]);
     return(
-        <div className="overflow-x-auto py-5 px-3 shadow-xl rounded-xl">
+        <div className="overflow-x-auto py-5 px-3 shadow-xl rounded-xl bg-base-100">
             <h1 className="text-center px-2.5 py-4 text-lg font-semibold border-b-2 border-b-neutral">AssignedUsers</h1>
             <table className="table table-sm md:table-md min-w-full divide-y divide-neutral-200">
                 <thead>
@@ -56,27 +56,27 @@ export default function AssignedusersTable({ projectId }: { projectId: string })
                             </tr>
                         ) :
                         allUsers && allUsers.length > 0 ? allUsers.map((user)=>{
-                            let rowBgColor = "";
+                            let badgeColor = "";
                             switch (user.role){
                                 case "Manager":
-                                    rowBgColor = "bg-accent text-white font-semibold";
+                                    badgeColor = "badge badge-neutral text-center mt-2.5 font-semibold";
                                     break;
                                 case "TeamLead":
-                                    rowBgColor = "bg-blue-500 text-white font-semibold";
+                                    badgeColor = "badge badge-info text-center mt-2.5 font-semibold";
                                     break;
                                 case "Employee":
-                                    rowBgColor = "bg-yellow-500 text-white font-semibold";
+                                    badgeColor = "badge badge-secondary text-center mt-2.5 font-semibold ";
                                     break;
                                 default:
-                                    rowBgColor = ""
+                                    badgeColor = ""
                             }
                             return(
                                 <tr 
-                                className={`transition-all ease-in-out hover:bg-base-300 hover:text-neutral hover:cursor-pointer ${rowBgColor}`} 
+                                className={`transition-all ease-in-out hover:bg-base-300 hover:text-neutral hover:cursor-pointer`} 
                                 key={user._id}>
-                                    <td className="first:rounded-l-xl">{user.userId.name}</td>
+                                    <td>{user.userId.name}</td>
                                     <td>{user.userId.email}</td>
-                                    <td className="last:rounded-r-xl">{user.role}</td>
+                                    <td className={`${badgeColor}`}>{user.role}</td>
                                 </tr>
                             )
                         }) : (

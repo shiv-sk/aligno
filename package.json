@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@syncfusion/ej2-react-gantt": "^29.2.11",
     "axios": "^1.9.0",
     "bcryptjs": "^3.0.2",
     "daisyui": "^5.0.35",

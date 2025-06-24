@@ -1,7 +1,5 @@
 import { authorizeRole } from "@/lib/middleware/authorizerole";
-import { validateInput } from "@/lib/validate";
 import Issue from "@/models/issue.model";
-import assignIssueSchema from "@/schemas/assignIssue.schema";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}}){
@@ -14,15 +12,6 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}
                 message:"issueId is required!"
             } , {status:400})
         }
-        const validation = await validateInput(req , assignIssueSchema);
-        if(!validation.success){
-            return NextResponse.json({
-                success:false,
-                status:400,
-                message:"Invalid Input",
-                errors:validation.errors
-            } , {status:400})
-        }
         const issue = await Issue.findById(issueId);
         if(!issue){
             return NextResponse.json({
@@ -31,32 +20,31 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}
                 message:"Issue is not found!"
             } , {status:400})
         }
-        const {projectId} = issue;
-        const authorizedUser = await authorizeRole(["TeamLead"])(projectId.toString());
+        const {projectId} = issue
+        const authorizedUser = await authorizeRole(["Manager"])(projectId.toString());
         if("status" in authorizedUser){
             return authorizedUser;
         }
-        const {requestedBy , assignedBy} = validation.data;
-        const assignedIssue = await Issue.findByIdAndUpdate(issueId , {status:"Assigned" , assignedTo:requestedBy , assignedBy} , {new:true});
-        if(!assignedIssue){
+        const AcceptedIssue = await Issue.findByIdAndUpdate(issueId , {status:"Closed" , completedAt:new Date()} , {new:true});
+        if(!AcceptedIssue){
             return NextResponse.json({
                 success:false,
                 status:404,
-                message:"Issue is not found or not Assigned!"
+                message:"Issue is not Accepted!"
             } , {status:400})
         }
         return NextResponse.json({
             success:true,
             status:200,
-            message:"assigned Issue is! ",
-            assignedIssue
+            message:"Accepted Issue is! ",
+            AcceptedIssue
         } , {status:200})
     } catch (err) {
-        console.error("assign Issue error!" , err);
+        console.error("Accepted Issue error!" , err);
         return NextResponse.json({
             success:false,
             status:500,
-            message:"issue assign error! "
+            message:"Accept Issue error! "
         } , {status:500})
     }
 }

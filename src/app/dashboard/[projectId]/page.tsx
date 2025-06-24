@@ -16,15 +16,14 @@ export default function Dashboard(){
     const [isLoading , setIsLoading] = useState(false);
 
     useEffect(()=>{
-        if(!user || !user._id || !projectId){
-            alert("missing query params!");
-            return;
-        }
-        setIsLoading(true);
         const getUserRole = async()=>{
+            if(!user || !user._id || !projectId){
+                return;
+            }
+            setIsLoading(true);
             try {
                 const response = await getAndDeleteReq(`/api/projectmember/role?projectId=${projectId}&userId=${user._id}` , "GET");
-                // console.log("role of user in this project! " , response);
+                console.log("role of user in this project! " , response);
                 if(response.success){
                     setRole(response.role || "");
                 }
@@ -37,15 +36,14 @@ export default function Dashboard(){
         }
         getUserRole();
     } , [projectId , user]);
-    
-    console.log(projectId);
     return(
         <div className="py-5 bg-base-300 min-h-screen">
             {
-                isLoading ? "Loading..." :
+                isLoading ? <div className="flex justify-center items-center min-h-screen">Loading...</div> :
                 role === "TeamLead" ? <TeamLeadDashboard projectId={projectId as string}/> : 
                 role === "Manager" ? <ManagerDashboard projectId={projectId as string}/> : 
-                role === "Employee" ? <EmployeeDashboard projectId={projectId as string}/> : <p>No Dashboard!</p>
+                role === "Employee" ? <EmployeeDashboard projectId={projectId as string}/> : 
+                <p className="flex justify-center items-center min-h-screen">No Dashboard!</p>
             }
         </div>
     )

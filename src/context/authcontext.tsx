@@ -55,8 +55,11 @@ const AuthProvider = ({ children }: { children: ReactNode })=>{
             setIsLoading(true);
             try {
                 const response = await getAndDeleteReq(`/api/user/me` , "GET");
-                console.log(response);
-                setUser(response?.foundUser);
+                if(response.success){
+                    console.log(response);
+                    setUser(response.user);
+                }
+                console.log("user from current user function! " , user);
                 return { success: true, data: response?.data }; 
             } catch (error: any) {
                 const errorMessage = error.response?.data?.message || "Unable to find current user.";

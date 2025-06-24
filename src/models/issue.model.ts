@@ -1,7 +1,8 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 interface IssueModel extends Document{
-    title: string,
+    _id:string,
+    name: string,
     description: string,
     projectId: mongoose.Types.ObjectId,
     createdBy: mongoose.Types.ObjectId,
@@ -10,12 +11,16 @@ interface IssueModel extends Document{
     status:string,
     priority:string,
     duedate:Date,
+    completedAt:Date,
+    assignedAt:Date,
+    createdAt:Date,
+    updatedAt:Date
 }
 
 const IssueSchema:Schema<IssueModel> = new Schema({
-    title:{
+    name:{
         type:String,
-        required:[true , "Issue title is required! "],
+        required:[true , "Issue name is required! "],
     },
     description:{
         type:String,
@@ -54,7 +59,15 @@ const IssueSchema:Schema<IssueModel> = new Schema({
     duedate:{
         type:Date,
         required:[true , "Duedate is required! "]
-    }
+    },
+    completedAt:{
+        type:Date,
+        default:null
+    },
+    assignedAt:{
+        type:Date,
+        default:null
+    },
 } , {timestamps:true});
 
 const Issue = (mongoose.models.Issue as mongoose.Model<IssueModel>) 

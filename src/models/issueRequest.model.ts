@@ -1,17 +1,12 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 interface IssueRequestModel extends Document{
-    description: string,
     issueId: mongoose.Types.ObjectId,
     requestedBy: mongoose.Types.ObjectId,
     status:string,
 }
 
 const IssueRequestSchema:Schema<IssueRequestModel> = new Schema({
-    description:{
-        type:String,
-        required:[true , "Issue Description is required! "],
-    },
     issueId:{
         type:Schema.Types.ObjectId,
         ref:"Issue",

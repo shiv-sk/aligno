@@ -25,17 +25,25 @@ export default function TeamLeadDashboard({ projectId }: { projectId: string }){
                         {/* Sidebar content here */}
                         <Link href={`/allissues/1234`}><li><button className="btn w-full">All Issues</button></li></Link>
                         <li><button className="btn w-full btn-neutral">Review Requests</button></li>
+                        <li><button className="btn w-full btn-neutral">Overview</button></li>
                         </ul>
                     </div>
                 </div>
-                <ul className="hidden md:flex justify-between items-center w-full max-w-4xl bg-base-200 rounded-xl shadow-xl py-4 px-6">
+                <ul className="hidden md:flex justify-between items-center w-full max-w-4xl bg-base-100 rounded-xl shadow-xl py-4 px-6">
                     <li className="text-lg font-bold btn btn-info shadow-xl">TeamLead Dashboard</li>
                     <div className="hidden md:flex gap-4">
                         <li>
-                            <Link href={`/allissues/1234`}><button className="btn text-lg shadow-xl">All Issues</button></Link>
+                            <Link href={`/allissues/1234`}>
+                                <button className="btn text-lg shadow-xl">All Issues</button>
+                            </Link>
                         </li>
                         <li>
-                            <button className="btn btn-neutral shadow-xl">Review Requests</button>
+                            <Link href={'/reviewrequests/1234'}>
+                                <button className="btn btn-neutral shadow-xl">Review Requests</button>
+                            </Link>
+                        </li>
+                        <li>
+                            <button className="btn btn-neutral shadow-xl">Overview</button>
                         </li>
                     </div>
                 </ul>

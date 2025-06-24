@@ -36,7 +36,7 @@ export default function Home(){
     } , [])
     
     return(
-        <div className="flex flex-col justify-center items-center min-h-screen py-5">
+        <div className="flex flex-col justify-center items-center min-h-screen py-5 bg-base-200">
             <h1 className="text-xl font-semibold py-3.5 px-2">AllProjects</h1>
             <div className="flex flex-wrap gap-3 justify-center items-center">
                 {
@@ -47,7 +47,9 @@ export default function Home(){
                                 <h2 className="card-title">{project?.name || "Project-Name"}</h2>
                                 <p>{project?.description || "Project-Description"}</p>
                                 <div className="card-actions justify-end">
-                                <Link href={`/project/${project._id}`}><button className="btn btn-primary">View</button></Link>
+                                <Link href={`/project/${project._id}`}>
+                                    <button className="btn btn-neutral shadow-xl">View</button>
+                                </Link>
                                 </div>
                             </div>
                         </div>

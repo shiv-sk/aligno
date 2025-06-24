@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import { validateInput } from "@/lib/validate";
 import Issue from "@/models/issue.model";
 import newIssueSchema from "@/schemas/newIssue.schema";
+import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: Request){
@@ -17,12 +19,21 @@ export async function POST(req: Request){
                 errors:validation.errors
             } , {status:400})
         }
-        const { title , description , duedate , createdBy , projectId , priority } = validation.data;
+        const { name , description , duedate , projectId , priority } = validation.data;
         const authorizedUser = await authorizeRole(["Manager"])(projectId);
         if("status" in authorizedUser){
             return authorizedUser;
         }
-        const existIssue = await Issue.findOne({$and:[{title} , {projectId}]});
+        const createdBy = authorizedUser.user._id;
+        const isValidUserObjectId = mongoose.isValidObjectId(createdBy);
+        if(!createdBy || !isValidUserObjectId){
+            return NextResponse.json({
+                success:false,
+                status:400,
+                message:"projectId is missing or not valid!"
+            } , {status:400})
+        }
+        const existIssue = await Issue.findOne({$and:[{name} , {projectId}]});
         if(existIssue){
             return NextResponse.json({
                 success:false,
@@ -31,7 +42,7 @@ export async function POST(req: Request){
             } , {status:400})
         }
         const newIssue = await Issue.create({
-            title,
+            name,
             description,
             createdBy,
             duedate,
@@ -51,12 +62,11 @@ export async function POST(req: Request){
             message:"issue is created! ",
             newIssue
         } , {status:201})
-    } catch (err) {
-        console.error("error from Issue!" , err);
+    } catch (err: any) {
         return NextResponse.json({
             success:false,
             status:500,
-            message:"Issue creation error! "
+            message:err.message
         } , {status:500})
     }
 }
