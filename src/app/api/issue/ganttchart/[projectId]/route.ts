@@ -1,8 +1,10 @@
+import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest , {params}:{params:{projectId:string}}){
+    await dbConnect();
     try {
         const projectId = params.projectId;
         if(!projectId){
@@ -28,32 +30,65 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
             switch(status){
                 case "Closed": return 100;
                 case "Assigned": return 50;
-                case "Open": return 0;
+                case "Open": return 10;
+                case "Review": return 80;
+                case "Reopened": return 70;
                 default: return 10;
+            }
+        }
+        const barColor = function (status: string){
+            switch(status){
+                case "Closed": return "bar-green";
+                case "Assigned": return "bar-blue";
+                case "Open": return "bar-gray";
+                case "Review": return "bar-yellow";
+                case "Reopened": return "bar-orange";
+                default: return "";
             }
         }
         const formattedIssueData = issues.map((issue)=>({
             id:issue._id.toString(),
             name:issue.name,
-            start:new Date(issue.assignedAt ?? issue.createdAt),
-            end:new Date(issue.completedAt ?? issue.duedate),
+            start:new Date(issue.assignedAt ?? issue.createdAt).toISOString().split("T")[0],
+            end:new Date(issue.completedAt ?? issue.duedate).toISOString().split("T")[0],
             type:"task",
             progress:getProgress(issue.status),
             isDisabled: false,
-            dependencies: []
+            dependencies: [],
+            status:issue.status,
+            custom_class:barColor(issue.status)
         }))
+        const issueStatus = ["Closed" , "Assigned" , "Review"];
+        const overdueStatus = ["Reopened" , "Open" , "Assigned"];
+        const totalIssues = issues.length;
+        const completedIssues = issues.filter((issue)=>(issue.status === "Closed")).length;
+        const overdueIssues = issues.filter((issue)=>((overdueStatus.includes(issue.status)) && new Date() > new Date(issue.duedate))).length;
+        const activeIssues = issues.filter((issue)=>(issueStatus.includes(issue.status))).length;
+        const activityRate = Math.round((activeIssues / totalIssues) * 100);
+        const overdueRate = Math.round((overdueIssues / totalIssues) * 100);
+        const completionRate = Math.round((completedIssues / totalIssues) * 100);
+        console.log("completedIssues: " , completedIssues , "over issues" , overdueIssues);
+        const issueSummary = {
+            activityRate,
+            overdueRate,
+            completionRate,
+            totalIssues,
+            overdueIssues,
+            completedIssues,
+            activeIssues
+        } 
         return NextResponse.json({
             success:true,
             status:200,
             message:"formated Issues are! ",
-            formattedIssueData
+            data:{formattedIssueData , issueSummary}
         } , {status:200})
     } catch (err) {
-        console.error("Accepted Issue error!" , err);
+        console.error("ganttChart error!" , err);
         return NextResponse.json({
             success:false,
             status:500,
-            message:"Accept Issue error! "
+            message:"GantChart error! "
         } , {status:500})
     }
 }

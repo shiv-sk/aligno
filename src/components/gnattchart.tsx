@@ -1,9 +1,32 @@
 "use client";
 
-import { GanttComponent } from "@syncfusion/ej2-react-gantt";
+import { useEffect, useRef } from "react";
+import Gantt from "frappe-gantt";
+import "../../node_modules/frappe-gantt/dist/frappe-gantt.css"
+type GanttTask = {
+    id: string;
+    name: string;
+    start: string;
+    end: string;
+    progress: number;
+    dependencies?: string;
+    custom_class?: string;
+};
 
-export default function GanttChart({data}){
+type Props = {
+    tasks: GanttTask[];
+}
+export default function GanttChart({ tasks }: Props){
+    const ganttRef = useRef<HTMLDivElement>(null);
+    useEffect(()=>{
+        if(ganttRef.current && tasks.length > 0){
+            new Gantt(ganttRef.current , tasks , {
+                view_mode: "Day",
+                date_format: "YYYY-MM-DD",
+            })
+        }
+    } , [tasks])
     return(
-        <GanttComponent dataSource={data}></GanttComponent>
+        <div ref={ganttRef}></div>
     )
 }

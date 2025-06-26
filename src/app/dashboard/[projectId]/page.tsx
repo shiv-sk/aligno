@@ -39,11 +39,11 @@ export default function Dashboard(){
     return(
         <div className="py-5 bg-base-300 min-h-screen">
             {
-                isLoading ? <div className="flex justify-center items-center min-h-screen">Loading...</div> :
+                isLoading ? <div className="flex py-20 mx-auto min-h-screen">Loading...</div> :
                 role === "TeamLead" ? <TeamLeadDashboard projectId={projectId as string}/> : 
                 role === "Manager" ? <ManagerDashboard projectId={projectId as string}/> : 
                 role === "Employee" ? <EmployeeDashboard projectId={projectId as string}/> : 
-                <p className="flex justify-center items-center min-h-screen">No Dashboard!</p>
+                <p className="flex py-20 items-center min-h-screen">No Dashboard!</p>
             }
         </div>
     )

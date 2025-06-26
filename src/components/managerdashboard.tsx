@@ -56,6 +56,11 @@ export default function ManagerDashboard({ projectId }: { projectId: string }){
                                 <button className="btn btn-neutral shadow-xl">Review Closure</button>
                             </Link>
                         </li>
+                        <li>
+                            <Link href={`/overview/${projectId}`}>
+                                <button className="btn btn-neutral shadow-xl">Overview</button>
+                            </Link>
+                        </li>
                     </div>
                 </ul>
                 <div className="">
