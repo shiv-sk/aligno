@@ -4,7 +4,7 @@ interface IssueAssignment{
     userName:string,
     taskName:string,
 }
-export default function ClosureAccepted({taskName , userName}: IssueAssignment){
+export default function ClosureAcceptedEmailTemplate({taskName , userName}: IssueAssignment){
     return(
         <Html lang="en">
             <Head/>

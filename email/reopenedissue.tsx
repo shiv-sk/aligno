@@ -4,7 +4,7 @@ interface IssueAssignment{
     userName:string,
     taskName:string,
 }
-export default function IssueReopened({taskName , userName}: IssueAssignment){
+export default function IssueReopenedEmailTemplate({taskName , userName}: IssueAssignment){
     return(
         <Html lang="en">
             <Head/>

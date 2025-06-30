@@ -5,7 +5,7 @@ interface IssueAssignment{
     taskName:string,
     duedate:string
 }
-export default function issueAssignEmail({taskName , userName , duedate}: IssueAssignment){
+export default function issueAssignEmailTemplate({taskName , userName , duedate}: IssueAssignment){
     return(
         <Html lang="en">
             <Head/>

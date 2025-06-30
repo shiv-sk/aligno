@@ -6,7 +6,7 @@ interface IssueAssignment{
     role:string,
     adminmail:string
 }
-export default function ProjectAssign({projectName , userName , role , adminmail}: IssueAssignment){
+export default function ProjectAssignEmailTemplate({projectName , userName , role , adminmail}: IssueAssignment){
     return(
         <Html lang="en">
             <Head/>
