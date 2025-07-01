@@ -18,7 +18,7 @@ export async function POST(req: Request){
                 errors:validation.errors
             } , {status:400})
         }
-        const { description , issueId , requestedBy } = validation.data;
+        const { issueId , requestedBy } = validation.data;
         const issue = await Issue.findById(issueId);
         if(!issue){
             return NextResponse.json({
@@ -41,7 +41,6 @@ export async function POST(req: Request){
             } , {status:400})
         }
         const newIssueRequest = await IssueRequest.create({
-            description,
             requestedBy,
             issueId,
         })
