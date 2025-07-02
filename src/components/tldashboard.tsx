@@ -24,8 +24,16 @@ export default function TeamLeadDashboard({ projectId }: { projectId: string }){
                         <ul className="menu p-4 w-64 min-h-full bg-base-100 text-base-content gap-2">
                         {/* Sidebar content here */}
                         <Link href={`/allissues/1234`}><li><button className="btn w-full">All Issues</button></li></Link>
-                        <li><button className="btn w-full btn-neutral">Review Requests</button></li>
-                        <li><button className="btn w-full btn-neutral">Overview</button></li>
+                        <li>
+                            <Link href={'/'}>
+                                <button className="btn w-full btn-neutral">Review Requests</button>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={`/overview/${projectId}`}>
+                                <button className="btn w-full btn-neutral">Overview</button>
+                            </Link>
+                        </li>
                         </ul>
                     </div>
                 </div>
@@ -43,7 +51,9 @@ export default function TeamLeadDashboard({ projectId }: { projectId: string }){
                             </Link>
                         </li>
                         <li>
-                            <button className="btn btn-neutral shadow-xl">Overview</button>
+                            <Link href={`/overview/${projectId}`}>
+                                <button className="btn btn-neutral shadow-xl">Overview</button>
+                            </Link>
                         </li>
                     </div>
                 </ul>

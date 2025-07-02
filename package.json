@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-email/components": "^0.1.1",
+    "@react-pdf/renderer": "^4.3.0",
     "axios": "^1.9.0",
     "bcryptjs": "^3.0.2",
     "daisyui": "^5.0.35",

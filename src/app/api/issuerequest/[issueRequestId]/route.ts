@@ -4,14 +4,14 @@ import Issue from "@/models/issue.model";
 import IssueRequest from "@/models/issueRequest.model";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest , {params}:{params:{issueReuestId:string}}){
+export async function GET(req: NextRequest , {params}:{params:{issueRequestId:string}}){
     await dbConnect();
     try {
-        const issueRequestId = params.issueReuestId;
+        const issueRequestId = params.issueRequestId;
         if(!issueRequestId){
             return NextResponse.json({
                 status:400,
-                message:"issueId is required!"
+                message:"issueId is required!" 
             } , {status:400})
         }
         const issueRequest = await IssueRequest.findById(issueRequestId);

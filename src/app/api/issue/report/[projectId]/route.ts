@@ -71,18 +71,18 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
             status:issue.status,
             priority:issue.priority,
             assignedTo:issue.assignedTo?.name || "unAssigned",
-            assignedAt:issue.assignedAt,
-            completedAt:issue.completedAt,
-            duedate:issue.duedate,
+            assignedAt:issue.assignedAt ? issue.assignedAt.toISOString().split("T")[0] : "-",
+            completedAt:issue.completedAt ? issue.completedAt.toISOString().split("T")[0] : "-",
+            duedate:issue.duedate ? issue.duedate.toISOString().split("T")[0] : "-",
         }))
-        const headers = {
+        const footer = {
             generatedBy:authorizedUser.user.name
         }
         return NextResponse.json({
             success:true,
             status:200,
             message:"formated Issues are! ",
-            data:{issueSummary , projectInsights , sanitizedIssues , headers}
+            data:{issueSummary , projectInsights , sanitizedIssues , footer}
         } , {status:200})
     } catch (err) {
         console.error("PdfReport error!" , err);
