@@ -49,49 +49,50 @@ export default function Company(){
     } , [projectId]);
 
     return(
-        <div className="flex flex-col py-20 items-center min-h-screen bg-base-300">
-            <h1 className="text-center px-2.5 py-4 text-lg font-semibold">Project-Detail!</h1>
-            {
-                isLoading ? (<p className="flex justify-center items-center min-h-screen">Loading...</p>) :
-                project ? (
-                    <div className="card bg-base-100 w-96 shadow-xl">
-                        <div className="card-body">
-                            <h2 className="card-title text-center">{project?.name || "ProjectName"}</h2>
-                            <p className="text-lg">
-                                Description: {project?.description || "ProjectDescription"}
-                            </p>
-                            <p className="text-lg">
-                                CreatedBy: {project?.createdBy.name || "Project createdBy"}
-                            </p>
-                            <p className="text-lg">
-                                Contact: {project?.createdBy.email || "Project createdBy contact"}
-                            </p>
-                            <p className="text-lg">
-                                CreatedOn: {project?.createdAt ? new Date (project.createdAt).toDateString() : "Project Creation Date"}
-                            </p>
-                            <div className="card-actions justify-end">
-                                {
-                                    user?.isAdmin && (
-                                        <>
-                                            <Link href={`/addusers/${projectId}`}>
-                                                <button className="btn btn-primary">Add User</button>
-                                            </Link>
-                                            <Link href={`/`}>
-                                                <button className="btn btn-primary">Edit</button>
-                                            </Link>
-                                            <Link href={`/`}>
-                                                <button className="btn btn-primary">Delete</button>
-                                            </Link>
-                                        </>
-                                    )
-                                }
-                                <Link href={`/dashboard/${projectId}`}><button className="btn btn-primary">Dashboard</button></Link>
+        <div className="min-h-screen bg-base-300">
+            <div className="flex flex-col justify-center items-center py-6">
+                <h1 className="text-center px-2.5 py-4 text-lg font-semibold">Project-Detail!</h1>
+                {
+                    isLoading ? (<p className="flex justify-center items-center min-h-screen">Loading...</p>) :
+                    project ? (
+                        <div className="card bg-base-100 w-96 shadow-xl">
+                            <div className="card-body">
+                                <h2 className="card-title text-center">{project?.name || "ProjectName"}</h2>
+                                <p className="text-lg">
+                                    Description: {project?.description || "ProjectDescription"}
+                                </p>
+                                <p className="text-lg">
+                                    CreatedBy: {project?.createdBy.name || "Project createdBy"}
+                                </p>
+                                <p className="text-lg">
+                                    Contact: {project?.createdBy.email || "Project createdBy contact"}
+                                </p>
+                                <p className="text-lg">
+                                    CreatedOn: {project?.createdAt ? new Date (project.createdAt).toDateString() : "Project Creation Date"}
+                                </p>
+                                <div className="card-actions justify-end">
+                                    {
+                                        user?.isAdmin && (
+                                            <>
+                                                <Link href={`/addusers/${projectId}`}>
+                                                    <button className="btn btn-primary">Add User</button>
+                                                </Link>
+                                                <Link href={`/`}>
+                                                    <button className="btn btn-primary">Edit</button>
+                                                </Link>
+                                                <Link href={`/`}>
+                                                    <button className="btn btn-primary">Delete</button>
+                                                </Link>
+                                            </>
+                                        )
+                                    }
+                                    <Link href={`/dashboard/${projectId}`}><button className="btn btn-primary">Dashboard</button></Link>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ) : (<p className="flex justify-center items-center min-h-screen">Porject not found!</p>)
-            }
-            
+                    ) : (<p className="flex justify-center items-center min-h-screen">Porject not found!</p>)
+                }
+            </div>
         </div>
     )
 }

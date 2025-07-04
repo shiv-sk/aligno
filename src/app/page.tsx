@@ -16,7 +16,7 @@ export default function Home(){
     
   ]
 
-  const previewSection = [
+  const featureCards = [
     { 
       number: 1, src:"https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" , title: "Role-based Dashboard" ,
       text:"Admins, Managers, Team Leads, and Employees each see only what they need. Simplified navigation, role-specific actions, and clutter-free dashboards help teams stay focused and productive." 
@@ -32,7 +32,7 @@ export default function Home(){
     
   ]
 
-  const alignoInAction = [
+  const productScreenshots = [
     { 
       number: 1, src:"https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" , alt:"item1" 
     },
@@ -87,7 +87,7 @@ export default function Home(){
         <h1 className="text-3xl font-semibold text-center text-slate-600 mb-6">Key Capabilities</h1>
         <div className="flex justify-center item-center flex-wrap gap-4.5 px-2 bg-base-100 shadow-lg rounded-lg py-6">
           {
-            previewSection.map(({number , src , title , text})=>(
+            featureCards.map(({number , src , title , text})=>(
               <div className="card bg-base-100 w-96 shadow-xl hover:scale-105 transition-transform duration-300 border-t-2 border-t-gray-600" key={number}>
                 <figure>
                   <Image
@@ -111,7 +111,7 @@ export default function Home(){
         <h1 className="text-3xl font-semibold text-center text-slate-600 mb-6">Live Product Preview</h1>
         <div className="flex justify-center items-center gap-3.5 flex-wrap py-6 px-3 rounded-lg">
           {
-            alignoInAction.map(({number , src , alt})=>(
+            productScreenshots.map(({number , src , alt})=>(
               <div className="bg-base-100 w-96 shadow-xl hover:scale-90 transition-transform duration-300 hover:rounded-lg" key={number}>
                 <figure>
                   <Image

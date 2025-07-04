@@ -2,8 +2,11 @@
 "use client";
 
 import { useAuth } from "@/context/authcontext";
-import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { IoEyeOutline } from "react-icons/io5";
+import { FaEyeSlash } from "react-icons/fa6";
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 export default function Login(){
     const {loginUser} = useAuth();
@@ -12,15 +15,21 @@ export default function Login(){
         email:"",
         password:""
     })
+    const [isPasswordShow , setIsPasswordShow] = useState(false);
+    const router = useRouter();
 
     const handleOnChange = (e:ChangeEvent<HTMLInputElement>)=>{
         setLoginData({...loginData , [e.target.name]:e.target.value})
     }
+    const handlePasswordShow = (e:React.MouseEvent<HTMLElement>)=>{
+        e.preventDefault();
+        setIsPasswordShow(!isPasswordShow);
+    }
 
     const handleLogin = async(e:FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
-        if(Object.entries(loginData).length === 0){
-            alert("data is required! ");
+        if(Object.values(loginData).includes("")){
+            toast.error("Credentials are missing!");
             return;
         }
         setIsLoading(true);
@@ -28,12 +37,13 @@ export default function Login(){
             const response = await loginUser(loginData);
             console.log(response);
             if(response.success){
-                alert("login success!");
+                toast.success("login success!");
+                router.push("/allprojects")
             }
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || "Server Error!.";
             // console.error("error loginPage! " , error);
-            alert(errorMessage);
+            toast.error(errorMessage);
         }finally{
             setIsLoading(false);
         }
@@ -53,27 +63,30 @@ export default function Login(){
                     placeholder="exp@email.com" 
                     className="input w-full shadow-md"
                     value={loginData.email}
-                    onChange={handleOnChange} 
-                    required
+                    onChange={handleOnChange}
+                    autoComplete="email" 
+                    
                     />
                     <label htmlFor="password" className="text-md font-medium mb-1">Password</label>
                     <div className="flex relative">
                     <input
                     name="password" 
-                    type="password"
+                    type={isPasswordShow ? "text" : "password"}
                     id="password" 
                     placeholder="pass@123" 
                     className="input w-full shadow-md"
                     value={loginData.password}
                     autoComplete="true"
                     onChange={handleOnChange} 
-                    required/>
-                    <p className="absolute top-2 right-1.5">showbutton</p>
+                    />
+                    <p 
+                    className="z-10 absolute top-2 right-1.5 hover:cursor-pointer" 
+                    onClick={handlePasswordShow}>
+                        { 
+                            isPasswordShow ? <FaEyeSlash className="text-2xl" /> : <IoEyeOutline className="text-2xl" />
+                        }
+                    </p>
                     </div>
-                    <p className="text-sm"> Don’t have an account?{" "} <Link href={"/register"}>
-                    <span 
-                    className="text-info hover:underline hover:text-blue-500">Register
-                    </span></Link></p>
                     <button 
                     type="submit" 
                     className="btn w-full btn-neutral text-lg font-semibold shadow-xl" 

@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/context/authcontext";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { ToastContainer } from 'react-toastify';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,18 @@ export default function RootLayout({
           {children}
           <Footer/>
         </AuthProvider>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+          />
       </body>
     </html>
   );

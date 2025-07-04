@@ -4,6 +4,9 @@
 import { getAndDeleteReq } from "@/apiCalls/apiCalls";
 import Link from "next/link";
 import { useEffect, useState } from "react"
+import { CiFilter } from "react-icons/ci";
+import { toast } from "react-toastify";
+import { CiSearch } from "react-icons/ci";
 
 export default function Home(){
     interface Project{
@@ -27,7 +30,7 @@ export default function Home(){
             } catch (error: any) {
                 const errorMessage = error.response?.data?.message || "Server Error!.";
                 // console.error("error from getAllProjectPage! " , error);
-                alert(errorMessage);
+                toast.error(errorMessage);
             }finally{
                 setIsLoading(false);
             }
@@ -36,27 +39,51 @@ export default function Home(){
     } , [])
     
     return(
-        <div className="flex flex-col justify-center items-center min-h-screen py-5 bg-base-200">
-            <h1 className="text-xl font-semibold py-3.5 px-2">AllProjects</h1>
-            <div className="flex flex-wrap gap-3 justify-center items-center">
-                {
-                    isLoading ? "Loading..." :
-                    allProjects && allProjects.length > 0 ? allProjects.map((project)=>(
-                        <div className="card bg-base-100 w-96 shadow-xl" key={project._id}>
-                            <div className="card-body">
-                                <h2 className="card-title">{project?.name || "Project-Name"}</h2>
-                                <p>{project?.description || "Project-Description"}</p>
-                                <div className="card-actions justify-end">
-                                <Link href={`/project/${project._id}`}>
-                                    <button className="btn btn-neutral shadow-xl">View</button>
-                                </Link>
+        <div className="min-h-screen py-5 bg-base-300">
+            <div className="flex flex-col justify-center items-center">
+                <div className="w-full max-w-xl md:max-w-4xl mb-6 flex flex-row justify-between gap-3">
+                    <div className="relative w-full">
+                        <CiSearch className="absolute z-10 left-3 top-1/2 -translate-y-1/2 text-xl text-gray-500"/>
+                        <input 
+                        type="text" 
+                        name="search"
+                        id="search"
+                        placeholder="Search by name or description"
+                        className="input md:w-full w-xs pl-9 shadow-xl h-12"/>
+                    </div>
+                    
+                    <div className="relative w-full max-w-[200px]">
+                        <CiFilter className="absolute z-10 left-3 top-1/2 -translate-y-1/2 text-xl text-gray-500"/>
+                        <select className="select shadow-xl pl-9 w-full h-12">
+                            <option disabled={true}>Pick a Priority</option>
+                            <option value={""}>Recent</option>
+                        </select>
+                    </div>
+                </div>
+                <h1 className="text-3xl font-bold text-center py-3.5 px-2">AllProjects</h1>
+                <p className="text-gray-500 text-center mb-4">Browse through all your team or company projects</p>
+                <div className="flex flex-wrap gap-3 justify-center items-center">
+                    {
+                        isLoading ? (
+                            <p className="text-lg font-medium">Loading projects...</p>
+                        ) :
+                        allProjects && allProjects.length > 0 ? allProjects.map((project)=>(
+                            <div className="card bg-base-100 w-96 shadow-xl" key={project._id}>
+                                <div className="card-body">
+                                    <h2 className="card-title">{project?.name || "Project-Name"}</h2>
+                                    <p>{project?.description || "Project-Description"}</p>
+                                    <div className="card-actions justify-end">
+                                    <Link href={`/project/${project._id}`}>
+                                        <button className="btn btn-neutral shadow-xl">View</button>
+                                    </Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    )) : (
-                        <p>Projects not found!</p>
-                    )
-                }
+                        )) : (
+                            <p className="text-center text-gray-500 mt-4">Projects not found!</p>
+                        )
+                    }
+                </div>
             </div>
         </div>
     )
