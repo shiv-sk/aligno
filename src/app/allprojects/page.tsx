@@ -55,8 +55,9 @@ export default function Home(){
                     <div className="relative w-full max-w-[200px]">
                         <CiFilter className="absolute z-10 left-3 top-1/2 -translate-y-1/2 text-xl text-gray-500"/>
                         <select className="select shadow-xl pl-9 w-full h-12">
-                            <option disabled={true}>Pick a Priority</option>
+                            <option disabled={true}>Select a value</option>
                             <option value={""}>Recent</option>
+                            <option value={""}>Oldest</option>
                         </select>
                     </div>
                 </div>

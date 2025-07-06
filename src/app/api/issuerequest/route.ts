@@ -77,7 +77,20 @@ export async function GET(req: NextRequest , {params}:{params:{issueId:string}})
                 message:"issueId is required!"
             } , {status:400})
         }
-        const requestedIssues = await IssueRequest.find({issueId});
+        const issue = await Issue.findById(issueId);
+        if(!issue){
+            return NextResponse.json({
+                success:false,
+                status:404,
+                message:"Issue not found! "
+            } , {status:404})
+        }
+        const {projectId} = issue;
+        const authorizedUser = await authorizeRole(["Employee"])(projectId.toString());
+        if("status" in authorizedUser){
+            return authorizedUser;
+        }
+        const requestedIssues = await IssueRequest.find({issueId}).populate("userId" , "name email");
         if(requestedIssues.length === 0){
             return NextResponse.json({
                 status:404,

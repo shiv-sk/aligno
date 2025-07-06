@@ -8,11 +8,13 @@ import TeamLeadDashboard from "@/components/tldashboard";
 import { useAuth } from "@/context/authcontext";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Dashboard(){
     const {projectId} = useParams();
     const {user} = useAuth();
     const [role , setRole] = useState("");
+    const [projectName , setProjectName] = useState("");
     const [isLoading , setIsLoading] = useState(false);
 
     useEffect(()=>{
@@ -26,24 +28,33 @@ export default function Dashboard(){
                 console.log("role of user in this project! " , response);
                 if(response.success){
                     setRole(response.role || "");
+                    setProjectName(response.projectName || "projectName");
                 }
             } catch (error: any) {
                 const errorMessage = error.response?.data?.message || "Server Error!.";
-                alert(errorMessage);
+                toast.error(errorMessage);
             }finally{
                 setIsLoading(false);
             }
         }
         getUserRole();
-    } , [projectId , user]);
+    } , [projectId , user , role]);
     return(
         <div className="py-5 bg-base-300 min-h-screen">
             {
-                isLoading ? <div className="flex py-20 mx-auto min-h-screen">Loading...</div> :
-                role === "TeamLead" ? <TeamLeadDashboard projectId={projectId as string}/> : 
-                role === "Manager" ? <ManagerDashboard projectId={projectId as string}/> : 
-                role === "Employee" ? <EmployeeDashboard projectId={projectId as string}/> : 
-                <p className="flex py-20 items-center min-h-screen">No Dashboard!</p>
+                isLoading ? (
+                    <div className="flex justify-center items-center h-64">
+                        <span className="loading loading-spinner loading-xl"></span>
+                    </div>
+                ) :
+                role === "TeamLead" ? <TeamLeadDashboard projectId={projectId as string} projectName={projectName as string}/> :
+                role === "Manager" ? <ManagerDashboard projectId={projectId as string}/> :
+                role === "Employee" ? <EmployeeDashboard projectId={projectId as string}/> :
+                <div className="flex justify-center items-center h-64">
+                    <p className="text-lg font-semibold">
+                        Sorry, we couldn&apos;t find this project. It might have been deleted or moved!.
+                    </p>
+                </div>
             }
         </div>
     )

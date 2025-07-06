@@ -7,7 +7,7 @@ import newIssueSchema from "@/schemas/newIssue.schema";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: Request){
+export async function POST(req: NextRequest){
     await dbConnect();
     try {
         const validation = await validateInput(req , newIssueSchema);

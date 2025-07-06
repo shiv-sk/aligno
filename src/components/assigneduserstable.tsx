@@ -3,6 +3,7 @@
 
 import { getAndDeleteReq } from "@/apiCalls/apiCalls";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function AssignedusersTable({ projectId }: { projectId: string }){
     interface AssignedUsers{
@@ -30,7 +31,7 @@ export default function AssignedusersTable({ projectId }: { projectId: string })
                 }
             } catch (error: any) {
                 const errorMessage = error.response?.data?.message || "Server Error!.";
-                alert(errorMessage);
+                toast.error(errorMessage);
             }finally{
                 setIsLoading(false);
             }

@@ -18,7 +18,7 @@ export async function GET(req: NextRequest){
     }
 
     try {
-        const projectUser = await ProjectUser.findOne({projectId , userId});
+        const projectUser = await ProjectUser.findOne({projectId , userId}).populate("projectId" , "name");
         if(!projectUser){
             return NextResponse.json({
                 success:false,
@@ -26,11 +26,13 @@ export async function GET(req: NextRequest){
                 message:"projectUser not found! "
             } , {status:404})
         }
+        const projectName = (projectUser.projectId as unknown as { name: string }).name;
         return NextResponse.json({
             success:true,
             status:200,
             message:"projectUser role is! ",
-            role:projectUser.role
+            role:projectUser.role,
+            projectName
         } , {status:200})
     } catch (err) {
         console.error("error from get projectUsers!" , err);

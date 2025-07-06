@@ -10,12 +10,12 @@ const projectUserSchema:Schema<ProjectUserModel> = new Schema({
     projectId:{
         type:Schema.Types.ObjectId,
         ref:"Project",
-        required:[true , "Name is required! "],
+        required:[true , "ProjectId is required! "],
     },
     userId:{
         type:Schema.Types.ObjectId,
         ref:"User",
-        required:[true , "Email is required! "],
+        required:[true , "UserId is required! "],
     },
     role:{
         type:String,

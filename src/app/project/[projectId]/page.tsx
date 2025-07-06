@@ -6,6 +6,7 @@ import { useAuth } from "@/context/authcontext";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 
 export default function Company(){
     interface User{
@@ -36,11 +37,13 @@ export default function Company(){
             try {
                 const response = await getAndDeleteReq(`/api/project/${projectId}` , "GET");
                 // console.log("response from getCompany! " , response);
-                setProject(response?.project || null);
+                if(response.success){
+                    setProject(response?.project || null);
+                }
             } catch (error: any) {
                 const errorMessage = error.response?.data?.message || "Server Error!.";
                 // console.error("error from companyPage! " , error);
-                alert(errorMessage);
+                toast.error(errorMessage);
             }finally{
                 setIsLoading(false);
             }
@@ -51,26 +54,32 @@ export default function Company(){
     return(
         <div className="min-h-screen bg-base-300">
             <div className="flex flex-col justify-center items-center py-6">
-                <h1 className="text-center px-2.5 py-4 text-lg font-semibold">Project-Detail!</h1>
+                <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">Project Overview</h1>
                 {
-                    isLoading ? (<p className="flex justify-center items-center min-h-screen">Loading...</p>) :
+                    isLoading ? (
+                        <div className="flex justify-center items-center h-64">
+                            <span className="loading loading-spinner loading-xl"></span>
+                        </div>
+                    ):
                     project ? (
                         <div className="card bg-base-100 w-96 shadow-xl">
                             <div className="card-body">
                                 <h2 className="card-title text-center">{project?.name || "ProjectName"}</h2>
-                                <p className="text-lg">
-                                    Description: {project?.description || "ProjectDescription"}
-                                </p>
-                                <p className="text-lg">
-                                    CreatedBy: {project?.createdBy.name || "Project createdBy"}
-                                </p>
-                                <p className="text-lg">
-                                    Contact: {project?.createdBy.email || "Project createdBy contact"}
-                                </p>
-                                <p className="text-lg">
-                                    CreatedOn: {project?.createdAt ? new Date (project.createdAt).toDateString() : "Project Creation Date"}
-                                </p>
-                                <div className="card-actions justify-end">
+                                <div className="space-y-2">
+                                    <p className="text-lg">
+                                        Description: {project?.description || "ProjectDescription"}
+                                    </p>
+                                    <p className="text-lg">
+                                        CreatedBy: {project?.createdBy.name || "Project createdBy"}
+                                    </p>
+                                    <p className="text-lg">
+                                        Contact: {project?.createdBy.email || "Project createdBy contact"}
+                                    </p>
+                                    <p className="text-lg">
+                                        CreatedOn: {project?.createdAt ? new Date (project.createdAt).toDateString() : "Project Creation Date"}
+                                    </p>
+                                </div>
+                                <div className="card-actions flex-wrap justify-end">
                                     {
                                         user?.isAdmin && (
                                             <>
@@ -86,11 +95,25 @@ export default function Company(){
                                             </>
                                         )
                                     }
-                                    <Link href={`/dashboard/${projectId}`}><button className="btn btn-primary">Dashboard</button></Link>
+                                    {
+                                        !user?.isAdmin && (
+                                            <>
+                                                <Link href={`/dashboard/${projectId}`}>
+                                                    <button className="btn btn-primary">Dashboard</button>
+                                                </Link>
+                                            </>
+                                        )
+                                    }
                                 </div>
                             </div>
                         </div>
-                    ) : (<p className="flex justify-center items-center min-h-screen">Porject not found!</p>)
+                    ) : (
+                        <div className="flex justify-center items-center h-64">
+                            <p className="text-lg font-semibold">
+                                Sorry, we couldn&apos;t find this project. It might have been deleted or moved!.
+                            </p>
+                        </div>
+                    )
                 }
             </div>
         </div>
