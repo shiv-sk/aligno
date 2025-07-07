@@ -22,8 +22,12 @@ export default function TeamLeadDashboard({ projectId , projectName }: { project
                         <label htmlFor="menu-drawer" className="drawer-overlay"></label>
                         <ul className="menu p-4 w-64 min-h-full bg-base-100 text-base-content gap-2">
                         {/* Sidebar content here */}
-                        <Link href={`/allissues/1234`}><li><button className="btn w-full">All Issues</button></li></Link>
-                        <Link href={`/allissues/1234`}><li><button className="btn w-full btn-neutral">Review Request</button></li></Link>
+                        <Link href={`/allissues/1234`}>
+                            <li><button className="btn w-full">All Projects</button></li>
+                        </Link>
+                        <Link href={`/allissues/${projectId}`}>
+                            <li><button className="btn w-full btn-neutral">All Issues</button></li>
+                        </Link>
                         <Link href={`/overview/${projectId}`}>
                             <li className="btn w-full btn-neutral">Overview</li>
                         </Link>
@@ -34,14 +38,14 @@ export default function TeamLeadDashboard({ projectId , projectName }: { project
                     <div className="hidden md:flex gap-4">
                         <li>
                             <Link href={`/allissues/1234`}>
-                                <button className="btn text-lg shadow-xl">All Issues</button>
+                                <button className="btn text-lg shadow-xl">All Projects</button>
                             </Link>
                         </li>
                     </div>
                     <div className="hidden md:flex gap-4">
                         <li>
-                            <Link href={'/reviewrequests/1234'}>
-                                <button className="btn btn-neutral shadow-xl">Review Requests</button>
+                            <Link href={`/allissues/${projectId}`}>
+                                <button className="btn btn-neutral shadow-xl">All Issues</button>
                             </Link>
                         </li>
                         <li>

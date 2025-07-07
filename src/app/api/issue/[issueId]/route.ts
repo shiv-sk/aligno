@@ -46,7 +46,12 @@ export async function GET(req: NextRequest , {params}:{params:{issueId:string}})
                 message:"issueId is required!"
             } , {status:400})
         }
-        const issue = await Issue.findById(issueId).populate("createdBy" , "name email");
+        const issue = await Issue.findById(issueId).populate(
+            [
+                {path:"assignedBy" , select:"name email"} , 
+                {path:"createdBy" , select:"name email"} ,
+                {path:"assignedTo" , select:"name email"}
+            ]);
         if(!issue){
             return NextResponse.json({
                 success:false,
