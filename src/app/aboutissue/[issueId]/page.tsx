@@ -125,44 +125,61 @@ export default function AboutIssue(){
                 <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">About Task</h1>
                 <div className="flex items-center justify-center gap-4 pt-2.5">
                     {
+                        isLoading ? (
+                            <div className="flex justify-center items-center h-64">
+                                <span className="loading loading-spinner loading-xl"></span>
+                            </div>
+                        ) :
                         issue ? (
-                            <div className="card bg-base-100 w-96 shadow-sm">
+                            <div className="card bg-base-100 md:w-[600px] w-96 shadow-sm">
                                 <div className="card-body">
                                     <h2 className="card-title">{issue.name}</h2>
-                                    <p>Description: {issue.description}</p>
-                                    <p>CreatedBy-
+                                    <p className="text-lg font-semibold">Description: 
+                                        <span className="font-normal">{ issue.description}</span>
+                                    </p>
+                                    <p className="text-lg font-semibold">CreatedBy-
                                         <br />
                                         <span className="font-semibold text-base text-slate-700">{issue.createdBy.name}</span>
                                         <br />
                                         <span className="text-sm text-gray-500">{issue.createdBy.email}</span>
                                     </p>
-                                    <p>AssignedBy-
+                                    <p className="text-lg font-semibold">AssignedBy-
                                         <br />
-                                        <span className="font-semibold text-base text-slate-700">{issue.assignedBy.name ?? "N/A"}</span>
+                                        <span className="font-semibold text-base text-slate-700">{issue.assignedBy?.name ?? "N/A"}</span>
                                         <br />
-                                        <span className="text-sm text-gray-500">{issue.assignedBy.email ?? "N/A"}</span>
+                                        <span className="text-sm text-gray-500">{issue.assignedBy?.email ?? "N/A"}</span>
                                     </p>
-                                    <p>AssignedTo-
+                                    <p className="text-lg font-semibold">AssignedTo-
                                         <br />
-                                        <span className="font-semibold text-base text-slate-700">{issue.assignedTo.name ?? "N/A"}</span>
+                                        <span className="font-semibold text-base text-slate-700">{issue.assignedTo?.name ?? "N/A"}</span>
                                         <br />
-                                        <span className="text-sm text-gray-500">{issue.assignedTo.email ?? "N/A"}</span>
+                                        <span className="text-sm text-gray-500">{issue.assignedTo?.email ?? "N/A"}</span>
                                         <br />
-                                        <span className="text-sm text-gray-500">AssignedAt: {issue.assignedAt.split("T")[0] ?? "N/A"}</span>
+                                        <span className="text-sm text-gray-500">AssignedAt: {issue.assignedAt?.split("T")[0] ?? "N/A"}</span>
                                     </p>
-                                    <p>CompletedAt- 
+                                    <p className="text-lg font-semibold">CompletedAt- 
                                         <br />
                                         <span className="text-sm text-gray-500">{issue.completedAt?.split("T")[0] ?? "N/A"}</span>
                                     </p>
-                                    <p>Status: <span className={`badge ${statusBadgeColor}`}>{issue.status}</span></p>
-                                    <p>Priority: <span className={`badge ${priorityBadgeColor}`}>{issue.priority}</span></p>
-                                    <div className="flex gap-2 items-center">
+                                    <p className="text-lg font-semibold">Status: 
+                                        <span className={`badge ${statusBadgeColor}`}>{issue.status}</span>
+                                    </p>
+                                    <p className="text-lg font-semibold">Priority: 
+                                        <span className={`badge ${priorityBadgeColor}`}>{issue.priority}</span>
+                                    </p> 
+                                    <div className="flex gap-2 items-center text-lg font-semibold">
                                         Due: <span className="text-sm font-medium text-red-600">{issue.duedate.split("T")[0]}</span>
                                         {getDueDateBadge()}
                                     </div>
                                 </div>
                             </div>
-                        ) : ""
+                        ) : (
+                            <div className="flex justify-center items-center h-64">
+                                <p className="text-lg font-semibold">
+                                    Sorry, we couldn&apos;t find the Task. It might have been deleted or moved!.
+                                </p>
+                            </div>
+                        )
                     }
                     
                 </div>

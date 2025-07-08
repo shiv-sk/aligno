@@ -30,11 +30,11 @@ export async function GET(req: NextRequest , {params}:{params:{issueRequestId:st
             } , {status:404})
         }
         const {projectId} = issue;
-        const authorizedUser = await authorizeRole(["Employee"])(projectId.toString());
+        const authorizedUser = await authorizeRole(["TeamLead"])(projectId.toString());
         if("status" in authorizedUser){
             return authorizedUser;
         }
-        const {duedate , priority , description} = issue;
+        const {duedate , priority , description , name:issueName} = issue;
         const issues = await Issue.find({assignedTo:requestedBy}).populate("assignedTo" , "name email");
         if(issues.length === 0){
             return NextResponse.json({
@@ -58,6 +58,7 @@ export async function GET(req: NextRequest , {params}:{params:{issueRequestId:st
         const issueStatus = ["Assigned" , "Review"];
         const totalIssues = issues.length;
         const totalAssignedIssues = issues.filter((issue)=>(issue.status === "Assigned")).length;
+        const highProrityIssues = issues.filter((issue)=>(issue.priority === "High")).length;
         const completedIssues = issues.filter((issue)=>(issue.status === "Closed")).length;
         const onWorkingIssues = issues.filter((issue)=>(issueStatus.includes(issue.status))).length;
         const completionRate = Math.round((completedIssues / totalIssues) * 100);
@@ -69,9 +70,11 @@ export async function GET(req: NextRequest , {params}:{params:{issueRequestId:st
             onWorkingIssues,
             completedIssues,
             completionRate,
-            overdueIssues
+            overdueIssues,
+            highProrityIssues
         }
         const issueData = {
+            issueName,
             priority,
             duedate,
             description
