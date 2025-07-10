@@ -5,7 +5,7 @@ import { getAndDeleteReq, postAndPatchReq } from "@/apiCalls/apiCalls";
 import UserSummary from "@/types/usersummary";
 import UserData from "@/types/userData";
 import IssueData from "@/types/issueData";
-import { useParams } from "next/navigation";
+import { useParams , useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import IssueDataComponent from "@/components/issuedata";
@@ -19,6 +19,7 @@ export default function IssueRequestReview(){
     const [userSummary , setUserSummary] = useState<UserSummary | null>(null);
     const [issueData , setIssueData] = useState<IssueData | null>(null);
     const {issueRequestId} = useParams();
+    const router = useRouter();
 
     useEffect(()=>{
         if(!issueRequestId){
@@ -44,7 +45,7 @@ export default function IssueRequestReview(){
         getIssueRequest();
     } , [issueRequestId]);
 
-    const handleAssignIssue = async(e)=>{
+    const handleAssignIssue = async(e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
         if(!userData?.requestedBy || !issueData?.issueId){
             return;
@@ -52,7 +53,11 @@ export default function IssueRequestReview(){
         setIsAssignLoading(true);
         try {
             const response = await postAndPatchReq(`/api/issue/assignissue/${issueData.issueId}` , "PATCH" , {requestedBy:userData.requestedBy});
-            console.log("response from assign issue! " , response);
+            // console.log("response from assign issue! " , response);
+            if(response.success){
+                toast.success("Task assigned successfully.");
+                router.push(`/reviewrequests/${issueData.issueId}`);
+            }
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || "Server Error!.";
             toast.error(errorMessage);
@@ -61,7 +66,7 @@ export default function IssueRequestReview(){
         }
     }
 
-    const handleUnAssignIssue = async(e)=>{
+    const handleUnAssignIssue = async(e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
         if(!userData?.requestedBy || !issueData?.issueId){
             return;
@@ -69,7 +74,11 @@ export default function IssueRequestReview(){
         setIsAssignLoading(true);
         try {
             const response = await postAndPatchReq(`/api/issue/assignissue/${issueData.issueId}` , "PATCH" , {});
-            console.log("response from assign issue! " , response);
+            // console.log("response from assign issue! " , response);
+            if(response.success){
+                toast.success("Task unassigned.");
+                router.push(`/reviewrequests/${issueData.issueId}`);
+            }
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || "Server Error!.";
             toast.error(errorMessage);
