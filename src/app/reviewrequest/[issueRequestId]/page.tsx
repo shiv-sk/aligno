@@ -26,8 +26,8 @@ export default function IssueRequestReview(){
     }
 
     interface UserSummary{
-        totalAssignedIssues:number,
-        numberonWorkingIssues:number,
+        totalIssues:number,
+        onWorkingIssues:number,
         completedIssues:number, 
         completionRate:number, 
         overdueIssues:number, 
@@ -57,7 +57,16 @@ export default function IssueRequestReview(){
         }
         getIssueRequest();
     } , [issueRequestId]);
-    console.log("total completed tasks! ",userSummary?.completedIssues);
+    function getDayDifference(){
+        const today:any = new Date();
+        const duedate:any = issueData?.duedate ? new Date(issueData.duedate) : null;
+        if(!duedate){
+            return null;
+        }
+        const difference = today - duedate;
+        const differenceInDay = Math.floor(difference / (1000 * 60 * 60 * 24));
+        return differenceInDay ?? null;
+    }
     return(
         <div className="bg-base-300 min-h-screen">
             <div className="flex flex-col items-center py-5">
@@ -66,27 +75,63 @@ export default function IssueRequestReview(){
                     issueData && userData && userSummary ? (
                         <div className="card bg-base-100 md:w-[600px] w-96 shadow-sm">
                             <div className="card-body">
-                                <h2 className="card-title">Task: {issueData.issueName || "TaskName"}</h2>
-                                <p>Description: {issueData.description || "Task Description"}</p>
-                                <p>Priority: {issueData.priority || "Task Priority"}</p>
-                                <p>Duedate: {issueData.duedate || "Task Duedate"}</p>
-                                <div>
-                                    <h1>UserInfo</h1>
-                                    <p>userName: {userData.name || "UserName"}</p>
-                                    <p>userEmail: {userData.email || "UserEmail"}</p>
+                                <div className="px-3 space-y-1 bg-base-100 shadow-md py-6 rounded-xl">
+                                    <h1 className="text-center font-bold text-lg border-b-2">TaskInfo</h1>
+                                    <h2 className="text-lg">Task: 
+                                        <span className="text-base">{issueData.issueName || "TaskName"}</span>
+                                    </h2>
+                                    <p className="text-lg">Description: 
+                                        <span className="text-base"> {issueData.description || "Task Description"}</span>
+                                    </p>
+                                    <p className="text-lg">Priority: 
+                                        <span className="text-base">{issueData.priority || "Task Priority"}</span>
+                                    </p>
+                                    <p className="text-lg">Duedate: 
+                                        <span className="text-base">{issueData.duedate?.split("T")[0] || "Task Duedate"}</span>
+                                        <span className="pl-3 text-base">{`${getDayDifference()} `}days left</span>
+                                    </p>
                                 </div>
-                                <div>
-                                    <h1>User Summary and WorkLoad</h1>
-                                    <p>Total Assigned: {userSummary.totalAssignedIssues || "AssignedTask"}</p>
-                                    <p>Currently Working: {userSummary.numberonWorkingIssues || "OnWorkingTask"}</p>
-                                    <p>Completed: {userSummary.completedIssues || "CompletedTask"}</p>
-                                    <p>Overdue Tasks: {userSummary.overdueIssues || "OverdueTasks"}</p>
-                                    <p>High Priority: {userSummary.highProrityIssues || "HighPriorityTasks"}</p>
+                                <div className="flex flex-col md:flex-row gap-4 justify-evenly py-6 space-y-1 px-3">
+                                    <div className="space-y-1 py-6 px-3 md:h-[250px] bg-base-200 overflow-y-auto overflow-x-auto shadow-md rounded-xl md:w-1/2">
+                                        <h1 className="text-center font-bold text-lg">UserInfo</h1>
+                                        <p className="text-lg">name: 
+                                            <span className="text-base">{userData.name || "UserName"}</span>
+                                        </p>
+                                        <p className="text-lg">email: 
+                                            <span className="text-base">{userData.email || "UserEmail"}</span>
+                                        </p>
+                                    </div>
+                                    <div className="space-y-1 py-6 px-3 md:h-[250px] overflow-y-auto overflow-x-auto bg-base-200 shadow-md rounded-xl md:w-1/2">
+                                        <h1 className="text-center font-bold text-lg">User Progress and WorkLoad</h1>
+                                        <p className="text-lg">Assigned Tasks: 
+                                            <span className="text-base">{userSummary.totalIssues ?? "AssignedTask"}</span>
+                                        </p>
+                                        <p className="text-lg">on Working Tasks: 
+                                            <span className="text-base">{userSummary.onWorkingIssues ?? "OnWorkingTask"}</span>
+                                        </p>
+                                        <p className="text-lg">Completed Tasks: 
+                                            <span className="text-base">{userSummary.completedIssues ?? "CompletedTask"}</span>
+                                        </p>
+                                        <p className="text-lg">Overdue Tasks: 
+                                            <span className="text-base">{userSummary.overdueIssues ?? "OverdueTasks"}</span>
+                                        </p>
+                                        <p className="text-lg">High Priority Tasks: 
+                                            <span className="text-base">{userSummary.highProrityIssues ?? "HighPriorityTasks"}</span>
+                                        </p>
+                                        <p className="text-lg">Completion Rate:
+                                            <span className="text-base">{userSummary.completionRate ?? "HighPriorityTasks"}%</span> 
+                                            <progress className="progress progress-success w-full" 
+                                            value={userSummary.completedIssues} 
+                                            max={userSummary.totalIssues}>
+                                            </progress>
+                                            {`${userSummary.completedIssues} of ${userSummary.totalIssues} tasks completed`}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                            <div>
-                                <button>Assign</button>
-                                <button>Reject</button>
+                            <div className="flex justify-center items-center gap-4 py-6">
+                                <button className="btn btn-primary">Assign</button>
+                                <button className="btn btn-secondary">Reject</button>
                             </div>
                         </div>
                     ) :(

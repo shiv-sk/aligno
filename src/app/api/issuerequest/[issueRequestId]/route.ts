@@ -57,7 +57,6 @@ export async function GET(req: NextRequest , {params}:{params:{issueRequestId:st
         const overdueStatus = ["Reopened" , "Open" , "Assigned"];
         const issueStatus = ["Assigned" , "Review"];
         const totalIssues = issues.length;
-        const totalAssignedIssues = issues.filter((issue)=>(issue.status === "Assigned")).length;
         const highProrityIssues = issues.filter((issue)=>(issue.priority === "High")).length;
         const completedIssues = issues.filter((issue)=>(issue.status === "Closed")).length;
         const onWorkingIssues = issues.filter((issue)=>(issueStatus.includes(issue.status))).length;
@@ -66,12 +65,12 @@ export async function GET(req: NextRequest , {params}:{params:{issueRequestId:st
             overdueStatus.includes(issue.status) && 
             new Date() > new Date(issue.duedate))).length;
         const userSummary = {
-            totalAssignedIssues,
             onWorkingIssues,
             completedIssues,
             completionRate,
             overdueIssues,
-            highProrityIssues
+            highProrityIssues,
+            totalIssues
         }
         const issueData = {
             issueName,
