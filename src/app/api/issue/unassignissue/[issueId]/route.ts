@@ -25,7 +25,16 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}
         if("status" in authorizedUser){
             return authorizedUser;
         }
-        const unAssignedIssue = await Issue.findByIdAndUpdate(issueId , {status:"Open" , assignedTo:null , assignedBy:null} , {new:true});
+        if(!issue.assignedTo){
+            return NextResponse.json({
+                success:false,
+                status:404,
+                message:"Issue is already Assigned!"
+            } , {status:400})
+        }
+        const unAssignedIssue = await Issue.findByIdAndUpdate(issueId , 
+            {status:"Open" , assignedTo:null , assignedBy:null , assignedAt:null} , 
+            {new:true});
         if(!unAssignedIssue){
             return NextResponse.json({
                 success:false,

@@ -34,7 +34,7 @@ export async function GET(req: NextRequest , {params}:{params:{issueRequestId:st
         if("status" in authorizedUser){
             return authorizedUser;
         }
-        const {duedate , priority , description , name:issueName} = issue;
+        const {duedate , priority , description , name:issueName  , assignedTo} = issue;
         const issues = await Issue.find({assignedTo:requestedBy}).populate("assignedTo" , "name email");
         if(issues.length === 0){
             return NextResponse.json({
@@ -53,7 +53,7 @@ export async function GET(req: NextRequest , {params}:{params:{issueRequestId:st
                 },
             } , {status:200})
         }
-        const {name , email} = issues[0].assignedTo as unknown as { name: string; email: string };;
+        const {name , email } = issues[0].assignedTo as unknown as { name: string; email: string };
         const overdueStatus = ["Reopened" , "Open" , "Assigned"];
         const issueStatus = ["Assigned" , "Review"];
         const totalIssues = issues.length;
@@ -73,12 +73,15 @@ export async function GET(req: NextRequest , {params}:{params:{issueRequestId:st
             totalIssues
         }
         const issueData = {
+            issueId,
             issueName,
             priority,
             duedate,
-            description
+            description,
+            assignedTo
         }
         const userData = {
+            requestedBy,
             name,
             email
         }

@@ -30,12 +30,19 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}
                 success:false,
                 status:404,
                 message:"Issue is not found!"
-            } , {status:400})
+            } , {status:404})
         }
         const {projectId} = issue;
         const authorizedUser = await authorizeRole(["TeamLead"])(projectId.toString());
         if("status" in authorizedUser){
             return authorizedUser;
+        }
+        if(issue.assignedTo){
+            return NextResponse.json({
+                success:false,
+                status:400,
+                message:"Issue is already assigned!"
+            } , {status:400})
         }
         const assignedBy = authorizedUser.user._id;
         const isValidUserObjectId = mongoose.isValidObjectId(assignedBy);
