@@ -3,7 +3,9 @@ import mongoose, { Document, Schema } from "mongoose";
 interface IssueRequestModel extends Document{
     issueId: mongoose.Types.ObjectId,
     requestedBy: mongoose.Types.ObjectId,
+    actionTakenBy: mongoose.Types.ObjectId,
     status:string,
+    actionTakenAt:Date,
 }
 
 const IssueRequestSchema:Schema<IssueRequestModel> = new Schema({
@@ -16,6 +18,13 @@ const IssueRequestSchema:Schema<IssueRequestModel> = new Schema({
         type:Schema.Types.ObjectId,
         ref:"User",
         required:[true , "UserId is required! "],
+    },
+    actionTakenBy:{
+        type:Schema.Types.ObjectId,
+        ref:"User",
+    },
+    actionTakenAt:{
+        type:Date,
     },
     status:{
         type:String,
