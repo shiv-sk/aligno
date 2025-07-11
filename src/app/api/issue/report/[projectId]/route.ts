@@ -28,7 +28,7 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
                 success:false,
                 status:404,
                 message:"Issues is not found!"
-            } , {status:400})
+            } , {status:404})
         }
         const overdueStatus = ["Reopened" , "Open" , "Assigned"];
         const issueStatus = ["Assigned" , "Review"];
