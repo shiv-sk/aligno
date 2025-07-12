@@ -22,9 +22,11 @@ const IssueRequestSchema:Schema<IssueRequestModel> = new Schema({
     actionTakenBy:{
         type:Schema.Types.ObjectId,
         ref:"User",
+        default:null,
     },
     actionTakenAt:{
         type:Date,
+        default:null,
     },
     status:{
         type:String,
