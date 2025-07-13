@@ -1,0 +1,41 @@
+import mongoose, { Document, Schema } from "mongoose";
+
+interface IssueReviewModel extends Document{
+    issueId: mongoose.Types.ObjectId,
+    requestedBy: mongoose.Types.ObjectId,
+    reviewedBy: mongoose.Types.ObjectId,
+    status:string,
+    reviewedAt:Date,
+}
+
+const IssueReviewSchema:Schema<IssueReviewModel> = new Schema({
+    issueId:{
+        type:Schema.Types.ObjectId,
+        ref:"Issue",
+        required:[true , "ProjectId is required! "],
+    },
+    requestedBy:{
+        type:Schema.Types.ObjectId,
+        ref:"User",
+        required:[true , "UserId is required! "],
+    },
+    reviewedBy:{
+        type:Schema.Types.ObjectId,
+        ref:"User",
+        default:null,
+    },
+    reviewedAt:{
+        type:Date,
+        default:null,
+    },
+    status:{
+        type:String,
+        enum:["Pending" , "Approved" , "Rejected"],
+        default:"Pending"
+    },
+} , {timestamps:true});
+
+const IssueReview = (mongoose.models.IssueReviewt as mongoose.Model<IssueReviewModel>) 
+|| mongoose.model<IssueReviewModel>("IssueRequest" , IssueReviewSchema);
+
+export default IssueReview;
