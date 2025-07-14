@@ -50,7 +50,8 @@ export async function GET(req: NextRequest , {params}:{params:{issueId:string}})
             [
                 {path:"assignedBy" , select:"name email"} , 
                 {path:"createdBy" , select:"name email"} ,
-                {path:"assignedTo" , select:"name email"}
+                {path:"assignedTo" , select:"name email"} ,
+                {path:"projectId" , select:"name"} ,
             ]);
         if(!issue){
             return NextResponse.json({

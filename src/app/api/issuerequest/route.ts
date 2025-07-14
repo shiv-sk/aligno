@@ -38,7 +38,7 @@ export async function POST(req: NextRequest){
             return NextResponse.json({
                 success:false,
                 status:400,
-                message:"Issue is already requested! "
+                message:"You are already requested! "
             } , {status:400})
         }
         const newIssueRequest = await IssueRequest.create({

@@ -57,7 +57,7 @@ const AuthProvider = ({ children }: { children: ReactNode })=>{
                 const response = await getAndDeleteReq(`/api/user/me` , "GET");
                 if(response.success){
                     console.log(response);
-                    setUser(response.user);
+                    setUser(response?.user);
                 }
                 console.log("user from current user function! " , user);
                 return { success: true, data: response?.data }; 

@@ -32,7 +32,7 @@ export default function EmployeeDashboard({ projectId }: { projectId: string }){
                         <Link href={`/availabletasks/${projectId}`}>
                             <li><button className="btn w-full btn-neutral">Available Tasks</button></li>
                         </Link>
-                        <Link href={`#`}>
+                        <Link href={`/#`}>
                             <li><button className="btn w-full btn-neutral">Insigths</button></li>
                         </Link>
                         </ul>
@@ -52,12 +52,12 @@ export default function EmployeeDashboard({ projectId }: { projectId: string }){
                             </Link>
                         </li>
                         <li>
-                            <Link href={`#`}>
+                            <Link href={`/#`}>
                                 <button className="btn btn-neutral shadow-xl">Insights</button>
                             </Link>
                         </li>
                         <li>
-                            <Link href={`#`}>
+                            <Link href={`/#`}>
                                 <button className="btn btn-neutral shadow-xl">Overview</button>
                             </Link>
                         </li>

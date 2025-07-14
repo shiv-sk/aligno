@@ -18,7 +18,6 @@ export default function IssueDetail(){
 
     useEffect(()=>{
         const getIssue = async()=>{
-            let projectId = "";
             if(!issueId || !user || !user._id){
                 return;
             }
@@ -27,17 +26,11 @@ export default function IssueDetail(){
                 const response = await getAndDeleteReq(`/api/issue/${issueId}` , "GET");
                 if(response.success){
                     setIssue(response.issue);
-                    projectId = response.issue.projectId
-                }
-                if(user && user?._id){
-                    const response = await getAndDeleteReq(`/api/projectmember/role?projectId=${projectId}&userId=${user._id}` , "GET");
-                    if(response.success){
-                        setRole(response.role || "");
+                    const projectId = response.issue.projectId._id;
+                    const roleResponse = await getAndDeleteReq(`/api/projectmember/role?projectId=${projectId}&userId=${user._id}` , "GET");
+                    if(roleResponse.success){
+                        setRole(roleResponse.role || "");
                     }
-                }
-                else{
-                    console.log("user is from contextApi: " , user);
-                    console.log("userID is from contextApi: " , user?._id);
                 }
             } catch (error: any) {
                 const errorMessage = error.response?.data?.message || "Server Error!.";
@@ -47,7 +40,7 @@ export default function IssueDetail(){
             }
         }
         getIssue();
-    } , [issueId]);
+    } , [issueId , user]);
     return(
         <div className="bg-base-300 min-h-screen py-6">
             <h1 className="text-center font-bold py-2 px-3 text-2xl">Task-Detail</h1>
