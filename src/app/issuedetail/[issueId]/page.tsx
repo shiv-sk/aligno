@@ -1,11 +1,76 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
+import { getAndDeleteReq } from "@/apiCalls/apiCalls";
 import Issuedetail from "@/components/issuedetail"
+import { useAuth } from "@/context/authcontext";
+import { Issue } from "@/types/issue";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react"
+import { toast } from "react-toastify";
 export default function IssueDetail(){
+
+    const [isLoading , setIsLoading] = useState(false);
+    const [role , setRole] = useState("");
+    const [issue , setIssue] = useState<Issue | null>(null);
+    const {issueId} = useParams();
+    const {user} = useAuth();
+
+    useEffect(()=>{
+        const getIssue = async()=>{
+            let projectId = "";
+            if(!issueId || !user || !user._id){
+                return;
+            }
+            setIsLoading(true);
+            try {
+                const response = await getAndDeleteReq(`/api/issue/${issueId}` , "GET");
+                if(response.success){
+                    setIssue(response.issue);
+                    projectId = response.issue.projectId
+                }
+                if(user && user?._id){
+                    const response = await getAndDeleteReq(`/api/projectmember/role?projectId=${projectId}&userId=${user._id}` , "GET");
+                    if(response.success){
+                        setRole(response.role || "");
+                    }
+                }
+                else{
+                    console.log("user is from contextApi: " , user);
+                    console.log("userID is from contextApi: " , user?._id);
+                }
+            } catch (error: any) {
+                const errorMessage = error.response?.data?.message || "Server Error!.";
+                toast.error(errorMessage);
+            }finally{
+                setIsLoading(false);
+            }
+        }
+        getIssue();
+    } , [issueId]);
     return(
         <div className="bg-base-300 min-h-screen py-6">
             <h1 className="text-center font-bold py-2 px-3 text-2xl">Task-Detail</h1>
-            <div className="flex justify-center">
-                <Issuedetail/>
-            </div>
+            {
+                isLoading && (
+                    <div className="flex justify-center items-center h-64">
+                        <span className="loading loading-spinner loading-xl"></span>
+                    </div>
+                )
+            }
+            {
+                issue ? (
+                    <div className="flex justify-center">
+                        <Issuedetail issue={issue} role={role}/>
+                    </div> 
+                ) : (
+                    <div className="flex justify-center items-center h-64">
+                        <p className="text-lg font-semibold">
+                            Sorry, we couldn&apos;t find this issue. It might have been deleted or moved!.
+                        </p>
+                    </div>
+                )
+            }
         </div>
     )
 }

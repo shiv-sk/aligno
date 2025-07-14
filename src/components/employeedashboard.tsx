@@ -5,6 +5,9 @@ import AssignedusersTable from "./assigneduserstable";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 export default function EmployeeDashboard({ projectId }: { projectId: string }){
+    if(!projectId){
+        return;
+    }
     return(
         <div className="min-h-screen">
             <div className="flex flex-col items-center pt-6 pb-16 gap-6">
@@ -23,8 +26,15 @@ export default function EmployeeDashboard({ projectId }: { projectId: string }){
                         <label htmlFor="menu-drawer" className="drawer-overlay"></label>
                         <ul className="menu p-4 w-64 min-h-full bg-base-100 text-base-content gap-2">
                         {/* Sidebar content here */}
-                        <Link href={`/allissues/1234`}><li><button className="btn w-full">All Tasks</button></li></Link>
-                        <li><button className="btn w-full btn-neutral">Available Tasks</button></li>
+                        <Link href={`/allissues/1234`}>
+                            <li><button className="btn w-full">All Tasks</button></li>
+                        </Link>
+                        <Link href={`/availabletasks/${projectId}`}>
+                            <li><button className="btn w-full btn-neutral">Available Tasks</button></li>
+                        </Link>
+                        <Link href={`#`}>
+                            <li><button className="btn w-full btn-neutral">Insigths</button></li>
+                        </Link>
                         </ul>
                     </div>
                 </div>
@@ -37,17 +47,17 @@ export default function EmployeeDashboard({ projectId }: { projectId: string }){
                             </Link>
                         </li>
                         <li>
-                            <Link href={`/availabletasks/1234`}>
+                            <Link href={`/availabletasks/${projectId}`}>
                                 <button className="btn btn-neutral shadow-xl">Available Tasks</button>
                             </Link>
                         </li>
                         <li>
-                            <Link href={`/mytasks/1234`}>
-                                <button className="btn btn-neutral shadow-xl">My Tasks</button>
+                            <Link href={`#`}>
+                                <button className="btn btn-neutral shadow-xl">Insights</button>
                             </Link>
                         </li>
                         <li>
-                            <Link href={`/availabletasks/1234`}>
+                            <Link href={`#`}>
                                 <button className="btn btn-neutral shadow-xl">Overview</button>
                             </Link>
                         </li>

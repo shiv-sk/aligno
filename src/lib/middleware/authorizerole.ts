@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from "next/server";
 import { getUserFromToken } from "../utils/getuser"
 import ProjectUser from "@/models/projectMember.model";
@@ -29,11 +30,11 @@ export function authorizeRole(allowedRoles: string[]){
                 } , {status:403})
             }
             return {user , userRole:assigneduser.role}
-        } catch (error) {
+        } catch (error: any) {
             return NextResponse.json({
                 success:false,
                 status:403,
-                message: error || "Forbidden: You do not have permission for this project."
+                message: error.message || "Forbidden: You do not have permission for this project."
             } , {status:403})
         }
     };

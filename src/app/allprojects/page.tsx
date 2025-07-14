@@ -66,7 +66,9 @@ export default function Home(){
                 <div className="flex flex-wrap gap-3 justify-center items-center">
                     {
                         isLoading ? (
-                            <p className="text-lg font-medium">Loading projects...</p>
+                            <div className="flex justify-center items-center h-64">
+                                <span className="loading loading-spinner loading-xl"></span>
+                            </div>
                         ) :
                         allProjects && allProjects.length > 0 ? allProjects.map((project)=>(
                             <div className="card bg-base-100 w-96 shadow-xl" key={project._id}>
@@ -81,7 +83,11 @@ export default function Home(){
                                 </div>
                             </div>
                         )) : (
-                            <p className="text-center text-gray-500 mt-4">Projects not found!</p>
+                            <div className="flex justify-center items-center h-64">
+                                <p className="text-lg font-semibold">
+                                    Sorry, we couldn&apos;t find the projects. It might have been deleted or moved!.
+                                </p>
+                            </div>
                         )
                     }
                 </div>

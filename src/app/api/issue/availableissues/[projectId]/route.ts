@@ -1,4 +1,5 @@
 import dbConnect from "@/lib/connection.db";
+import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -12,17 +13,15 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
                 message:"projectId is required!"
             } , {status:400})
         }
-        const issues = await Issue.find({projectId});
-        if(issues.length === 0){
-            return NextResponse.json({
-                status:200,
-                message:"issues are not found for this project! "
-            } , {status:200})
+        const authorizedUser = await authorizeRole(["Employee"])(projectId.toString());
+        if("status" in authorizedUser){
+            return authorizedUser;
         }
+        const issues = await Issue.find({projectId , status:{$in:["Open", "Reopened"]}});
         return NextResponse.json({
             success:true,
             status:200,
-            message:"issues are! ",
+            message:issues.length === 0 ? "No available issues for this project." : "Available issues are.",
             issues
         } , {status:200})
     } catch (err) {

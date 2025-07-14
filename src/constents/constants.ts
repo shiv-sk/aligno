@@ -9,8 +9,12 @@ const Constants = {
     Closed:"Closed",
     Pending:"Pending",
     Approved:"Approved",
-    Rejected:"Rejected"
+    Rejected:"Rejected",
+    Manager:"Manager",
+    TeamLead:"TeamLead",
+    Employee:"Employee",
 };
 export default Constants;
 //"Open" , "Assigned" , "Review" , "Reopened" , "Closed"
 //"Pending" , "Approved" , "Rejected"
+//"Manager" , "TeamLead" , "Employee"

@@ -1,4 +1,5 @@
 interface Issue{
+    status: string;
     issueName:string,
     description:string,
     priority:string,
