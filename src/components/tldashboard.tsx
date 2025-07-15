@@ -26,7 +26,10 @@ export default function TeamLeadDashboard({ projectId , projectName }: { project
                             <li><button className="btn w-full">All Projects</button></li>
                         </Link>
                         <Link href={`/allissues/${projectId}`}>
-                            <li><button className="btn w-full btn-neutral">All Issues</button></li>
+                            <li><button className="btn w-full btn-neutral">All Tasks</button></li>
+                        </Link>
+                        <Link href={`/allissuerequests`}>
+                            <li><button className="btn w-full btn-neutral">All Tasks</button></li>
                         </Link>
                         <Link href={`/overview/${projectId}`}>
                             <li className="btn w-full btn-neutral">Overview</li>
@@ -34,7 +37,7 @@ export default function TeamLeadDashboard({ projectId , projectName }: { project
                         </ul>
                     </div>
                 </div>
-                <ul className="hidden md:flex justify-around items-center w-full max-w-4xl bg-base-100 rounded-xl shadow-xl py-4 px-6">
+                <ul className="hidden md:flex justify-around items-center w-full max-w-4xl bg-base-100 rounded-xl shadow-xl py-6 px-6">
                     <div className="hidden md:flex gap-4">
                         <li>
                             <Link href={`/allissues/1234`}>
@@ -45,7 +48,12 @@ export default function TeamLeadDashboard({ projectId , projectName }: { project
                     <div className="hidden md:flex gap-4">
                         <li>
                             <Link href={`/allissues/${projectId}`}>
-                                <button className="btn btn-neutral shadow-xl">All Issues</button>
+                                <button className="btn btn-neutral shadow-xl">All Tasks</button>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={`/allissuerequests`}>
+                                <button className="btn btn-neutral shadow-xl">Requests</button>
                             </Link>
                         </li>
                         <li>

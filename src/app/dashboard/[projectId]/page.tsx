@@ -49,7 +49,7 @@ export default function Dashboard(){
                 ) :
                 role === "TeamLead" ? <TeamLeadDashboard projectId={projectId as string} projectName={projectName as string}/> :
                 role === "Manager" ? <ManagerDashboard projectId={projectId as string}/> :
-                role === "Employee" ? <EmployeeDashboard projectId={projectId as string}/> :
+                role === "Employee" ? <EmployeeDashboard projectId={projectId as string} projectName={projectName as string}/> :
                 <div className="flex justify-center items-center h-64">
                     <p className="text-lg font-semibold">
                         Sorry, we couldn&apos;t find this project. It might have been deleted or moved!.

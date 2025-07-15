@@ -30,6 +30,7 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
             setIsLoading(false);
         }
     }
+    console.log("issue from issuedetail Component! " , issue);
     return(
         <div className="bg-base-100 shadow-lg rounded-lg space-y-6 px-3 py-6 md:w-[720px] w-96">
             <TaskInfo issue={issue} />
@@ -51,7 +52,7 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
                         <button 
                         className="btn btn-primary" 
                         disabled={isLoading}
-                        title={!!issue?.assignedTo?._id ? "This task has already been claimed." : "Click to claim this task."}
+                        title="Click to send completion request for this task"
                         >{isLoading ? "Marking..." : "Mark As Done"}</button>
                     )
                 }

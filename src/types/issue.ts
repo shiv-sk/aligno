@@ -1,12 +1,12 @@
 interface Project{
     _id:string,
-    name:string
+    name?:string
 }
 
 interface User{
     _id:string,
-    name:string,
-    email:string
+    name?:string,
+    email?:string
 }
 
 export interface Issue{

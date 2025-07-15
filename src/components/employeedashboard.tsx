@@ -4,7 +4,7 @@ import Link from "next/link";
 import AssignedusersTable from "./assigneduserstable";
 import { GiHamburgerMenu } from "react-icons/gi";
 
-export default function EmployeeDashboard({ projectId }: { projectId: string }){
+export default function EmployeeDashboard({ projectId , projectName }: { projectId: string , projectName:string}){
     if(!projectId){
         return;
     }
@@ -38,12 +38,18 @@ export default function EmployeeDashboard({ projectId }: { projectId: string }){
                         </ul>
                     </div>
                 </div>
-                <ul className="hidden md:flex justify-between items-center w-full max-w-4xl bg-base-100 rounded-xl shadow-xl py-4 px-6">
-                    <li className="text-lg font-bold btn btn-info shadow-xl">Employee Dashboard</li>
+                <ul className="hidden md:flex justify-around items-center w-full max-w-4xl bg-base-100 rounded-xl shadow-xl py-6 px-6">
                     <div className="hidden md:flex gap-4">
                         <li>
                             <Link href={`/allissues/1234`}>
-                                <button className="btn text-lg shadow-xl">All Tasks</button>
+                                <button className="btn text-lg shadow-xl">All Projects</button>
+                            </Link>
+                        </li>
+                    </div>
+                    <div className="hidden md:flex gap-4">
+                        <li>
+                            <Link href={`/allissues/1234`}>
+                                <button className="btn btn-neutral shadow-xl">All Tasks</button>
                             </Link>
                         </li>
                         <li>
@@ -63,6 +69,12 @@ export default function EmployeeDashboard({ projectId }: { projectId: string }){
                         </li>
                     </div>
                 </ul>
+                <div className="w-full max-w-4xl bg-base-300 shadow-md rounded-xl py-4 px-6 text-center">
+                    <h2 className="text-2xl font-semibold text-gray-700">{projectName}</h2>
+                    <p className="text-sm text-gray-500 italic">
+                        Assigned as <span className="font-medium badge badge-info">Employee</span>
+                    </p>
+                </div>
                 <div className="">
                     <AssignedusersTable projectId={projectId}/>
                 </div>

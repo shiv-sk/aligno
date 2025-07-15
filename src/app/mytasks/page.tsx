@@ -39,7 +39,7 @@ export default function MyTasks(){
 
     return(
         <div className="bg-base-200 min-h-screen">
-            <div className="flex flex-col pt-8 items-center">
+            <div className="flex flex-col py-6 items-center">
                 <div className="w-full max-w-xl md:max-w-4xl mb-6 flex flex-row justify-between gap-3">
                     <input
                     type="text" 
@@ -76,7 +76,7 @@ export default function MyTasks(){
                                     priorityBadgeColor = "badge badge-secondary text-center font-semibold"
                                     break;
                                 case Constants.Low:
-                                    priorityBadgeColor = "badge badge-primary text-center font-semibold"
+                                    priorityBadgeColor = "badge bg-sky-900 text-center text-white font-semibold"
                                     break;
                                 default:
                                     priorityBadgeColor = "badge badge-info text-center font-semibold"

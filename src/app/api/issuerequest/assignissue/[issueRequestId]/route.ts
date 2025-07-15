@@ -1,29 +1,29 @@
+import Constants from "@/constents/constants";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
-import { validateInput } from "@/lib/validate";
 import Issue from "@/models/issue.model";
-import assignIssueSchema from "@/schemas/assignIssue.schema";
+import IssueRequest from "@/models/issueRequest.model";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}}){
+export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:string}}){
     try {
-        const issueId = params.issueId;
-        if(!issueId){
+        const issueRequestId = params.issueRequestId;
+        if(!issueRequestId){
             return NextResponse.json({
                 success:false,
                 status:400,
-                message:"issueId is required!"
+                message:"issueRequestId is required!"
             } , {status:400})
         }
-        const validation = await validateInput(req , assignIssueSchema);
-        if(!validation.success){
+        const issueRequest = await IssueRequest.findById(issueRequestId);
+        if(!issueRequest){
             return NextResponse.json({
                 success:false,
-                status:400,
-                message:"Invalid Input",
-                errors:validation.errors
-            } , {status:400})
+                status:404,
+                message:"IssueRequest is not found!"
+            } , {status:404})
         }
+        const {issueId} = issueRequest;
         const issue = await Issue.findById(issueId);
         if(!issue){
             return NextResponse.json({
@@ -50,7 +50,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}
             return NextResponse.json({
                 success:false,
                 status:400,
-                message:"projectId is missing or not valid!"
+                message:"userId missing or not correct"
             } , {status:400})
         }
         const date = new Date();
@@ -61,22 +61,33 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}
                 message:"task is already passed duedate!"
             } , {status:400})
         }
-        const {requestedBy} = validation.data;
+        const {requestedBy} = issueRequest;
+        const actionTakenBy = authorizedUser.user._id;
+        const updatedIssueRequest = await IssueRequest.findByIdAndUpdate(issueRequestId , 
+            {status:Constants.Approved , actionTakenBy , actionTakenAt:new Date()} , 
+            {new:true});
+        if(!updatedIssueRequest){
+            return NextResponse.json({
+                success:false,
+                status:500,
+                message:"IssueRequest is not found or not updated!"
+            } , {status:500})
+        }
         const assignedIssue = await Issue.findByIdAndUpdate(issueId , 
             {status:"Assigned" , assignedTo:requestedBy , assignedBy , assignedAt:new Date()} , 
             {new:true});
         if(!assignedIssue){
             return NextResponse.json({
                 success:false,
-                status:404,
+                status:500,
                 message:"Issue is not found or not Assigned!"
-            } , {status:400})
+            } , {status:500})
         }
         return NextResponse.json({
             success:true,
             status:200,
-            message:"assigned Issue is! ",
-            assignedIssue
+            message:"issue assigned successfully! ",
+            data:{assignedIssue , updatedIssueRequest}
         } , {status:200})
     } catch (err) {
         console.error("assign Issue error!" , err);
