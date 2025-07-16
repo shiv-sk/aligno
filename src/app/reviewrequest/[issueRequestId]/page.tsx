@@ -14,6 +14,7 @@ import UserSummaryComponent from "@/components/usersummary";
 
 export default function IssueRequestReview(){
     const [isLoading , setIsLoading] = useState(false);
+    const [isRejectLoading , setIsRejectLoading] = useState(false);
     const [isAssignLoading , setIsAssignLoading] = useState(false);
     const [userData , setUserData] = useState<UserData | null>(null);
     const [userSummary , setUserSummary] = useState<UserSummary | null>(null);
@@ -47,16 +48,16 @@ export default function IssueRequestReview(){
 
     const handleAssignIssue = async(e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
-        if(!userData?.requestedBy || !issueData?.issueId){
+        if(!issueRequestId){
             return;
         }
         setIsAssignLoading(true);
         try {
-            const response = await postAndPatchReq(`/api/issue/assignissue/${issueData.issueId}` , "PATCH" , {requestedBy:userData.requestedBy});
+            const response = await postAndPatchReq(`/api/issuerequest/assignissue/${issueRequestId}` , "PATCH" , {});
             // console.log("response from assign issue! " , response);
             if(response.success){
                 toast.success("Task assigned successfully.");
-                router.push(`/reviewrequests/${issueData.issueId}`);
+                router.push(`/allissuerequests`);
             }
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || "Server Error!.";
@@ -66,24 +67,24 @@ export default function IssueRequestReview(){
         }
     }
 
-    const handleUnAssignIssue = async(e: React.MouseEvent<HTMLButtonElement>)=>{
+    const handleRejectIssueRequest = async(e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
-        if(!userData?.requestedBy || !issueData?.issueId){
+        if(!issueRequestId){
             return;
         }
-        setIsAssignLoading(true);
+        setIsRejectLoading(true);
         try {
-            const response = await postAndPatchReq(`/api/issue/assignissue/${issueData.issueId}` , "PATCH" , {});
+            const response = await postAndPatchReq(`/api/issuerequest/rejectrequest/${issueRequestId}` , "PATCH" , {});
             // console.log("response from assign issue! " , response);
             if(response.success){
-                toast.success("Task unassigned.");
-                router.push(`/reviewrequests/${issueData.issueId}`);
+                toast.success("TaskRequest Rejected Successfully.");
+                router.push(`/allissuerequests`);
             }
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || "Server Error!.";
             toast.error(errorMessage);
         }finally{
-            setIsAssignLoading(false);
+            setIsRejectLoading(false);
         }
     }
     
@@ -98,31 +99,27 @@ export default function IssueRequestReview(){
                         </div>
                     ) :
                     issueData && userData && userSummary ? (
-                        <div className="card bg-base-100 md:w-[600px] w-96 shadow-sm">
+                        <div className="card bg-base-100 md:w-[700px] w-96 shadow-sm px-3">
                             <div className="card-body">
                                 <IssueDataComponent issueData={issueData}/>
-                                <div className="flex flex-col md:flex-row gap-4 justify-evenly py-6 space-y-1 px-3">
-                                    <UserDataComponent userData={userData}/>
-                                    <UserSummaryComponent userSummary={userSummary}/>
-                                </div>
+                                <UserDataComponent userData={userData}/>
+                                <UserSummaryComponent userSummary={userSummary}/>
                             </div>
-                            <div className="flex justify-center items-center gap-4 py-6">
+                            <div className="flex justify-end items-center gap-3 py-6">
                                 {
-                                    issueData.assignedTo && issueData.assignedTo === userData.requestedBy ? (
-                                        <>
-                                        <button 
-                                        className="btn btn-primary text-lg"
-                                        disabled={isAssignLoading} 
-                                        onClick={handleUnAssignIssue}>{isAssignLoading ? "UnAssigning..." : "UnAssign"}</button>
-                                        </>
-                                    ) : (
+                                    !issueData.assignedTo && (
                                         <>
                                             <button 
                                             className="btn btn-primary text-lg"
                                             disabled={isAssignLoading} 
-                                            onClick={handleAssignIssue}>{isAssignLoading ? "Assigning..." : "Assign"}</button>
+                                            onClick={handleAssignIssue}
+                                            title="Assign this task to the requested user"
+                                            >{isAssignLoading ? "Approving..." : "Approve"}</button>
                                             <button 
-                                            className="btn btn-secondary text-lg">Reject</button>
+                                            className="btn btn-secondary text-lg"
+                                            onClick={handleRejectIssueRequest}
+                                            title="Reject the Taskrequest"
+                                            >{isRejectLoading ? "Rejecting..." : "Reject"}</button>
                                         </>
                                     )
                                 }

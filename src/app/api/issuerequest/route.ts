@@ -1,3 +1,4 @@
+import Constants from "@/constents/constants";
 import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import { validateInput } from "@/lib/validate";
@@ -72,7 +73,7 @@ export async function POST(req: NextRequest){
 export async function GET(){
     await dbConnect();
     try {
-        const issueRequests = await IssueRequest.find().populate([
+        const issueRequests = await IssueRequest.find({status:Constants.Pending}).populate([
             {path:"requestedBy" , select:"name email"}, 
             {path:"issueId" , select:"name projectId description status priority"}
         ]).lean<issueRequest[]>();

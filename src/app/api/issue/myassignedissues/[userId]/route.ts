@@ -12,11 +12,11 @@ export async function GET(req: NextRequest , {params}:{params:{userId:string}}){
                 message:"UserId is required!"
             } , {status:400})
         }
-        const issues = await Issue.find({assignedTo:userId});
+        const issues = await Issue.find({assignedBy:userId});
         return NextResponse.json({
             success:true,
             status:200,
-            message:issues.length === 0 ? "Issues not assigned to user! " : "Issues are! ",
+            message:issues.length === 0 ? "Tasks not assigned by you! " : "Issues are! ",
             issues
         } , {status:200})
     } catch (err) {

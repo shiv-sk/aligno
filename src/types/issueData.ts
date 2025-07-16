@@ -5,7 +5,8 @@ interface Issue{
     priority:string,
     duedate:string,
     issueId:string,
-    assignedTo:string
+    assignedTo:string,
+    assignedBy:string
 }
 
 export default Issue;

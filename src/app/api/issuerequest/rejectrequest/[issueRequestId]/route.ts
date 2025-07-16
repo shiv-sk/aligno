@@ -36,13 +36,6 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
         if("status" in authorizedUser){
             return authorizedUser;
         }
-        if(issue.assignedTo){
-            return NextResponse.json({
-                success:false,
-                status:400,
-                message:"Task is already assigned!"
-            } , {status:400})
-        }
         const actionTakenBy = authorizedUser.user._id;
         if(!actionTakenBy){
             return NextResponse.json({
@@ -51,17 +44,8 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
                 message:"userId missing or not correct"
             } , {status:400})
         }
-        const date = new Date();
-        if(date > issue.duedate){
-            return NextResponse.json({
-                success:false,
-                status:400,
-                message:"Task is already passed duedate!"
-            } , {status:400})
-        }
-        const {requestedBy} = issueRequest;
         const updatedIssueRequest = await IssueRequest.findByIdAndUpdate(issueRequestId , 
-            {status:Constants.Approved , actionTakenBy , actionTakenAt:new Date()} , 
+            {status:Constants.Rejected , actionTakenAt:new Date() , actionTakenBy} , 
             {new:true});
         if(!updatedIssueRequest){
             return NextResponse.json({
@@ -70,35 +54,18 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
                 message:"IssueRequest is not found or not updated!"
             } , {status:500})
         }
-        if(!requestedBy){
-            return NextResponse.json({
-                success:false,
-                status:400,
-                message: "Invalid requester for the issue."
-            } , {status:400})
-        }
-        const assignedIssue = await Issue.findByIdAndUpdate(issueId , 
-            {status:Constants.Assigned , assignedTo:requestedBy , assignedBy:actionTakenBy , assignedAt:new Date()} , 
-            {new:true});
-        if(!assignedIssue){
-            return NextResponse.json({
-                success:false,
-                status:500,
-                message:"Task is not found or not Assigned!"
-            } , {status:500})
-        }
         return NextResponse.json({
             success:true,
             status:200,
-            message:"Task successfully assigned to user from approved request.",
-            data:{assignedIssue , updatedIssueRequest}
+            message:"Task request has been rejected successfully.",
+            updatedIssueRequest
         } , {status:200})
     } catch (err) {
-        console.error("assign Issue error!" , err);
+        console.error("issueRequest reject error!" , err);
         return NextResponse.json({
             success:false,
             status:500,
-            message:"issue assign error! "
+            message:"issueRequest reject error! "
         } , {status:500})
     }
 }

@@ -46,7 +46,7 @@ export default function IssueData({issueData} :{issueData:issueData}){
         }
     }
     return(
-        <div className="px-3 space-y-1 bg-base-100 shadow-md py-6 rounded-xl">
+        <div className="px-3 space-y-1 bg-base-300 shadow-md py-6 rounded-xl">
             <h1 className="text-center font-bold text-lg border-b-2">TaskInfo</h1>
             <h2 className="text-lg">Task: 
                 <span className="text-base">{issueData.issueName || "TaskName"}</span>
@@ -54,8 +54,8 @@ export default function IssueData({issueData} :{issueData:issueData}){
             <p className="text-lg">Description: 
                 <span className="text-base"> {issueData.description || "Task Description"}</span>
             </p>
-            <p className={`text-lg ${priorityBadgeColor}`}>Priority: 
-                <span className={`text-base`}>{issueData.priority || "Task Priority"}</span>
+            <p className={`text-lg`}>Priority: 
+                <span className={`text-base ${priorityBadgeColor}`}>{issueData.priority || "Task Priority"}</span>
             </p>
             <div className="text-lg">Duedate: 
                 <span className="text-base">{issueData.duedate?.split("T")[0] || "Task Duedate"}</span>

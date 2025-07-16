@@ -57,7 +57,7 @@ export default function AllIssueRequests(){
                         </select>
                     </div>
                 </div>
-                <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">All Tasks</h1>
+                <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">All Requested Tasks</h1>
                 <div className="flex flex-wrap items-center justify-center gap-4 pt-2.5">
                     {
                         isLoading ? (
@@ -69,11 +69,11 @@ export default function AllIssueRequests(){
                             <div className="card bg-base-100 w-96 shadow-xl" key={issue._id}>
                                 <div className="card-body">
                                     <h2 className="card-title">{issue.issueId.name || "TaskName"}</h2>
-                                    <p>{"Task Description"}</p>
+                                    <p>{issue.issueId.description || "Task Description"}</p>
                                     <p>status: {issue.issueId.status || "Task Status"}</p>
                                     <p>Priority: {issue.issueId.priority || "Task Priority"}</p>
                                     <div className="card-actions justify-end">
-                                    <Link href={`/aboutissue/${issue.issueId._id}`}>
+                                    <Link href={`/issuedetail/${issue.issueId._id}`}>
                                         <button className="btn btn-primary">View Details</button>
                                     </Link>
                                     <Link href={`/reviewrequest/${issue._id}`}>

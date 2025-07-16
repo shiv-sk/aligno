@@ -15,6 +15,7 @@ export default function MyTasks(){
     const [isLoading , setIsLoading] = useState(false);
     const [issues , setAllIssues] = useState<Issue[]>([]);
 
+    console.log("the user from context! " , user);
     useEffect(()=>{
         const getAllAssignedIssues = async()=>{
             if(!user || !user._id){
@@ -22,7 +23,7 @@ export default function MyTasks(){
             }
             setIsLoading(true);
             try {
-                const response = await getAndDeleteReq(`/api/issue/myissues/${user._id}` , "GET");
+                const response = await getAndDeleteReq(`/api/issue/myassignedissues/${user._id}` , "GET");
                 if(response.success){
                     // console.log("the assigned issues are! " , response);
                     setAllIssues(response?.issues);
@@ -61,7 +62,7 @@ export default function MyTasks(){
                         </select>
                     </div>
                 </div>
-                <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">My Tasks</h1>
+                <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">Assigned Tasks</h1>
                 <div className="flex flex-wrap items-center justify-center gap-4 pt-2.5">
                     {
                         isLoading ? (

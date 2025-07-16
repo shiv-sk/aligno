@@ -56,6 +56,24 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
                         >{isLoading ? "Marking..." : "Mark As Done"}</button>
                     )
                 }
+                {
+                    role === Constants.TeamLead &&(
+                        <button 
+                        className="btn btn-primary" 
+                        disabled={true}
+                        title="Task is assigned"
+                        >{"Assigned"}</button>
+                    )
+                }
+                {
+                    role === Constants.TeamLead && issue?.assignedBy._id === user?._id &&(
+                        <button 
+                        className="btn btn-primary" 
+                        disabled={isLoading}
+                        title="Click to unassign this task"
+                        >{isLoading ? "UnAssigning..." : "UnAssign"}</button>
+                    )
+                }
             </div>
         </div>
     )

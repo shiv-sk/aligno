@@ -9,52 +9,62 @@ export default function UserSummary({userSummary} : {userSummary: userSummary}){
         if(userSummary.highProrityIssues >= 3 && completionRate < 40){
             return(
                 <div className="tooltip" data-tip="User is currently overloaded.">
-                    <span className="badge badge-error">Summary</span>
+                    <span className="badge badge-error">Hover me</span>
                 </div>
             )
         }
         else if(userSummary.highProrityIssues >= 1 && completionRate <= 50){
             return(
                 <div className="tooltip" data-tip="User must focus on current work.">
-                    <span className="badge badge-accent">Summary</span>
+                    <span className="badge badge-accent">Hover me</span>
                 </div>
             )
         }
         else{
            return(
                 <div className="tooltip" data-tip="User can handle">
-                    <span className="badge badge-info">Summary</span>
+                    <span className="badge badge-info">Hover me</span>
                 </div>
             ) 
         }
     }
     return(
-        <div className="space-y-1 py-6 px-3 md:h-[250px] overflow-y-auto overflow-x-auto bg-base-100 shadow-md rounded-xl md:w-1/2 space-y-1.5">
+        <div className="space-y-1 py-6 px-3 overflow-y-auto overflow-x-auto bg-base-100 shadow-md rounded-xl w-full space-y-1.5">
             <h1 className="text-center font-bold text-lg">User Progress and WorkLoad</h1>
-            <p className="text-lg badge badge-accent">Assigned Tasks: 
-                <span className="text-base">{userSummary.totalIssues ?? "AssignedTask"}</span>
-            </p>
-            <p className="text-lg badge badge-info">on Working Tasks: 
-                <span className="text-base">{userSummary.onWorkingIssues ?? "OnWorkingTask"}</span>
-            </p>
-            <p className="text-lg badge badge-success">Completed Tasks: 
-                <span className="text-base">{userSummary.completedIssues ?? "CompletedTask"}</span>
-            </p>
-            <p className="text-lg badge badge-warning">Overdue Tasks: 
-                <span className="text-base">{userSummary.overdueIssues ?? "OverdueTasks"}</span>
-            </p>
-            <div className="text-lg badge badge-primary">High Priority Tasks: 
-                <span className="text-basel">{userSummary.highProrityIssues ?? "HighPriorityTasks"}</span>
+            <div className="space-y-1 py-3 px-3 flex flex-wrap justify-center bg-base-100 w-full space-y-1.5 gap-3">
+                <div className="flex flex-col justify-center items-center shadow-lg py-6 px-3 rounded-lg h-[100px] w-[180px]">
+                    <p className="text-lg">Assigned Tasks</p>
+                    <p className="text-base text-lg badge badge-accent">{userSummary.totalIssues ?? "AssignedTask"}</p>
+                </div>
+                <div className="flex flex-col justify-center items-center shadow-lg py-6 px-3 rounded-lg h-[100px] w-[180px]">
+                    <p className="text-lg">on Working Tasks</p>
+                    <p className="text-base text-lg badge badge-info">{userSummary.onWorkingIssues ?? "OnWorkingTask"}</p>
+                </div>
+                <div className="flex flex-col justify-center items-center shadow-lg py-6 px-3 rounded-lg h-[100px] w-[180px]">
+                    <p className="text-lg">Completed Tasks</p>
+                    <p className="text-base text-lg badge badge-success">{userSummary.completedIssues ?? "CompletedTask"}</p>
+                </div>
+                <div className="flex flex-col justify-center items-center shadow-lg py-6 px-3 rounded-lg h-[100px] w-[180px]">
+                    <p className="text-lg">Overdue Tasks</p>
+                    <p className="text-base text-lg badge badge-warning">{userSummary.overdueIssues ?? "OverdueTasks"}</p>
+                </div>
+                <div className="flex flex-col justify-center items-center shadow-lg py-6 px-3 rounded-lg h-[100px] w-[180px]">
+                    <p className="text-lg">High Priority Tasks</p> 
+                    <p className="text-base text-lg badge badge-warning">{userSummary.highProrityIssues ?? "HighPriorityTasks"}</p>
+                </div>
+                <div className="flex flex-col justify-center items-center shadow-lg py-6 px-3 rounded-lg h-[100px] w-[180px]">
+                    <p className="text-lg">Completion Rate</p> 
+                    <p className="text-base text-lg badge badge-success">{userSummary.completionRate ?? "HighPriorityTasks"}%</p>
+                </div>
             </div>
-            <p className="text-lg">Completion Rate:
-                <span className="text-base">{userSummary.completionRate ?? "HighPriorityTasks"}%</span> 
+            <div className="px-3">
                 <progress className="progress progress-success w-full" 
                     value={userSummary.completedIssues} 
                     max={userSummary.totalIssues}>
                 </progress>
                 {`${userSummary.completedIssues} of ${userSummary.totalIssues} tasks completed`}
-            </p>
-            <span className="px-18 text-base text-center">{setOverdueStatement()}</span>
+                <p className="text-base text-lg">Summary: {setOverdueStatement()}</p>
+            </div>
         </div>
     )
 }

@@ -43,16 +43,13 @@ export default function IssueDetail(){
     } , [issueId , user]);
     return(
         <div className="bg-base-300 min-h-screen py-6">
-            <h1 className="text-center font-bold py-2 px-3 text-2xl">Task-Detail</h1>
+            <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">Task-Detail</h1>
             {
-                isLoading && (
+                isLoading ? (
                     <div className="flex justify-center items-center h-64">
                         <span className="loading loading-spinner loading-xl"></span>
                     </div>
-                )
-            }
-            {
-                issue ? (
+                ) : issue ? (
                     <div className="flex justify-center">
                         <Issuedetail issue={issue} role={role}/>
                     </div> 
