@@ -6,6 +6,10 @@ interface IssueReviewModel extends Document{
     reviewedBy: mongoose.Types.ObjectId,
     status:string,
     reviewedAt:Date,
+    attachment:string,
+    comment:string,
+    createdAt:Date,
+    updatedAt:Date,
 }
 
 const IssueReviewSchema:Schema<IssueReviewModel> = new Schema({
@@ -27,6 +31,16 @@ const IssueReviewSchema:Schema<IssueReviewModel> = new Schema({
     reviewedAt:{
         type:Date,
         default:null,
+    },
+    comment:{
+        type:String,
+        required:true,
+        trim:true,
+        lowercase:true
+    },
+    attachment:{
+        type:String,
+        default:null
     },
     status:{
         type:String,

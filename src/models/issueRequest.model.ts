@@ -6,6 +6,8 @@ interface IssueRequestModel extends Document{
     actionTakenBy: mongoose.Types.ObjectId,
     status:string,
     actionTakenAt:Date,
+    createdAt:Date,
+    updatedAt:Date,
 }
 
 const IssueRequestSchema:Schema<IssueRequestModel> = new Schema({

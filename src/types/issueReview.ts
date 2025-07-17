@@ -1,11 +1,11 @@
-interface IssueRequest{
+interface IssueReview{
     _id:string,
     requestedBy:{
         _id:string,
         name:string,
         email:string
     },
-    actionTakenBy:{
+    reviewedBy:{
         _id:string,
         name:string,
     },
@@ -18,7 +18,9 @@ interface IssueRequest{
         priority:string,
     },
     createdAt:Date,
-    actionTakenAt:Date,
-    status:string
+    reviewedAt:Date,
+    status:string,
+    comment:string , 
+    attachment:string
 }
-export default IssueRequest;
+export default IssueReview;

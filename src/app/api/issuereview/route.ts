@@ -1,26 +1,15 @@
 import Constants from "@/constents/constants";
 import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
-import { validateInput } from "@/lib/validate";
 import Issue from "@/models/issue.model";
-import IssueRequest from "@/models/issueRequest.model";
-import requestIssueSchema from "@/schemas/issueRequest.schema";
+import IssueReview from "@/models/issueReview.model";
 import issueRequest from "@/types/issuerequest";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest){
     await dbConnect();
     try {
-        const validation = await validateInput(req , requestIssueSchema);
-        if(!validation.success){
-            return NextResponse.json({
-                success:false,
-                status:400,
-                message:"Invalid Input",
-                errors:validation.errors
-            } , {status:400})
-        }
-        const { issueId } = validation.data;
+        const {issueId , requestedBy , comment} = await req.json();
         const issue = await Issue.findById(issueId);
         if(!issue){
             return NextResponse.json({
@@ -34,38 +23,46 @@ export async function POST(req: NextRequest){
         if("status" in authorizedUser){
             return authorizedUser;
         }
-        const requestedBy = authorizedUser.user._id;
-        const existIssueRequest = await IssueRequest.findOne({$and:[{issueId} , {requestedBy} , {status:Constants.Pending}]});
-        if(existIssueRequest){
+        const existIssueReviewRequest = await IssueReview.findOne({$and:[{issueId} , {requestedBy} , {status:Constants.Pending}]});
+        if(existIssueReviewRequest){
             return NextResponse.json({
                 success:false,
                 status:400,
                 message:"You are already requested! "
             } , {status:400})
         }
-        const newIssueRequest = await IssueRequest.create({
+        const newIssueReviewRequest = await IssueReview.create({
             requestedBy,
             issueId,
+            comment
         })
-        if(!newIssueRequest){
+        if(!newIssueReviewRequest){
             return NextResponse.json({
                 success:false,
                 status:500,
-                message:"Issue is not created! "
+                message:"IssueReview is not created! "
             } , {status:500})
+        }
+        const updatedIssue = await Issue.findByIdAndUpdate(issueId , {status:Constants.Review} , {new:true});
+        if(!updatedIssue){
+            return NextResponse.json({
+                success:false,
+                status:404,
+                message:"Issue not found! "
+            } , {status:404})
         }
         return NextResponse.json({
             success:true,
             status:201,
-            message:"issueReuest is created! ",
-            newIssueRequest
+            message:"issueReviewReuest is created! ",
+            data:{newIssueReviewRequest , updatedIssue}
         } , {status:201})
     } catch (err) {
-        console.error("error from IssueRequest!" , err);
+        console.error("error from IssueReviewRequest!" , err);
         return NextResponse.json({
             success:false,
             status:500,
-            message:"IssueRequest creation error! "
+            message:"IssueReviewRequest creation error! "
         } , {status:500})
     }
 }
@@ -73,25 +70,25 @@ export async function POST(req: NextRequest){
 export async function GET(){
     await dbConnect();
     try {
-        const issueRequests = await IssueRequest.find({status:Constants.Pending}).populate([
+        const issueReviewRequests = await IssueReview.find({status:Constants.Pending}).populate([
             {path:"requestedBy" , select:"name email"}, 
             {path:"issueId" , select:"name projectId description status priority"}
         ]).lean<issueRequest[]>();
-        if(issueRequests.length === 0){
+        if(issueReviewRequests.length === 0){
             return NextResponse.json({
                 success:false,
                 status:404,
-                message:"IssueRequests are not found! "
+                message:"issueReviewRequests are not found! "
             } , {status:404})
         }
-        const {projectId} = issueRequests[0]?.issueId;
+        const {projectId} = issueReviewRequests[0]?.issueId;
         if(!projectId){
             return NextResponse.json({
                 status:400,
                 message:"projectId is required!"
             } , {status:400})
         }
-        const authorizedUser = await authorizeRole(["TeamLead"])(projectId.toString());
+        const authorizedUser = await authorizeRole(["Manager"])(projectId.toString());
         if("status" in authorizedUser){
             return authorizedUser;
         }
@@ -99,7 +96,7 @@ export async function GET(){
             success:true,
             status:200,
             message:"issue Requests are! ",
-            issueRequests
+            issueReviewRequests
         } , {status:200})
     } catch (err) {
         console.error("error from get requestedIssues!" , err);
