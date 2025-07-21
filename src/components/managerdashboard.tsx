@@ -4,7 +4,7 @@ import Link from "next/link";
 import AssignedusersTable from "./assigneduserstable";
 import { GiHamburgerMenu } from "react-icons/gi";
 
-export default function ManagerDashboard({ projectId }: { projectId: string }){
+export default function ManagerDashboard({ projectId , projectName }: { projectId: string , projectName:string } ){
     if(!projectId){
         return;
     }
@@ -39,11 +39,17 @@ export default function ManagerDashboard({ projectId }: { projectId: string }){
                     </div>
                 </div>
                 <ul className="hidden md:flex justify-between items-center w-full max-w-4xl bg-base-100 rounded-xl shadow-xl py-4 px-6">
-                    <li className="text-lg font-bold btn btn-info shadow-xl">Manager Dashboard</li>
                     <div className="hidden md:flex gap-4">
                         <li>
                             <Link href={`/allissues/1234`}>
-                                <button className="btn text-lg shadow-xl">All Issues</button>
+                                <button className="btn text-lg shadow-xl">All Projects</button>
+                            </Link>
+                        </li>
+                    </div>
+                    <div className="hidden md:flex gap-4">
+                        <li>
+                            <Link href={`/allissues/1234`}>
+                                <button className="btn btn-neutral shadow-xl">All Tasks</button>
                             </Link>
                         </li>
                         <li>
@@ -52,8 +58,8 @@ export default function ManagerDashboard({ projectId }: { projectId: string }){
                             </Link>
                         </li>
                         <li>
-                            <Link href={`/reviewclosure/${projectId}`}>
-                                <button className="btn btn-neutral shadow-xl">Review Closure</button>
+                            <Link href={`/issuereviews`}>
+                                <button className="btn btn-neutral shadow-xl">Review Requests</button>
                             </Link>
                         </li>
                         <li>
@@ -63,6 +69,12 @@ export default function ManagerDashboard({ projectId }: { projectId: string }){
                         </li>
                     </div>
                 </ul>
+                <div className="w-full max-w-4xl bg-base-300 shadow-md rounded-xl py-4 px-6 text-center">
+                    <h2 className="text-2xl font-semibold text-gray-700">{projectName}</h2>
+                    <p className="text-sm text-gray-500 italic">
+                        Assigned as <span className="font-medium badge badge-info">Manager</span>
+                    </p>
+                </div>
                 <div className="">
                     <AssignedusersTable projectId={projectId}/>
                 </div>

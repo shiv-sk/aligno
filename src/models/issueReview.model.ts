@@ -49,7 +49,7 @@ const IssueReviewSchema:Schema<IssueReviewModel> = new Schema({
     },
 } , {timestamps:true});
 
-const IssueReview = (mongoose.models.IssueReviewt as mongoose.Model<IssueReviewModel>) 
-|| mongoose.model<IssueReviewModel>("IssueRequest" , IssueReviewSchema);
+const IssueReview = (mongoose.models.IssueReview as mongoose.Model<IssueReviewModel>) 
+|| mongoose.model<IssueReviewModel>("IssueReview" , IssueReviewSchema);
 
 export default IssueReview;

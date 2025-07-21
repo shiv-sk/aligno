@@ -9,7 +9,7 @@ import { Issue as IssueType } from "@/types/issue";
 import IssueRequestType from "@/types/issuerequest";
 import IssueReviewType from "@/types/issueReview";
 
-export async function PATCH(req: NextRequest , {params}:{params:{issueReviewId:string}}){
+export async function GET(req: NextRequest , {params}:{params:{issueReviewId:string}}){
     await dbConnect();
     try {
         const issueReviewId = params.issueReviewId;
@@ -29,7 +29,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueReviewId:s
                 message:"TaskReviewRequest is not found! "
             } , {status:400})
         }
-        const {issueId , requestedBy , createdAt , reviewedAt , reviewedBy , comment , attachment} = issueReviewRequest;
+        const {issueId , requestedBy , createdAt , reviewedAt , reviewedBy , comment , attachment , status} = issueReviewRequest;
         const issue = await Issue.findById(issueId)
         .populate([{path:"assignedTo" , select:"name"} , {path:"projectId" , select:"name"} , {path:"createdBy" , select:"name"}])
         .lean<IssueType>();
@@ -40,7 +40,8 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueReviewId:s
                 message:"Issue not found! "
             } , {status:404})
         }
-        const {projectId , createdAt:issueCreatedAt , assignedTo , name , description , priority , createdBy , status:issueStatus} = issue;
+        const {projectId , createdAt:issueCreatedAt , assignedTo , name , description , priority , 
+            createdBy , status:issueStatus , assignedAt} = issue;
         const authorizedUser = await authorizeRole(["Manager"])(projectId._id.toString());
         if("status" in authorizedUser){
             return authorizedUser;
@@ -63,53 +64,55 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueReviewId:s
             projectName:projectId.name || null,
             assignedTo:assignedTo.name || null
         }
-        const timeLine = {
-            steps:[
-                {
-                    label:"Task Created",
-                    timeStamp:issueCreatedAt,
-                    by:{
-                        name:createdBy.name || null,
-                        role:"Manager",
-                    }
-                },
-                {
-                    label:"Task Assignment Request Sent",
-                    timeStamp:issueRequestCreatedAt,
-                    by:{
-                        name:issueAssignmentRequestBy.name || null,
-                        role:"Employee",
-                    }
-                },
-                {
-                    label:"Task Assignment Request Approved",
-                    timeStamp:actionTakenAt,
-                    by:{
-                        name:actionTakenBy.name || null,
-                        role:"TeamLead",
-                    }
-                },
-                {
-                    label:"Task Review Request Sent",
-                    timeStamp:createdAt,
-                    by:{
-                        name:requestedBy.name || null,
-                        role:"Employee",
-                    }
-                },
-                {
-                    label:"Task Reviewed",
-                    timeStamp:reviewedAt,
-                    by:{
-                        name:reviewedBy.name || null,
-                        role:"Manager",
-                    }
-                },
-            ]
-        }
+        const timeLine = [
+            {
+                label:"CreatedBy",
+                timeStamp:issueCreatedAt,
+                by:{
+                    name:createdBy.name || null,
+                }
+            },
+            {
+                label:"Task Assignment Request Sent || Assignment RequestedBy",
+                timeStamp:issueRequestCreatedAt,
+                by:{
+                    name:issueAssignmentRequestBy.name || null,
+                }
+            },
+            {
+                label:"Task Assignment Request Approved || Assignment Request Reviewed by",
+                timeStamp:actionTakenAt,
+                by:{
+                    name:actionTakenBy.name || null,
+                }
+            },
+            {
+                label:"AssignedTo",
+                timeStamp:assignedAt,
+                by:{
+                    name:assignedTo.name || null,
+                }
+            },
+            {
+                label:"Task Review Request Sent || Review RequestedBy",
+                timeStamp:createdAt,
+                by:{
+                    name:requestedBy.name || null,
+                }
+            },
+            {
+                label:"Task Reviewed || ReviewedBy",
+                timeStamp:reviewedAt,
+                by:{
+                    name:reviewedBy.name || null,
+                }
+            },
+            
+        ]
         const reviewSummary = {
             comment,
-            attachment
+            attachment,
+            status
         }
         return NextResponse.json({
             success:true,

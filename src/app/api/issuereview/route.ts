@@ -3,7 +3,7 @@ import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
 import IssueReview from "@/models/issueReview.model";
-import issueRequest from "@/types/issuerequest";
+import IssueReviewInterface from "@/types/issueReview";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest){
@@ -73,13 +73,13 @@ export async function GET(){
         const issueReviewRequests = await IssueReview.find({status:Constants.Pending}).populate([
             {path:"requestedBy" , select:"name email"}, 
             {path:"issueId" , select:"name projectId description status priority"}
-        ]).lean<issueRequest[]>();
+        ]).lean<IssueReviewInterface[]>();
         if(issueReviewRequests.length === 0){
             return NextResponse.json({
-                success:false,
-                status:404,
+                success:true,
+                status:200,
                 message:"issueReviewRequests are not found! "
-            } , {status:404})
+            } , {status:200})
         }
         const {projectId} = issueReviewRequests[0]?.issueId;
         if(!projectId){
@@ -95,15 +95,15 @@ export async function GET(){
         return NextResponse.json({
             success:true,
             status:200,
-            message:"issue Requests are! ",
+            message:"issue Reviews are! ",
             issueReviewRequests
         } , {status:200})
     } catch (err) {
-        console.error("error from get requestedIssues!" , err);
+        console.error("error from get requestedReviewIssues!" , err);
         return NextResponse.json({
             success:false,
             status:500,
-            message:"requestedIssues error! "
+            message:"requestedReviewIssues error! "
         } , {status:500})
     }
 }
