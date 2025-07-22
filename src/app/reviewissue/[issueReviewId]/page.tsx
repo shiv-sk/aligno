@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 export default function ReviewIssue(){
 
     const [isLoading , setIsLoading] = useState(false);
-    const [issueReview , setIssueReview] = useState(null);
+    const [issueReviewData , setIssueReviewData] = useState(null);
     const {issueReviewId} = useParams();
 
     useEffect(()=>{
@@ -23,6 +23,7 @@ export default function ReviewIssue(){
                 const response = await getAndDeleteReq(`/api/issuereview/${issueReviewId}` , "GET");
                 if(response.success){
                     console.log("response from issueReview Page! " , response);
+                    setIssueReviewData(response.data);
                 }
             } catch (error: any) {
                 const errorMessage = error.response?.data?.message || "Server Error!.";
@@ -36,9 +37,24 @@ export default function ReviewIssue(){
     return(
         <div className="bg-base-300 min-h-screen">
             <div>
-                <div className="flex justify-center py-6">
-                    <ReviewIssueComponent/>  
-                </div>
+                {
+                    isLoading ? (
+                        <div className="flex justify-center items-center h-64">
+                            <span className="loading loading-spinner loading-xl"></span>
+                        </div>
+                    ) :
+                    issueReviewData ? (
+                        <div className="flex justify-center py-6">
+                            <ReviewIssueComponent issue={issueReviewData}/>  
+                        </div>
+                    ) : (
+                        <div className="flex justify-center items-center h-64">
+                            <p className="text-lg font-semibold">
+                                Sorry, we couldn&apos;t find this issue. It might have been deleted or moved!.
+                            </p>
+                        </div>
+                    )
+                }
             </div>
         </div>
     )

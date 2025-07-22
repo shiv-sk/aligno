@@ -2,6 +2,7 @@ import Constants from "@/constents/constants";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
 import IssueRequest from "@/models/issueRequest.model";
+import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:string}}){
@@ -43,7 +44,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
                 message:"Task is already assigned!"
             } , {status:400})
         }
-        const actionTakenBy = authorizedUser.user._id;
+        const actionTakenBy = authorizedUser.user?._id;
         if(!actionTakenBy){
             return NextResponse.json({
                 success:false,
@@ -60,15 +61,16 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
             } , {status:400})
         }
         const {requestedBy} = issueRequest;
-        const updatedIssueRequest = await IssueRequest.findByIdAndUpdate(issueRequestId , 
-            {status:Constants.Approved , actionTakenBy , actionTakenAt:new Date()} , 
-            {new:true});
+        issueRequest.status = Constants.Approved;
+        issueRequest.actionTakenBy = actionTakenBy as mongoose.Types.ObjectId;
+        issueRequest.actionTakenAt = date;
+        const updatedIssueRequest = await issueRequest.save();
         if(!updatedIssueRequest){
             return NextResponse.json({
                 success:false,
-                status:500,
-                message:"IssueRequest is not found or not updated!"
-            } , {status:500})
+                status:400,
+                message:"issueRequest is not updated! "
+            } , {status:400})
         }
         if(!requestedBy){
             return NextResponse.json({
@@ -77,21 +79,23 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
                 message: "Invalid requester for the issue."
             } , {status:400})
         }
-        const assignedIssue = await Issue.findByIdAndUpdate(issueId , 
-            {status:Constants.Assigned , assignedTo:requestedBy , assignedBy:actionTakenBy , assignedAt:new Date()} , 
-            {new:true});
+        issue.status = Constants.Assigned;
+        issue.assignedTo = requestedBy;
+        issue.assignedBy = actionTakenBy as mongoose.Types.ObjectId;
+        issue.assignedAt = date;
+        const assignedIssue = await issue.save();
         if(!assignedIssue){
             return NextResponse.json({
                 success:false,
-                status:500,
-                message:"Task is not found or not Assigned!"
-            } , {status:500})
+                status:400,
+                message:"issue is not updated! "
+            } , {status:400})
         }
         return NextResponse.json({
             success:true,
             status:200,
             message:"Task successfully assigned to user from approved request.",
-            data:{assignedIssue , updatedIssueRequest}
+            data:{assignedIssue , updatedIssueRequest},
         } , {status:200})
     } catch (err) {
         console.error("assign Issue error!" , err);

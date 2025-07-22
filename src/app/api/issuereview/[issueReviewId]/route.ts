@@ -69,42 +69,42 @@ export async function GET(req: NextRequest , {params}:{params:{issueReviewId:str
                 label:"CreatedBy",
                 timeStamp:issueCreatedAt,
                 by:{
-                    name:createdBy.name || null,
+                    name:createdBy?.name || null,
                 }
             },
             {
-                label:"Task Assignment Request Sent || Assignment RequestedBy",
+                label:"Assignment RequestedBy",
                 timeStamp:issueRequestCreatedAt,
                 by:{
-                    name:issueAssignmentRequestBy.name || null,
+                    name:issueAssignmentRequestBy?.name || null,
                 }
             },
             {
-                label:"Task Assignment Request Approved || Assignment Request Reviewed by",
+                label:"Assignment Request Reviewed by",
                 timeStamp:actionTakenAt,
                 by:{
-                    name:actionTakenBy.name || null,
+                    name:actionTakenBy?.name || null,
                 }
             },
             {
                 label:"AssignedTo",
                 timeStamp:assignedAt,
                 by:{
-                    name:assignedTo.name || null,
+                    name:assignedTo?.name || null,
                 }
             },
             {
-                label:"Task Review Request Sent || Review RequestedBy",
+                label:"Review RequestedBy",
                 timeStamp:createdAt,
                 by:{
-                    name:requestedBy.name || null,
+                    name:requestedBy?.name || null,
                 }
             },
             {
-                label:"Task Reviewed || ReviewedBy",
+                label:"ReviewedBy",
                 timeStamp:reviewedAt,
                 by:{
-                    name:reviewedBy.name || null,
+                    name:reviewedBy?.name || null,
                 }
             },
             

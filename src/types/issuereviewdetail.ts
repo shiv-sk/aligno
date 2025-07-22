@@ -1,4 +1,4 @@
-interface IssueData{
+export interface IssueData{
     name: string;
     priority: string;
     description: string;
@@ -6,14 +6,14 @@ interface IssueData{
     projectName: string | null;
     assignedTo: string | null;
 }
-interface TimeLineEntry{
+export interface TimeLineEntry{
     label: string;
     timeStamp: Date | string | null;
     by:{
         name: string | null;
     }
 }
-interface ReviewSummary{
+export interface ReviewSummary{
     comment: string;
     attachment: string;
     status: "Pending" | "Approved" | "Rejected";
