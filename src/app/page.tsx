@@ -10,8 +10,8 @@ export default function Home(){
   const techStack = [
     { name: "Next.js", color: "bg-black text-white" },
     { name: "MongoDB", color: "bg-green-600 text-white" },
-    { name: "Tailwind CSS", color: "bg-sky-400 text-white" },
-    { name: "DaisyUI", color: "bg-purple-400 text-white" },
+    { name: "Tailwind CSS", color: "bg-slate-400 text-white" },
+    { name: "React", color: "bg-sky-400 text-white" },
     { name: "TypeScript", color: "bg-blue-600 text-white" },
     
   ]
@@ -83,12 +83,14 @@ export default function Home(){
       </div>
       {/* features section */}
       
-      <div className="flex justify-center flex-col item-center gap-2.5 py-6 px-2 bg-base-300 shadow-xl">
+      <div className="flex justify-center flex-col item-center gap-2.5 py-12 px-2 bg-base-300 shadow-xl">
         <h1 className="text-3xl font-semibold text-center text-slate-600 mb-6">Key Capabilities</h1>
         <div className="flex justify-center item-center flex-wrap gap-4.5 px-2 bg-base-100 shadow-lg rounded-lg py-6">
           {
             featureCards.map(({number , src , title , text})=>(
-              <div className="card bg-base-100 w-96 shadow-xl hover:scale-105 transition-transform duration-300 border-t-2 border-t-gray-600" key={number}>
+              <div 
+              className="card bg-base-100 w-96 shadow-xl hover:scale-105 transition-transform duration-300 border-t-2 border-t-gray-600" 
+              key={number}>
                 <figure>
                   <Image
                     src={src}
@@ -107,7 +109,7 @@ export default function Home(){
         </div>
       </div>
       {/* Preview Section */}
-      <div className="bg-base-300 flex flex-col py-6 px-2">
+      <div className="bg-base-300 flex flex-col py-12 px-2">
         <h1 className="text-3xl font-semibold text-center text-slate-600 mb-6">Live Product Preview</h1>
         <div className="flex justify-center items-center gap-3.5 flex-wrap py-6 px-3 rounded-lg">
           {
@@ -138,7 +140,8 @@ export default function Home(){
               { step: "4", title: "Track & Report", desc: "Track progress with insights and generate reports." },
             ].map(({ step, title, desc })=>(
               <div key={step} className="shadow-xl py-6 px-3 rounded-lg bg-base-100 text-center">
-                <div className="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full text-xl font-bold mb-4 mx-auto">
+                <div 
+                className="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full text-xl font-bold mb-4 mx-auto">
                   {step}
                 </div>
                 <h2 className="text-xl font-semibold mb-1">{title}</h2>
@@ -149,7 +152,8 @@ export default function Home(){
         </div>
       </div>
       {/* TechStack */}
-      <div className="bg-base-200 py-12 px-4">
+      <div 
+      className="bg-base-200 py-26 px-4 bg-gradient-to-tr from-slate-900 via-gray-50 to-slate-400 ">
         <h1 className="text-3xl font-semibold text-center text-slate-600 mb-6">Built With</h1>
         <div className="flex justify-center flex-wrap gap-6 max-w-4xl mx-auto">
           {
@@ -168,7 +172,7 @@ export default function Home(){
         </div>
       </div>
       {/* Get In Touch */}
-      <div className="bg-base-300 py-16 px-4 relative">
+      <div className="bg-base-300 py-20 px-4 relative">
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6 relative z-10">
           <h2 className="text-2xl font-bold mb-3 text-gray-800">Get in Touch</h2>
           <hr className="border-t-2 border-black w-24 my-4" />

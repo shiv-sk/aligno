@@ -2,6 +2,7 @@ import Constants from "@/constents/constants";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
 import IssueRequest from "@/models/issueRequest.model";
+import { Types } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:string}}){
@@ -36,7 +37,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
         if("status" in authorizedUser){
             return authorizedUser;
         }
-        const actionTakenBy = authorizedUser.user._id;
+        const actionTakenBy = authorizedUser.user._id
         if(!actionTakenBy){
             return NextResponse.json({
                 success:false,
@@ -44,9 +45,10 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
                 message:"userId missing or not correct"
             } , {status:400})
         }
-        const updatedIssueRequest = await IssueRequest.findByIdAndUpdate(issueRequestId , 
-            {status:Constants.Rejected , actionTakenAt:new Date() , actionTakenBy} , 
-            {new:true});
+        issueRequest.status = Constants.Rejected
+        issueRequest.actionTakenAt = new Date()
+        issueRequest.actionTakenBy = actionTakenBy as Types.ObjectId
+        const updatedIssueRequest = issueRequest.save();
         if(!updatedIssueRequest){
             return NextResponse.json({
                 success:false,

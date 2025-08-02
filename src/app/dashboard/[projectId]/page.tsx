@@ -47,7 +47,8 @@ export default function Dashboard(){
                         <span className="loading loading-spinner loading-xl"></span>
                     </div>
                 ) :
-                role === "TeamLead" ? <TeamLeadDashboard projectId={projectId as string} projectName={projectName as string}/> :
+                role === "TeamLead" ? <TeamLeadDashboard projectId={projectId as string} projectName={projectName as string} 
+                userId={user?._id as string}/> :
                 role === "Manager" ? <ManagerDashboard projectId={projectId as string} projectName={projectName as string}/> :
                 role === "Employee" ? <EmployeeDashboard projectId={projectId as string} projectName={projectName as string}/> :
                 <div className="flex justify-center items-center h-64">

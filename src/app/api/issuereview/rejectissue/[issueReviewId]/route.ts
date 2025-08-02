@@ -48,8 +48,8 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueReviewId:s
                 message:"TaskReviewRequest is not updated or not found! "
             } , {status:400})
         }
-        const updatedIssue = await Issue.findByIdAndUpdate(issueId , 
-            {status:Constants.Reopened , assignedAt:null , assignedBy:null , assignedTo:null} , {new:true});
+        issue.status = Constants.Reopened;
+        const updatedIssue = await issue.save();
         if(!updatedIssue){
             return NextResponse.json({
                 success:false,

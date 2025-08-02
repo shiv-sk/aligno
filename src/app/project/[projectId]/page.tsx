@@ -76,7 +76,8 @@ export default function Company(){
                                         Contact: {project?.createdBy.email || "Project createdBy contact"}
                                     </p>
                                     <p className="text-lg">
-                                        CreatedOn: {project?.createdAt ? new Date (project.createdAt).toDateString() : "Project Creation Date"}
+                                        CreatedOn: {project?.createdAt ? new Date (project.createdAt).toDateString() 
+                                        : "Project Creation Date"}
                                     </p>
                                 </div>
                                 <div className="card-actions flex-wrap justify-end">
@@ -91,6 +92,9 @@ export default function Company(){
                                                 </Link>
                                                 <Link href={`/`}>
                                                     <button className="btn btn-primary">Delete</button>
+                                                </Link>
+                                                <Link href={`/admindashboard/${projectId}`}>
+                                                    <button className="btn btn-primary">Analytics</button>
                                                 </Link>
                                             </>
                                         )

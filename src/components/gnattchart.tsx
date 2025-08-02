@@ -10,7 +10,6 @@ type GanttTask = {
     end: string;
     progress: number;
     dependencies?: string;
-    custom_class?: string;
 };
 
 type Props = {

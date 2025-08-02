@@ -23,7 +23,7 @@ export default function IssueReviewData({issue}:  {issue: IssueData}){
         default:
             statusBadgeColor = "badge badge-success text-center"
             break;
-        }
+    }
     switch(issue?.priority){
         case Constants.High:
             priorityBadgeColor = "badge badge-neutral text-center"
@@ -37,7 +37,7 @@ export default function IssueReviewData({issue}:  {issue: IssueData}){
         default:
             priorityBadgeColor = "badge badge-secondary text-center"
             break;
-        }
+    }
     return(
         <div className="bg-base-300 rounded-lg w-full py-6 px-3 space-y-2">
             <h1 className="text-center py-2 px-1 font-bold text-xl">Task Info</h1>

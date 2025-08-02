@@ -41,6 +41,11 @@ const styles = StyleSheet.create({
         fontFamily: "Helvetica",
         textAlign: 'center'
     },
+    section:{
+        color: 'white', 
+        textAlign: 'center', 
+        margin: 30
+    },
     header:{
         marginBottom: 20
     },
@@ -91,14 +96,14 @@ export default function PDFReport({issueSummary , projectInsights , issues , foo
                     <Text style={styles.headerText}>GeneratedOn:{`${currentDate.toDateString()}`}</Text>
                 </View>
                 <View style={styles.summaryBox}>
-                    <Text>WeeklyTotalTasks:{issueSummary.totalIssues}</Text>
-                    <Text>WeeklyOverdueTasks:{issueSummary.overdueIssues}</Text>
-                    <Text>WeeklyCompletedTasks:{issueSummary.completedIssues}</Text>
-                    <Text>WeeklyInProcessTasks:{issueSummary.onProcessIssues}</Text>
-                    <Text>WeeklyInReviewTasks:{issueSummary.issueInReview}</Text>
-                    <Text>WeeklyReopenedTasks:{issueSummary.reopenedIssues}</Text>
-                    <Text>WeeklyoverDueRate:{issueSummary.overdueRate}</Text>
-                    <Text>WeeklyCompletionRate:{issueSummary.completionRate}</Text>
+                    <Text>WeeklyTotalTasks:{issueSummary.totalIssues}</Text><br/>
+                    <Text>WeeklyOverdueTasks:{issueSummary.overdueIssues}</Text><br/>
+                    <Text>WeeklyCompletedTasks:{issueSummary.completedIssues}</Text><br/>
+                    <Text>WeeklyInProcessTasks:{issueSummary.onProcessIssues}</Text><br/>
+                    <Text>WeeklyInReviewTasks:{issueSummary.issueInReview}</Text><br/>
+                    <Text>WeeklyReopenedTasks:{issueSummary.reopenedIssues}</Text><br/>
+                    <Text>WeeklyoverDueRate:{issueSummary.overdueRate}</Text><br/>
+                    <Text>WeeklyCompletionRate:{issueSummary.completionRate}</Text><br/>
                 </View>
                 <View style={styles.table}>
                     <View style={styles.tableRow}>
@@ -110,6 +115,7 @@ export default function PDFReport({issueSummary , projectInsights , issues , foo
                         <View style={styles.tableCol}><Text>AssignedAt</Text></View>
                         <View style={styles.tableCol}><Text>CompletedAt</Text></View>
                     </View>
+                    <br />
                     {
                         issues.map((issue , index)=>(
                             <View key={index} style={styles.tableRow}>

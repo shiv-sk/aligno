@@ -36,16 +36,6 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
                 default: return 10;
             }
         }
-        const barColor = function (status: string){
-            switch(status){
-                case "Closed": return "bar-green";
-                case "Assigned": return "bar-blue";
-                case "Open": return "bar-gray";
-                case "Review": return "bar-yellow";
-                case "Reopened": return "bar-orange";
-                default: return "";
-            }
-        }
         const formattedIssueData = issues.map((issue)=>({
             id:issue._id.toString(),
             name:issue.name,
@@ -56,7 +46,6 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
             isDisabled: false,
             dependencies: [],
             status:issue.status,
-            custom_class:barColor(issue.status)
         }))
         const issueStatus = ["Closed" , "Assigned" , "Review"];
         const overdueStatus = ["Reopened" , "Open" , "Assigned"];
@@ -67,7 +56,6 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
         const activityRate = Math.round((activeIssues / totalIssues) * 100);
         const overdueRate = Math.round((overdueIssues / totalIssues) * 100);
         const completionRate = Math.round((completedIssues / totalIssues) * 100);
-        console.log("completedIssues: " , completedIssues , "over issues" , overdueIssues);
         const issueSummary = {
             activityRate,
             overdueRate,
