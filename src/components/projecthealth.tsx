@@ -38,7 +38,22 @@ export default function ProjectHealth({role , projecthealth}: {role:string , pro
                             </p>
                         </div>
                     </>
-                ) : role === "Admin" && projecthealth && (
+                ) : role === "Admin" && projecthealth ? (
+                    <>
+                        <Line data={data}/>
+                        <div className="border-bg-green-900 flex flex-wrap justify-evenly py-3">
+                            <p className="border-l-2 md:text-lg font-bold px-1.5">CompletionRate:
+                                <span className="font-normal md:text-xl">{projecthealth?.completionRate || 0}%</span>
+                            </p>
+                            <p className="border-l-2 md:text-lg font-bold px-1.5">ActivityRate:
+                                <span className="font-normal md:text-xl">{projecthealth?.activityRate || 0}%</span>
+                            </p>
+                            <p className="border-l-2 md:text-lg font-bold px-1.5">OverdueRate:
+                                <span className="font-normal md:text-xl">{projecthealth.overdueRate || 0}%</span>
+                            </p>
+                        </div>
+                    </>
+                ) : role === "Employee" && projecthealth && (
                     <>
                         <Line data={data}/>
                         <div className="border-bg-green-900 flex flex-wrap justify-evenly py-3">

@@ -133,8 +133,8 @@ export function getIssueRequestsData(issueRequests: IssueRequest[]){
     const totalIssueRequests = issueRequests.length;
     const acceptedIssueRequests = issueRequests.filter((issue)=>(issue.status === Constants.Approved)).length;
     const rejectedIssueRequests = issueRequests.filter((issue)=>(issue.status === Constants.Rejected)).length;
-    const issueRequestAcceptRate = totalIssueRequests > 0 ? (acceptedIssueRequests / totalIssueRequests) : 0;
-    const issueRequestRejectRate = totalIssueRequests > 0 ? (rejectedIssueRequests / totalIssueRequests) : 0;
+    const issueRequestAcceptRate = totalIssueRequests > 0 ? (acceptedIssueRequests / totalIssueRequests) * 100 : 0;
+    const issueRequestRejectRate = totalIssueRequests > 0 ? (rejectedIssueRequests / totalIssueRequests) * 100 : 0;
     return { totalIssueRequests, acceptedIssueRequests, rejectedIssueRequests , issueRequestAcceptRate, issueRequestRejectRate }
 }
 
@@ -142,7 +142,7 @@ export function getIssueReviewsData(issueReviews: IssueReview[]){
     const totalIssueReviews = issueReviews.length;
     const acceptedIssueReviews = issueReviews.filter((issue)=>(issue.status === Constants.Approved)).length;
     const rejectedIssueReviews = issueReviews.filter((issue)=>(issue.status === Constants.Rejected)).length;
-    const issueReviewAcceptRate = totalIssueReviews > 0 ? (acceptedIssueReviews / totalIssueReviews) : 0;
-    const issueReviewRejectRate = totalIssueReviews > 0 ? (rejectedIssueReviews / totalIssueReviews) : 0;
+    const issueReviewAcceptRate = totalIssueReviews > 0 ? (acceptedIssueReviews / totalIssueReviews) * 100 : 0;
+    const issueReviewRejectRate = totalIssueReviews > 0 ? (rejectedIssueReviews / totalIssueReviews) * 100 : 0;
     return { totalIssueReviews, acceptedIssueReviews, rejectedIssueReviews, issueReviewAcceptRate, issueReviewRejectRate }
 }

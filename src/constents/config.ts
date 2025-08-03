@@ -23,10 +23,10 @@ export const adminIssueOverview = {
     "overdueIssues":"overdueTasks"
 }
 export const employeeIssueOverview = {
-    "totalAssignmentRequestedIssues":"totalAssignmentRequestedIssues" , 
-    "assignedIssues":"assignedIssues" , 
-    "completedIssues":"completedIssues" , 
-    "totalReviewRequest":"totalReviewRequest" , 
-    "reviewAcceptedIssues":"reviewAcceptedIssues" , 
-    "reopenedIssues":"reopenedIssues"
+    "totalIssueRequests":"totalTaskRequests" , 
+    "assignedIssues":"assignedTasks" , 
+    "completedIssues":"completedTasks" , 
+    "totalIssueReviews":"totalReviewRequest" , 
+    "acceptedIssueReviews":"reviewAcceptedTasks" , 
+    "reopenedIssues":"reopenedTasks"
 }

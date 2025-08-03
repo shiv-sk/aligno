@@ -31,8 +31,10 @@ export default function ManagerAnalyticDashboard({projectId}: {projectId:string}
         const getManagerAnalyticData = async()=>{
             try {
                 const response = await getAndDeleteReq(`/api/managerdashboard?projectId=${projectId}&userId=${user._id}` , "GET");
-                console.log("response from managerAnalytic! " , response);
-                setManagerAnalyticData(response?.data || null);
+                if(response.success){
+                    console.log("response from managerAnalytic! " , response);
+                    setManagerAnalyticData(response?.data || null);
+                }
             } catch (error: any) {
                 const errorMessage = error.response?.data?.message || "Server Error!.";
                 toast.error(errorMessage);
@@ -46,12 +48,16 @@ export default function ManagerAnalyticDashboard({projectId}: {projectId:string}
         <div className="bg-base-300 min-h-screen py-6">
             <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">ManagerDashboard</h1>
             {
-                isLoading ? "Loading..." : (
+                isLoading ? (
+                    <div className="flex justify-center items-center h-64">
+                        <span className="loading loading-spinner loading-xl"></span>
+                    </div>
+                ) : (
                     <div 
                     className="flex flex-col justify-center items-center md:w-[720px] w-96 mx-auto bg-base-100 py-6 px-3 
                     rounded-lg shadow-lg">
                         <IssueOverview role={"Manager"} issueOverview={managerAnalyticData?.issueOverview}/>
-                        <Barchart role={"Manager"} activityData={managerAnalyticData?.activity}/>
+                        <Barchart role={"Manager"} activityData={managerAnalyticData?.activity} isReview={false}/>
                         <ActionableTable issues={managerAnalyticData?.actionableIssues || []} />
                         <ProjectHealth role={"Manager"} projecthealth={managerAnalyticData?.projectHealth} />
                         <StatusBasedIssue role={""} priorityData={undefined}/>

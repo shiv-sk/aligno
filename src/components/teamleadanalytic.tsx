@@ -52,11 +52,15 @@ export default function TeamLeadAnalyticDashboard({projectId , userId}: {project
             <div 
             className="flex flex-col justify-center items-center md:w-[720px] w-96 mx-auto bg-base-100 py-6 px-3 rounded-lg shadow-lg">
                 {
-                    isLoading ? "Loading..." : (
+                    isLoading ? (
+                        <div className="flex justify-center items-center h-64">
+                            <span className="loading loading-spinner loading-xl"></span>
+                        </div>
+                    ) : (
                         <>
                             <IssueOverview role={"TeamLead"} issueOverview={tamLeadAnayticData?.issueOverview}/>
                             <AssignedIssueTable assignedIssues={tamLeadAnayticData?.assignedissues}/>
-                            <Barchart role={"TeamLead"} activityData={tamLeadAnayticData?.teamLeadActivity} />
+                            <Barchart role={"TeamLead"} activityData={tamLeadAnayticData?.teamLeadActivity} isReview={false} />
                             <StatusBasedIssue role={"TeamLead"} priorityData={tamLeadAnayticData?.issuePriority} />
                         </>
                     )

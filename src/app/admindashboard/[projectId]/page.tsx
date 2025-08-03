@@ -50,7 +50,11 @@ export default function AdminDashboard(){
         <div className="bg-base-300 min-h-screen py-6">
             <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">AdminDashboard</h1>
             {
-                isLoading ? "Loading..." : 
+                isLoading ? (
+                    <div className="flex justify-center items-center h-64">
+                        <span className="loading loading-spinner loading-xl"></span>
+                    </div>
+                ) : 
                 (
                     <div
                     className="flex flex-col justify-center items-center md:w-[720px] w-96 mx-auto bg-base-100 

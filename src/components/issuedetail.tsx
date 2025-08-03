@@ -121,7 +121,7 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
                     )
                 }
                 {
-                    role === Constants.Employee && issue?.assignedTo._id === user?._id &&(
+                    role === Constants.Employee && issue?.assignedTo?._id === user?._id &&(
                         <button 
                         className="btn btn-primary" 
                         disabled={issue?.status === Constants.Review}

@@ -10,4 +10,7 @@ export interface IssueOverview{
     totalIssues:number,
     assignedIssues:number,
     unAssignedIssues:number,
+    totalIssueRequests:number,
+    totalIssueReviews:number,
+    acceptedIssueReviews:number,
 }

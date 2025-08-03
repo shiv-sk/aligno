@@ -1,4 +1,4 @@
-import {adminIssueOverview, managerIssueOverview, teamLeadIssueOverview} from "@/constents/config";
+import {adminIssueOverview, employeeIssueOverview, managerIssueOverview, teamLeadIssueOverview} from "@/constents/config";
 import { IssueOverview as IssueOverviewType } from "@/types/issueoverview";
 
 export default function IssueOverview({role , issueOverview}: {role:string , issueOverview:IssueOverviewType | null | undefined}){
@@ -69,7 +69,7 @@ export default function IssueOverview({role , issueOverview}: {role:string , iss
                             </div>
                         </div>
                     </>
-                ) : role === "Admin" && issueOverview && (
+                ) : role === "Admin" && issueOverview ? (
                     <>
                         <div className="flex flex-wrap justify-evenly ietms-center gap-4">
                             <div className="flex flex-col text-center bg-base-100 rounded-lg shadow-lg py-6 px-3 w-[150px] h-[80px]">
@@ -96,6 +96,37 @@ export default function IssueOverview({role , issueOverview}: {role:string , iss
                             </div>
                             <div className="flex flex-col text-center bg-base-100 rounded-lg shadow-lg py-6 px-3 w-[150px] h-[80px]">
                                 <p>{managerIssueOverview.reopenedIssues}</p>
+                                <p>{issueOverview?.reopenedIssues}</p>
+                            </div>
+                        </div>
+                    </>
+                ) : role === "Employee" && issueOverview && (
+                    <>
+                        <div className="flex flex-wrap justify-evenly ietms-center gap-4">
+                            <div className="flex flex-col text-center bg-base-100 rounded-lg shadow-lg py-6 px-3 w-[150px] h-[80px]">
+                                <p>{employeeIssueOverview.totalIssueRequests}</p>
+                                <p>{issueOverview?.totalIssueRequests}</p>
+                            </div>
+                            <div className="flex flex-col text-center bg-base-100 rounded-lg shadow-lg py-6 px-3 w-[150px] h-[80px]">
+                                <p>{employeeIssueOverview.assignedIssues}</p>
+                                <p>{issueOverview?.assignedIssues}</p>
+                            </div>
+                            <div className="flex flex-col text-center bg-base-100 rounded-lg shadow-lg py-6 px-3 w-[150px] h-[80px]">
+                                <p>{employeeIssueOverview.completedIssues}</p>
+                                <p>{issueOverview?.completedIssues}</p>
+                            </div>
+                        </div>
+                        <div className="flex flex-wrap justify-evenly ietms-center gap-4">
+                            <div className="flex flex-col text-center bg-base-100 rounded-lg shadow-lg py-6 px-3 w-[150px] h-[80px]">
+                                <p>{employeeIssueOverview.totalIssueReviews}</p>
+                                <p>{issueOverview?.totalIssueReviews}</p>
+                            </div>
+                            <div className="flex flex-col text-center bg-base-100 rounded-lg shadow-lg py-6 px-3 w-[150px] h-[80px]">
+                                <p>{employeeIssueOverview.acceptedIssueReviews}</p>
+                                <p>{issueOverview?.acceptedIssueReviews}</p>
+                            </div>
+                            <div className="flex flex-col text-center bg-base-100 rounded-lg shadow-lg py-6 px-3 w-[150px] h-[80px]">
+                                <p>{employeeIssueOverview.reopenedIssues}</p>
                                 <p>{issueOverview?.reopenedIssues}</p>
                             </div>
                         </div>
