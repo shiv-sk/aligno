@@ -3,8 +3,9 @@
 import { postAndPatchReq } from "@/apiCalls/apiCalls";
 import { useAuth } from "@/context/authcontext";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { toast } from "react-toastify";
 
-export default function AddCompany(){
+export default function AddProject(){
     const {user} = useAuth();
     const [isLoading , setIsLoading] = useState(false);
     const [projectData , setProjectData] = useState({
@@ -20,11 +21,11 @@ export default function AddCompany(){
     const handleSubmit = async(e:FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
         if(Object.entries(projectData).length === 0){
-            alert("data is required! ");
+            toast.error("data is required! ");
             return;
         }
         if(!user){
-            alert("user is null! ");
+            toast.error("user is null! ");
         }
 
         setIsLoading(true);
@@ -32,13 +33,13 @@ export default function AddCompany(){
             const response = await postAndPatchReq(`/api/project` , "POST" , projectData);
             console.log(response);
             if(response.success){
-                alert("project added!");
+                toast.success("project added!");
             }
             // console.log("the data is! " , {projectData , user});
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || "Server Error!.";
             // console.error("error addProjectPage! " , error);
-            alert(errorMessage);
+            toast.error(errorMessage);
         }finally{
             setIsLoading(false);
         }
@@ -47,7 +48,7 @@ export default function AddCompany(){
     return(
         <div className="flex flex-col justify-center items-center min-h-screen gap-4 py-5">
             <div className="max-w-sm w-full p-6 rounded-lg shadow-lg bg-base-100">
-                <h1 className="text-center font-bold text-2xl mb-4">AddProject</h1>
+                <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">AddProject</h1>
                 <div className="">
                     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                     <label htmlFor="name" className="text-md font-medium">Name</label>    

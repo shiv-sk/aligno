@@ -68,7 +68,7 @@ export default function Login(){
                     
                     />
                     <label htmlFor="password" className="text-md font-medium mb-1">Password</label>
-                    <div className="flex relative">
+                    <div className="flex relative justify-center items-center">
                     <input
                     name="password" 
                     type={isPasswordShow ? "text" : "password"}
@@ -80,7 +80,7 @@ export default function Login(){
                     onChange={handleOnChange} 
                     />
                     <p 
-                    className="z-10 absolute top-2 right-1.5 hover:cursor-pointer" 
+                    className="z-10 absolute right-1.5 hover:cursor-pointer" 
                     onClick={handlePasswordShow}>
                         { 
                             isPasswordShow ? <FaEyeSlash className="text-2xl" /> : <IoEyeOutline className="text-2xl" />

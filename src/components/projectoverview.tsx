@@ -8,49 +8,49 @@ export default function ProjectOverview({projectOverview}: {projectOverview:Proj
     let workLoadtooltip;
     switch(projectOverview?.teamEfficiency){
         case "Low":
-            teamEfficiencytooltipData = `project has overduerate ${projectOverview.overdueRate} and completionrate ${projectOverview.completionRate}`
+            teamEfficiencytooltipData = `This project has an overdue rate of ${projectOverview.overdueRate}% and a completion rate of ${projectOverview.completionRate}%.`
             break
         case "Balanced":
-            teamEfficiencytooltipData = `project has overduerate ${projectOverview.overdueRate} and completionrate ${projectOverview.completionRate}`
+            teamEfficiencytooltipData = `This project has an overdue rate of ${projectOverview.overdueRate}% and a completion rate of ${projectOverview.completionRate}%.`
             break
         case "High":
-            teamEfficiencytooltipData = `project has overduerate ${projectOverview.overdueRate} and completionrate ${projectOverview.completionRate}`
+            teamEfficiencytooltipData = `This project has an overdue rate of ${projectOverview.overdueRate}% and a completion rate of ${projectOverview.completionRate}%.`
             break
         default:
-            teamEfficiencytooltipData = `project has overduerate 0% and completionrate 0%`
+            teamEfficiencytooltipData = `This project has an overdue rate of 0% and a completion rate of 0%.`
     }
 
     switch(projectOverview?.projectHealth){
         case "Medium":
-            projectHealthtooltip = `project has overduerate ${projectOverview.overdueRate} and completionrate ${projectOverview.completionRate}`
+            projectHealthtooltip = `This project is ${projectOverview.completionRate}% complete with an overdue rate of ${projectOverview.overdueRate}%.`
             break
         case "Overloaded":
-            projectHealthtooltip = `project has overduerate ${projectOverview.overdueRate} and completionrate ${projectOverview.completionRate}`
+            projectHealthtooltip = `This project is ${projectOverview.completionRate}% complete with an overdue rate of ${projectOverview.overdueRate}%.`
             break
         case "Underloaded":
-            projectHealthtooltip = `project has overduerate ${projectOverview.overdueRate} and completionrate ${projectOverview.completionRate}`
+            projectHealthtooltip = `This project is ${projectOverview.completionRate}% complete with an overdue rate of ${projectOverview.overdueRate}%.`
             break
         case "Needs Attention":
-            projectHealthtooltip = `project has overduerate ${projectOverview.overdueRate} and completionrate ${projectOverview.completionRate}`
+            projectHealthtooltip = `This project is ${projectOverview.completionRate}% complete with an overdue rate of ${projectOverview.overdueRate}%.`
             break
         default:
-            projectHealthtooltip = `project has overduerate 0% and completionrate 0%`
+            projectHealthtooltip = `This project is 0% complete with an overdue rate of 0%.`
     }
     if(projectOverview?.completionRate && projectOverview?.overdueRate){
         if(projectOverview?.completionRate >= 40 && projectOverview?.overdueRate <= 30){
             workLoad = "Healthy";
             workLoadbadge = "badge badge-success";
-            workLoadtooltip = `project has ${projectOverview.perUserIssue} with ${projectOverview.completionRate} completionRate , ${projectOverview.overdueRate} overdueRate`
+            workLoadtooltip = `Each user has an average of ${projectOverview.perUserIssue} Tasks, with a ${projectOverview.completionRate}% completion rate and ${projectOverview.overdueRate}% overdue rate.`
         }
         else if(projectOverview?.completionRate >= 40 && projectOverview?.overdueRate <= 40){
             workLoad = "Moderate";
             workLoadbadge = "badge badge-primary";
-            workLoadtooltip = `project has ${projectOverview.perUserIssue} with ${projectOverview.completionRate} completionRate , ${projectOverview.overdueRate} overdueRate`
+            workLoadtooltip = `Each user has an average of ${projectOverview.perUserIssue} Tasks, with a ${projectOverview.completionRate}% completion rate and ${projectOverview.overdueRate}% overdue rate.`
         }
         else if(projectOverview?.completionRate <= 30 && projectOverview?.overdueRate > 40){
             workLoad = "Moderate";
             workLoadbadge = "badge badge-error";
-            workLoadtooltip = `project has ${projectOverview.perUserIssue} Tasks Per User with ${projectOverview.completionRate} completionRate , ${projectOverview.overdueRate} overdueRate`
+            workLoadtooltip = `Each user has an average of ${projectOverview.perUserIssue} Tasks, with a ${projectOverview.completionRate}% completion rate and ${projectOverview.overdueRate}% overdue rate.`
         }
     }
     return(
@@ -58,22 +58,25 @@ export default function ProjectOverview({projectOverview}: {projectOverview:Proj
             <h1 className="text-center font-semibold text-xl">ProjectOverview</h1>
             {
                 projectOverview ? (
-                    <div className="flex flex-wrap justify-evenly ietms-center gap-4">
-                        <div className="flex flex-col items-center bg-base-100 rounded-lg shadow-lg py-6 px-3 w-[150px] h-[80px]">
-                            <p>Teamefficiency</p>
-                            <p className="tooltip" data-tip={teamEfficiencytooltipData}>
+                    <div className="flex md:flex-row md:flex-wrap flex-col md:justify-center items-center gap-4 mx-auto w-full">
+                        <div className="w-full md:flex-col flex items-center bg-base-100 
+                        rounded-lg shadow-lg py-6 px-3 md:w-[180px] h-[90px]">
+                            <p className="px-1.5 font-semibold text-lg">Teamefficiency</p>
+                            <p className="tooltip font-bold" data-tip={teamEfficiencytooltipData}>
                                 <span className="badge badge-primary">{projectOverview?.teamEfficiency || "Teamefficiency"}</span>
                             </p>
                         </div>
-                        <div className="flex flex-col items-center bg-base-100 rounded-lg shadow-lg py-6 px-3 w-[150px] h-[80px]">
-                            <p>Projecthealth</p>
-                            <p className="tooltip" data-tip={projectHealthtooltip}>
+                        <div className="w-full flex md:flex-col items-center bg-base-100 
+                        rounded-lg shadow-lg py-6 px-3 md:w-[180px] h-[90px]">
+                            <p className="px-1.5 font-semibold text-lg">Projecthealth</p>
+                            <p className="tooltip font-bold" data-tip={projectHealthtooltip}>
                                 <span className="badge badge-success">{projectOverview?.projectHealth || "ProjectHealth"}</span>
                             </p>
                         </div>
-                        <div className="flex flex-col items-center bg-base-100 rounded-lg shadow-lg py-6 px-3 w-[180px] h-[80px]">
-                            <p>Workload</p>
-                            <p className="tooltip" data-tip={workLoadtooltip}>
+                        <div className="w-full flex md:flex-col items-center bg-base-100 
+                        rounded-lg shadow-lg py-6 px-3 md:w-[180px] h-[90px]">
+                            <p className="px-1.5 font-semibold text-lg">Workload</p>
+                            <p className="tooltip font-bold" data-tip={workLoadtooltip}>
                                 <span className={workLoadbadge}>{workLoad}</span>
                             </p>
                         </div>

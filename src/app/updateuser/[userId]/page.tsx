@@ -1,16 +1,40 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { postAndPatchReq } from "@/apiCalls/apiCalls";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { getAndDeleteReq, postAndPatchReq } from "@/apiCalls/apiCalls";
+import User from "@/types/userinput";
+import { useParams } from "next/navigation";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FaEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 
-export default function AddUser(){
+export default function UpdateUser(){
     const [isLoading , setIsLoading] = useState(false);
     const [isPasswordShow , setIsPasswordShow] = useState(false);
-    const [userData , setUserData] = useState({
+    const {userId} = useParams();
+
+    useEffect(()=>{
+        if(!userId){
+            return;
+        }
+        const getUser = async()=>{
+            try {
+                const response = await getAndDeleteReq(`/api/user/${userId}` , "GET");
+                if(response.success){
+                    console.log("response from updateuser page!")
+                }
+            } catch (error: any) {
+                const errorMessage = error.response?.data?.message || "Server Error!.";
+                toast.error(errorMessage);
+            }finally{
+                setIsLoading(false);
+            }
+        }
+        getUser();
+    } , [userId]);
+
+    const [userData , setUserData] = useState<User>({
         name:"",
         email:"",
         password:"",

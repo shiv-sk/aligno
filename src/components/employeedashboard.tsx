@@ -21,13 +21,15 @@ export default function EmployeeDashboard({ projectId , projectName }: { project
     return(
         <div className="min-h-screen">
             <div className="flex flex-col items-center pt-6 pb-16 gap-6">
-                <div className="flex flex-wrap gap-3 py-6 px-3">
-                    <p>Actions View</p>
+                <div className="flex flex-wrap justify-center items-center gap-3 py-6 px-3">
+                    <p className={`text-lg ${!isAnalyticView ? "font-bold bg-base-100 shadow-lg py-2 px-3 rounded-lg" : 
+                    isAnalyticView ? "font-normal bg-base-100 shadow-lg py-2 px-3 rounded-lg" : ""}`}>Actions View</p>
                     <input type="checkbox"
                     checked={isAnalyticView}
                     onChange={handleAnalyticClick} 
-                    className="toggle" />
-                    <p>Analytic View</p>
+                    className="toggle toggle-xl" />
+                    <p className={`text-lg ${isAnalyticView ? "font-bold bg-base-100 shadow-lg py-2 px-3 rounded-lg" : 
+                    !isAnalyticView ? "font-normal bg-base-100 shadow-lg py-2 px-3 rounded-lg" : ""}`}>Analytic View</p>
                 </div>
                 {
                     isAnalyticView ? (

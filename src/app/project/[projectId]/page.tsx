@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 
-export default function Company(){
+export default function Project(){
     interface User{
         name:string,
         email:string
@@ -62,7 +62,7 @@ export default function Company(){
                         </div>
                     ):
                     project ? (
-                        <div className="card bg-base-100 w-96 shadow-xl">
+                        <div className="card bg-base-100 md:w-[750px] w-96 shadow-xl">
                             <div className="card-body">
                                 <h2 className="card-title text-center">{project?.name || "ProjectName"}</h2>
                                 <div className="space-y-2">
@@ -80,19 +80,19 @@ export default function Company(){
                                         : "Project Creation Date"}
                                     </p>
                                 </div>
-                                <div className="card-actions flex-wrap justify-end">
+                                <div className="card-actions flex md:flex-wrap md:justify-end">
                                     {
                                         user?.isAdmin && (
                                             <>
                                                 <Link href={`/addusers/${projectId}`}>
-                                                    <button className="btn btn-primary">Add User</button>
+                                                    <button className="btn btn-primary">Assign User</button>
                                                 </Link>
-                                                <Link href={`/`}>
-                                                    <button className="btn btn-primary">Edit</button>
+                                                <Link href={`/updateproject/${projectId}`}>
+                                                    <button className="btn btn-primary">Update</button>
                                                 </Link>
-                                                <Link href={`/`}>
-                                                    <button className="btn btn-primary">Delete</button>
-                                                </Link>
+                                                {/* <Link href={`/`}>
+                                                    <button className="btn btn-primary">Del</button>
+                                                </Link> */}
                                                 <Link href={`/admindashboard/${projectId}`}>
                                                     <button className="btn btn-primary">Analytics</button>
                                                 </Link>

@@ -7,6 +7,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{userId:string}}
         const userId = params.userId;
         if(!userId){
             return NextResponse.json({
+                success:false,
                 status:400,
                 message:"userId is required!"
             } , {status:400})
@@ -19,11 +20,13 @@ export async function PATCH(req: NextRequest , {params}:{params:{userId:string}}
         const updatedUser = await User.findByIdAndUpdate(userId , {...data} , {new:true});
         if(!updatedUser){
             return NextResponse.json({
+                success:false,
                 status:404,
                 message:"user is not found or not updated!"
             } , {status:404})
         }
         return NextResponse.json({
+            success:true,
             status:200,
             message:"updated user is! ",
             updatedUser
@@ -31,6 +34,41 @@ export async function PATCH(req: NextRequest , {params}:{params:{userId:string}}
     } catch (err) {
         console.error("update User error!" , err);
         return NextResponse.json({
+            success:false,
+            status:500,
+            message:"User error! "
+        } , {status:500})
+    }
+}
+
+export async function GET(req: NextRequest , {params}:{params:{userId:string}}){
+    try {
+        const userId = params.userId;
+        if(!userId){
+            return NextResponse.json({
+                success:false,
+                status:400,
+                message:"userId is required!"
+            } , {status:400})
+        }
+        const user = await User.findById(userId);
+        if(!user){
+            return NextResponse.json({
+                success:false,
+                status:404,
+                message:"user is not found! "
+            } , {status:404})
+        }
+        return NextResponse.json({
+            success:true,
+            status:200,
+            message:"user is! ",
+            user,
+        } , {status:200})
+    } catch (err) {
+        console.error("get User by userId error!" , err);
+        return NextResponse.json({
+            success:false,
             status:500,
             message:"User error! "
         } , {status:500})
@@ -42,6 +80,7 @@ export async function DELETE(req: NextRequest , {params}:{params:{userId:string}
         const userId = params.userId;
         if(!userId){
             return NextResponse.json({
+                success:false,
                 status:400,
                 message:"userId is required!"
             } , {status:400})
@@ -49,11 +88,13 @@ export async function DELETE(req: NextRequest , {params}:{params:{userId:string}
         const deletedUser = await User.findByIdAndDelete(userId);
         if(!deletedUser){
             return NextResponse.json({
+                success:false,
                 status:404,
                 message:"user is not found or not deleted!"
             } , {status:404})
         }
         return NextResponse.json({
+            success:true,
             status:200,
             message:"updated user is! ",
             deletedUser
@@ -61,6 +102,7 @@ export async function DELETE(req: NextRequest , {params}:{params:{userId:string}
     } catch (err) {
         console.error("delete User error!" , err);
         return NextResponse.json({
+            success:false,
             status:500,
             message:"User error! "
         } , {status:500})

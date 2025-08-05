@@ -23,7 +23,7 @@ export default function Home(){
             setIsLoading(true);
             try {
                 const response = await getAndDeleteReq(`/api/project` , "GET");
-                console.log("response from allProjectsPage! " , response);
+                // console.log("response from allProjectsPage! " , response);
                 if(response.success){
                     setAllProjects(response?.projects || []);
                 }
