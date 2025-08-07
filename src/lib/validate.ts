@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ZodSchema } from "zod";
+import { ZodTypeAny } from "zod";
 
-export async function validateInput<T>(req:Request , schema:ZodSchema<T>):Promise<{success:true; data:T }| {success:false; errors:any }>{
+export async function validateInput<T>(req:Request , schema:ZodTypeAny):Promise<{success:true; data:T }| {success:false; errors:any }>{
     try {
         const body = await req.json();
         const parsed = schema.safeParse(body);

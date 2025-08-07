@@ -8,11 +8,3 @@ export interface IssueRates{
     overdueRate:number,
     prioritybased:Priority[]
 }
-
-/* 
-const projectHealth = {
-            completionRate,
-            overdueRate,
-            activityRate,
-        }
-*/

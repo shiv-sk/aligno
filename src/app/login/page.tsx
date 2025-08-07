@@ -50,11 +50,11 @@ export default function Login(){
     }
     
     return(
-        <div className="flex flex-col justify-center items-center min-h-screen gap-4 py-5 bg-base-300">
-            <div className="max-w-sm w-full p-6 rounded-lg shadow-lg bg-base-100">
+        <div className="min-h-screen gap-4 py-5 bg-base-300">
+            <div className="max-w-sm w-full p-6 rounded-lg shadow-lg bg-base-100 mx-auto my-20">
                 <h1 className="text-center font-bold text-2xl mb-4">Login</h1>
-                <div className="">
-                    <form className="flex flex-col gap-4" onSubmit={handleLogin}>
+                <div className="flex flex-col">
+                    <form className="flex flex-col gap-3" onSubmit={handleLogin}>
                     <label htmlFor="email" className="text-md font-medium">Email</label>    
                     <input
                     name="email" 

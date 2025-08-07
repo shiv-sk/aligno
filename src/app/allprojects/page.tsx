@@ -7,6 +7,8 @@ import { useEffect, useState } from "react"
 import { CiFilter } from "react-icons/ci";
 import { toast } from "react-toastify";
 import { CiSearch } from "react-icons/ci";
+import { useAuth } from "@/context/authcontext";
+import { useRouter } from "next/navigation";
 
 export default function Home(){
     interface Project{
@@ -17,6 +19,14 @@ export default function Home(){
 
     const [allProjects , setAllProjects] = useState<Project[]>([]);
     const [isLoading , setIsLoading] = useState(false);
+    const {user} = useAuth();
+    const router = useRouter();
+
+    useEffect(()=>{
+        if(!user){
+            router.push("/");
+        }
+    } , [user]);
 
     useEffect(()=>{
         const getAllProjects = async()=>{
@@ -41,8 +51,8 @@ export default function Home(){
     return(
         <div className="min-h-screen py-5 bg-base-300">
             <div className="flex flex-col justify-center items-center">
-                <div className="w-full max-w-xl md:max-w-4xl mb-6 flex flex-row justify-between gap-3">
-                    <div className="relative w-full">
+                <div className="w-full max-w-sm md:max-w-4xl mb-6 flex flex-col md:flex-row justify-between gap-3 items-center">
+                    <div className="relative w-full max-w-[320px] md:max-w-[550px]">
                         <CiSearch className="absolute z-10 left-3 top-1/2 -translate-y-1/2 text-xl text-gray-500"/>
                         <input 
                         type="text" 
@@ -52,7 +62,7 @@ export default function Home(){
                         className="input md:w-full w-xs pl-9 shadow-xl h-12"/>
                     </div>
                     
-                    <div className="relative w-full max-w-[200px]">
+                    <div className="relative w-full max-w-[320px]">
                         <CiFilter className="absolute z-10 left-3 top-1/2 -translate-y-1/2 text-xl text-gray-500"/>
                         <select className="select shadow-xl pl-9 w-full h-12">
                             <option disabled={true}>Select a value</option>

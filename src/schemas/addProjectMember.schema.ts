@@ -1,8 +1,9 @@
-import { z } from "zod/v4";
+import { z } from "zod";
 import objectIdSchema from "./objectId.schema";
 const addProjectMemberSchema = z.object({
     projectId:objectIdSchema,
     userId:objectIdSchema,
     role:z.enum(["Manager" , "TeamLead" , "Employee"]),
 });
-export default addProjectMemberSchema;
+const userAssignSchema = z.array(addProjectMemberSchema);
+export default userAssignSchema;

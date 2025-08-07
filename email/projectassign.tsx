@@ -4,9 +4,8 @@ interface IssueAssignment{
     userName:string,
     projectName:string,
     role:string,
-    adminmail:string
 }
-export default function ProjectAssignEmailTemplate({projectName , userName , role , adminmail}: IssueAssignment){
+export default function ProjectAssignEmailTemplate({projectName , userName , role}: IssueAssignment){
     return(
         <Html lang="en">
             <Head/>
@@ -32,7 +31,7 @@ export default function ProjectAssignEmailTemplate({projectName , userName , rol
                 </Row>
                 <Row>
                     <Text>
-                        If you have any questions or need assistance, feel free to reach out to ${adminmail}.
+                        If you have any questions or need assistance, feel free to reach out to.
                     </Text>
                 </Row>
             </Section>

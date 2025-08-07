@@ -92,11 +92,10 @@ export default function AddUsers(){
             // console.error("error addProjectPage! " , error);
             toast.error(errorMessage);
         }
-        console.log("the final data! " , dataToSend);
     }
     return(
         <div className="flex flex-col justify-center items-center min-h-screen gap-4 py-5 bg-base-300">
-            <div className="md:w-[450px] w-full p-6 rounded-xl shadow-xl bg-base-100 w-96">
+            <div className="md:w-[400px] w-full p-6 rounded-xl shadow-xl bg-base-100 w-96">
                 <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">Add Users</h1>
                 <div className="">
                     <form className="flex flex-col gap-4" onSubmit={handleAddUser}>
@@ -123,10 +122,10 @@ export default function AddUsers(){
                     </form>
                 </div>
             </div>
-            <div className="bg-base-100 rounded-xl py-4 px-1.5 shadow-xl w-96">
+            <div className="bg-base-100 rounded-xl py-4 px-1.5 md:shadow-xl w-96">
                 <h3 className="text-center py-2.5 px-4 text-lg">Selected Users</h3>
                 <div className="overflow-x-auto">
-                    <table className="table">
+                    <table className="table table-sm md:table-md min-w-full divide-y divide-neutral-200">
                         <thead>
                             <tr>
                                 <th className="font-black text-sm">Name</th>
@@ -139,11 +138,25 @@ export default function AddUsers(){
                             {
                                 selectedusers && selectedusers.length > 0 ? selectedusers.map((selectedUser)=>{
                                     const user = allUsers.find((u)=>u._id === selectedUser.userId);
+                                    let badgeColor;
+                                    switch(selectedUser?.role){
+                                        case "Manager":
+                                            badgeColor = "badge badge-neutral text-center mt-2.5 font-semibold";
+                                            break;
+                                        case "TeamLead":
+                                            badgeColor = "badge badge-info text-center mt-2.5 font-semibold";
+                                            break;
+                                        case "Employee":
+                                            badgeColor = "badge badge-secondary text-center mt-2.5 font-semibold ";
+                                            break;
+                                        default:
+                                            badgeColor = "badge badge-secondary text-center mt-2.5 font-semibold ";
+                                    }
                                     return(
                                         <tr key={selectedUser.userId}>
                                             <td>{user?.name || "userName"}</td>
                                             <td>{user?.email || "userEmail"}</td>
-                                            <td>{selectedUser?.role || "Role"}</td>
+                                            <td className={`${badgeColor}`}>{selectedUser?.role || "Role"}</td>
                                             <td onClick={()=>handleRemoveSelectedUser(user)}>{"remove"}</td>
                                         </tr>
                                     )

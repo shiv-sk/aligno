@@ -84,10 +84,10 @@ export default function Navbar(){
                     </>
                 ) : (
                     <>
-                        <div className="navbar-end">
-                            <Link href={"/"} className="btn btn-ghost text-xl">Aligno</Link>
+                        <div className="navbar-start">
+                            <Link href={"/"} className="btn btn-ghost text-2xl bg-primary text-white shadow-lg border-b-2">Aligno</Link>
                         </div>
-                        <div className="hidden md:navbar-end">
+                        <div className="navbar-end">
                             <Link href={"/login"} className="btn">Login</Link>
                         </div>
                     </>

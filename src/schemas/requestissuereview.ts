@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from "zod";
 import objectIdSchema from "./objectId.schema";
 const requestIssueReviewSchema = z.object({
     issueId:objectIdSchema,
