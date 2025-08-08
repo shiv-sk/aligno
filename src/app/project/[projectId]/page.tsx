@@ -62,7 +62,7 @@ export default function Project(){
                         </div>
                     ):
                     project ? (
-                        <div className="card bg-base-100 md:w-[750px] w-96 shadow-xl">
+                        <div className="card bg-base-100 md:w-[750px] w-80 shadow-xl">
                             <div className="card-body">
                                 <h2 className="card-title text-center">{project?.name || "ProjectName"}</h2>
                                 <div className="space-y-2">

@@ -10,7 +10,7 @@ import { CiSearch } from "react-icons/ci";
 import { useAuth } from "@/context/authcontext";
 import { useRouter } from "next/navigation";
 
-export default function Home(){
+export default function AllProjects(){
     interface Project{
         _id:string,
         name:string,
@@ -19,14 +19,17 @@ export default function Home(){
 
     const [allProjects , setAllProjects] = useState<Project[]>([]);
     const [isLoading , setIsLoading] = useState(false);
-    const {user} = useAuth();
+    const {user , isLoading: useAuthLoading} = useAuth();
     const router = useRouter();
 
     useEffect(()=>{
-        if(!user){
-            router.push("/");
+        if(useAuthLoading){
+            return;
         }
-    } , [user]);
+        if(!user){
+            router.replace("/");
+        }
+    } , [user , useAuthLoading , router]);
 
     useEffect(()=>{
         const getAllProjects = async()=>{
@@ -71,7 +74,7 @@ export default function Home(){
                         </select>
                     </div>
                 </div>
-                <h1 className="text-3xl font-bold text-center py-3.5 px-2">AllProjects</h1>
+                <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">AllProjects</h1>
                 <p className="text-gray-500 text-center mb-4">Browse through all your team or company projects</p>
                 <div className="flex flex-wrap gap-3 justify-center items-center">
                     {
@@ -81,7 +84,7 @@ export default function Home(){
                             </div>
                         ) :
                         allProjects && allProjects.length > 0 ? allProjects.map((project)=>(
-                            <div className="card bg-base-100 w-96 shadow-xl" key={project._id}>
+                            <div className="card bg-base-100 md:w-96 w-80 shadow-xl" key={project._id}>
                                 <div className="card-body">
                                     <h2 className="card-title">{project?.name || "Project-Name"}</h2>
                                     <p>{project?.description || "Project-Description"}</p>

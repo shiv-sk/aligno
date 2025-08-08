@@ -191,7 +191,7 @@ export default function Home(){
             <p className="mt-4 text-sm text-gray-500">Made by Shivanand Y.K</p>
           </div>
         </div>
-        <div className="absolute inset-0 left-[350px] bg-gray-700 z-0 w-1/4 mt-6 mb-6"></div>
+        <div className="absolute inset-0 md:left-[350px] bg-gray-700 z-0 md:w-1/4 mt-6 mb-6"></div>
       </div>
     </div>
   )

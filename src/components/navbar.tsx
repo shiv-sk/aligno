@@ -65,21 +65,27 @@ export default function Navbar(){
                                     tabIndex={0}
                                     className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                                     <li className="font-bold text-lg">
-                                        <Link href={"/"}>MyTasks</Link>
+                                        <Link href={"/mytasks"}>MyTasks</Link>
+                                    </li>
+                                    <li className="font-bold text-lg">
+                                        <Link href={"/assignedprojects"}>MyProjects</Link>
                                     </li>
                                 </ul>
                             </div>
-                            <Link href={"/"} className="btn btn-ghost text-4xl">Aligno</Link>
+                            <Link href={"/"}className="btn btn-ghost text-2xl bg-primary text-white shadow-lg border-b-2">Aligno</Link>
                         </div>
                         <div className="navbar-center hidden lg:flex">
                             <ul className="menu menu-horizontal px-1">
                                 <li className="font-bold text-lg">
                                     <Link href={"/mytasks"}>MyTasks</Link>
                                 </li>
+                                <li className="font-bold text-lg">
+                                    <Link href={"/assignedprojects"}>MyProjects</Link>
+                                </li>
                             </ul>
                         </div>
-                        <div className="hidden md:navbar-end">
-                            <Link href={"/login"} className="btn">Logout</Link>
+                        <div className="navbar-end">
+                            <button onClick={logoutUser} className="btn">Logout</button>
                         </div>
                     </>
                 ) : (

@@ -48,7 +48,7 @@ const useAuth = ()=>useContext(AuthContext);
 
 const AuthProvider = ({ children }: { children: ReactNode })=>{
     const [user , setUser] = useState<User | null>(null);
-    const [isLoading , setIsLoading] = useState(false);
+    const [isLoading , setIsLoading] = useState(true);
 
     useEffect(()=>{
         const currentUser = async():Promise<AuthResponse>=>{
@@ -56,11 +56,11 @@ const AuthProvider = ({ children }: { children: ReactNode })=>{
             try {
                 const response = await getAndDeleteReq(`/api/user/me` , "GET");
                 if(response.success){
-                    console.log(response);
+                    // console.log(response);
                     setUser(response?.user);
                 }
                 console.log("user from current user function! " , user);
-                return { success: true, data: response?.data }; 
+                return { success: true, data: response?.user }; 
             } catch (error: any) {
                 const errorMessage = error.response?.data?.message || "Unable to find current user.";
                 return { success:false , error:errorMessage }
