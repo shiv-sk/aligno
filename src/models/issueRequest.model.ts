@@ -2,6 +2,7 @@ import mongoose, { Document, Schema } from "mongoose";
 
 interface IssueRequestModel extends Document{
     issueId: mongoose.Types.ObjectId,
+    projectId: mongoose.Types.ObjectId,
     requestedBy: mongoose.Types.ObjectId,
     actionTakenBy: mongoose.Types.ObjectId,
     status:string,
@@ -14,6 +15,11 @@ const IssueRequestSchema:Schema<IssueRequestModel> = new Schema({
     issueId:{
         type:Schema.Types.ObjectId,
         ref:"Issue",
+        required:[true , "IssueId is required! "],
+    },
+    projectId:{
+        type:Schema.Types.ObjectId,
+        ref:"Project",
         required:[true , "ProjectId is required! "],
     },
     requestedBy:{

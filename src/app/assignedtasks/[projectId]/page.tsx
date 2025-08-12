@@ -7,24 +7,25 @@ import { Issue } from "@/types/issue";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { CiFilter } from "react-icons/ci";
+import { CiFilter, CiSearch } from "react-icons/ci";
 import { toast } from "react-toastify";
 
-export default function AvailableTasks(){
-    const {projectId} = useParams();
-    const [allIssues , setAllIssues] = useState<Issue[]>([]);
+export default function MyTasks(){
     const [isLoading , setIsLoading] = useState(false);
+    const [issues , setAllIssues] = useState<Issue[]>([]);
+    const {projectId} = useParams();
+
     useEffect(()=>{
-        if(!projectId){
-            return;
-        }
-        const getAllAvailableIssues = async()=>{
+        const getAllAssignedIssues = async()=>{
+            if(!projectId){
+                return;
+            }
             setIsLoading(true);
             try {
-                const response = await getAndDeleteReq(`/api/issue/availableissues/${projectId}` , "GET");
-                // console.log("response from availablesTasks page! " , response);
+                const response = await getAndDeleteReq(`/api/issue/projectassignedissues/${projectId}` , "GET");
                 if(response.success){
-                    setAllIssues(response.issues);
+                    // console.log("the assigned issues are! " , response);
+                    setAllIssues(response?.issues);
                 }
             } catch (error: any) {
                 const errorMessage = error.response?.data?.message || "Server Error!.";
@@ -33,19 +34,23 @@ export default function AvailableTasks(){
                 setIsLoading(false);
             }
         }
-        getAllAvailableIssues();
+        getAllAssignedIssues();
     } , [projectId]);
+
     return(
         <div className="bg-base-200 min-h-screen">
-            <div className="flex flex-col pt-8 items-center">
+            <div className="flex flex-col py-6 items-center">
                 <div className="w-full max-w-xl md:max-w-4xl mb-6 flex flex-row justify-between gap-3">
-                    <input
-                    type="text" 
-                    name="search"
-                    id="search" 
-                    placeholder="Search by name or description" 
-                    className="input md:w-full w-xs shadow-xl h-12"
-                    />
+                    <div className="relative w-full">
+                        <CiSearch className="absolute z-10 left-3 top-1/2 -translate-y-1/2 text-xl text-gray-500"/>
+                        <input
+                        type="text" 
+                        name="search"
+                        id="search" 
+                        placeholder="Search by name or description" 
+                        className="input md:w-full w-xs shadow-xl h-12"
+                        />
+                    </div>
                     <div className="relative w-full max-w-[200px]">
                         <CiFilter className="absolute z-10 left-3 top-1/2 -translate-y-1/2 text-xl text-gray-500"/>
                         <select className="select shadow-xl pl-9 w-full h-12">
@@ -56,15 +61,15 @@ export default function AvailableTasks(){
                         </select>
                     </div>
                 </div>
-                <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">Available Tasks</h1>
-                <div className="flex flex-wrap items-center justify-center gap-4 py-6">
+                <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">My Tasks</h1>
+                <div className="flex flex-wrap items-center justify-center gap-4 pt-2.5">
                     {
                         isLoading ? (
                             <div className="flex justify-center items-center h-64">
                                 <span className="loading loading-spinner loading-xl"></span>
                             </div>
                         ) :
-                        allIssues && allIssues.length > 0 ? allIssues.map((issue)=>{
+                        issues && issues.length > 0 ? issues.map((issue)=>{
                             let priorityBadgeColor = "";
                             switch(issue.priority){
                                 case Constants.High:
@@ -74,7 +79,7 @@ export default function AvailableTasks(){
                                     priorityBadgeColor = "badge badge-secondary text-center font-semibold"
                                     break;
                                 case Constants.Low:
-                                    priorityBadgeColor = "badge badge-primary text-center font-semibold"
+                                    priorityBadgeColor = "badge bg-sky-900 text-center text-white font-semibold"
                                     break;
                                 default:
                                     priorityBadgeColor = "badge badge-info text-center font-semibold"
@@ -83,14 +88,11 @@ export default function AvailableTasks(){
                             const today = new Date();
                             const duedate = new Date(issue.duedate);
                             let duedateBadgeColor = ""
-                            let tooltipData = ""
                             if(today > duedate){
                                 duedateBadgeColor = "badge badge-error";
-                                tooltipData = "due is passed";
                             }
                             else if(duedate > today){
                                 duedateBadgeColor = "badge badge-success";
-                                tooltipData = "due has time";
                             }
                             else{
                                 duedateBadgeColor = "badge badge-warning";
@@ -109,26 +111,23 @@ export default function AvailableTasks(){
                                             {issue.priority || "Task Priority!"}
                                         </span>
                                     </p>
-                                    <p className="font-bold tooltip" data-tip={tooltipData}>Duedate:
-                                        <span className={`font-normal`}>
-                                            {`${issue.duedate ? new Date(issue.duedate).toDateString() : "Task Duedate!"}`}
-                                        </span>
+                                    <p className="font-bold">Duedate: 
                                         <span className={`${duedateBadgeColor} font-normal`}>
-                                            000
+                                            {`${issue.duedate ? new Date(issue.duedate).toDateString() : "Task Priority!"}`}
                                         </span>
                                     </p>
                                     <div className="card-actions justify-end">
-                                    <Link href={`/issuedetail/${issue._id}`}>
-                                        <button className="btn btn-primary">View Details</button>
-                                    </Link>
+                                        <Link href={`/issuedetail/${issue._id}`}>
+                                            <button className="btn btn-primary">View Details</button>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
                             )
-                            }) : allIssues && allIssues.length === 0 ? (
+                        }) : issues && issues.length === 0 ? (
                             <div className="flex justify-center items-center h-64">
                                 <p className="text-lg font-semibold">
-                                    Currently Tasks are not Available.
+                                    Currently Tasks are not Assigned!.
                                 </p>
                             </div>
                         ) : (
@@ -139,6 +138,7 @@ export default function AvailableTasks(){
                             </div>
                         )
                     }
+                    
                 </div>
             </div>
         </div>

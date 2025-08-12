@@ -57,7 +57,8 @@ export default function IssueRequestReview(){
             // console.log("response from assign issue! " , response);
             if(response.success){
                 toast.success("Task assigned successfully.");
-                router.push(`/allissuerequests`);
+                const projectId = response?.data?.updatedIssueRequest?.projectId;
+                router.push(`/allissuerequests/${projectId}`);
             }
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || "Server Error!.";
@@ -78,7 +79,7 @@ export default function IssueRequestReview(){
             // console.log("response from assign issue! " , response);
             if(response.success){
                 toast.success("TaskRequest Rejected Successfully.");
-                router.push(`/allissuerequests`);
+                // router.push(`/allissuerequests`);
             }
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || "Server Error!.";
@@ -114,12 +115,18 @@ export default function IssueRequestReview(){
                                             disabled={isAssignLoading} 
                                             onClick={handleAssignIssue}
                                             title="Assign this task to the requested user"
-                                            >{isAssignLoading ? "Approving..." : "Approve"}</button>
+                                            >{isAssignLoading ? 
+                                            <span className="loading loading-spinner loading-xs"></span> 
+                                            : "Approve"}
+                                            </button>
                                             <button 
                                             className="btn btn-secondary text-lg"
                                             onClick={handleRejectIssueRequest}
                                             title="Reject the Taskrequest"
-                                            >{isRejectLoading ? "Rejecting..." : "Reject"}</button>
+                                            >{isRejectLoading ? 
+                                            <span className="loading loading-spinner loading-xs"></span> 
+                                            : "Reject"}
+                                            </button>
                                         </>
                                     )
                                 }

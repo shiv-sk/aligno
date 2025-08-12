@@ -4,6 +4,7 @@ interface IssueReviewModel extends Document{
     issueId: mongoose.Types.ObjectId,
     requestedBy: mongoose.Types.ObjectId,
     reviewedBy: mongoose.Types.ObjectId,
+    projectId: mongoose.Types.ObjectId,
     status:string,
     reviewedAt:Date,
     attachment:string,
@@ -16,6 +17,11 @@ const IssueReviewSchema:Schema<IssueReviewModel> = new Schema({
     issueId:{
         type:Schema.Types.ObjectId,
         ref:"Issue",
+        required:[true , "IssueId is required! "],
+    },
+    projectId:{
+        type:Schema.Types.ObjectId,
+        ref:"Project",
         required:[true , "ProjectId is required! "],
     },
     requestedBy:{

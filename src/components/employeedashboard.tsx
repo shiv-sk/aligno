@@ -59,13 +59,29 @@ export default function EmployeeDashboard({ projectId , projectName }: { project
                                     <ul className="menu p-4 w-64 min-h-full bg-base-100 text-base-content gap-2">
                                     {/* Sidebar content here */}
                                     <Link href={`/allissues/1234`}>
-                                        <li><button className="btn w-full">All Tasks</button></li>
-                                    </Link>
-                                    <Link href={`/availabletasks/${projectId}`}>
-                                        <li><button className="btn w-full btn-neutral">Available Tasks</button></li>
+                                        <li>
+                                            <button className="btn w-full">MyProjects</button>
+                                        </li>
                                     </Link>
                                     <Link href={`/#`}>
-                                        <li><button className="btn w-full btn-neutral">Insigths</button></li>
+                                        <li>
+                                            <button className="btn w-full btn-neutral">AllTasks</button>
+                                        </li>
+                                    </Link>
+                                    <Link href={`/availabletasks/${projectId}`}>
+                                        <li>
+                                            <button className="btn w-full btn-neutral">AvailableTasks</button>
+                                        </li>
+                                    </Link>
+                                    <Link href={`/assignedtasks/${projectId}`}>
+                                        <li>
+                                            <button className="btn w-full btn-neutral">MyTasks</button>
+                                        </li>
+                                    </Link>
+                                    <Link href={`/overview/${projectId}`}>
+                                        <li>
+                                            <button className="btn w-full btn-neutral">Overview</button>
+                                        </li>
                                     </Link>
                                     </ul>
                                 </div>
@@ -74,28 +90,28 @@ export default function EmployeeDashboard({ projectId , projectName }: { project
                                 <div className="hidden md:flex gap-4">
                                     <li>
                                         <Link href={`/allissues/1234`}>
-                                            <button className="btn text-lg shadow-xl">All Projects</button>
+                                            <button className="btn text-lg shadow-xl">MyProjects</button>
                                         </Link>
                                     </li>
                                 </div>
                                 <div className="hidden md:flex gap-4">
                                     <li>
                                         <Link href={`/allissues/1234`}>
-                                            <button className="btn btn-neutral shadow-xl">All Tasks</button>
+                                            <button className="btn btn-neutral shadow-xl">AllTasks</button>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link href={`/availabletasks/${projectId}`}>
-                                            <button className="btn btn-neutral shadow-xl">Available Tasks</button>
+                                            <button className="btn btn-neutral shadow-xl">AvailableTasks</button>
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href={`/#`}>
-                                            <button className="btn btn-neutral shadow-xl">Insights</button>
+                                        <Link href={`/assignedtasks/${projectId}`}>
+                                            <button className="btn btn-neutral shadow-xl">MyTasks</button>
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href={`/#`}>
+                                        <Link href={`/overview/${projectId}`}>
                                             <button className="btn btn-neutral shadow-xl">Overview</button>
                                         </Link>
                                     </li>

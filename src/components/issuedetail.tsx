@@ -16,7 +16,6 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
     const [isReviewLoading , setIsReviewLoading] = useState(false);
     const [reviewIssueData , setReviewIssueData] = useState({
         issueId:"",
-        requestedBy:"",
         comment:""
     });
     const commentRef = useRef<HTMLDialogElement | null>(null);
@@ -51,7 +50,12 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
 
     const closeModal = async (e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
-        if(!reviewIssueData.issueId || !reviewIssueData.requestedBy){
+        if(!reviewIssueData.issueId){
+            return;
+        }
+        if(!reviewIssueData.comment){
+            commentRef.current?.close();
+            toast.error("Please add comment!");
             return;
         }
         setIsReviewLoading(true);
@@ -59,27 +63,29 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
         try {
             const response = await postAndPatchReq(`/api/issuereview/` , "POST" , reviewIssueData);
             if(response.success){
-                // console.log("response from review issue component! " , response);
+                console.log("response from review issue component! " , response);
                 toast.success("Task sent to review stage! ");
                 setReviewIssueData({
                     issueId:"",
-                    requestedBy:"",
                     comment:""
                 })
             }
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || "Server Error!.";
             toast.error(errorMessage);
+            setReviewIssueData({
+                issueId:"",
+                comment:""
+            })
         }finally{
             setIsReviewLoading(false);
         }
     }
 
     useEffect(()=>{
-        if(issue && issue._id && issue.assignedTo?._id){
+        if(issue && issue?._id && issue.assignedTo?._id){
             setReviewIssueData({
-                issueId: issue._id,
-                requestedBy: issue.assignedTo._id,
+                issueId: issue?._id,
                 comment: ""
             })
         }
@@ -134,13 +140,13 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
                     role === Constants.TeamLead &&(
                         <button 
                         className="btn btn-primary" 
-                        disabled={!!issue?.assignedTo._id && issue.status !== Constants.Open}
+                        disabled={!!issue?.assignedTo?._id && issue.status !== Constants.Open}
                         title={issue?.status === Constants.Assigned ? "Task is assigned" : "Assign Task"}
                         >{isLoading ? <span className="loading loading-spinner loading-xs"></span> : "Assign"}</button>
                     )
                 }
                 {
-                    role === Constants.TeamLead && issue?.assignedBy._id === user?._id &&(
+                    role === Constants.TeamLead && issue?.assignedBy?._id === user?._id &&(
                         <button 
                         className="btn btn-primary" 
                         disabled={isLoading}

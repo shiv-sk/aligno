@@ -6,11 +6,12 @@ import Issue from "@/models/issue.model";
 import newIssueSchema from "@/schemas/newIssue.schema";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
 export async function POST(req: NextRequest){
     await dbConnect();
     try {
-        const validation = await validateInput(req , newIssueSchema);
+        const validation = await validateInput<z.infer<typeof newIssueSchema>>(req , newIssueSchema);
         if(!validation.success){
             return NextResponse.json({
                 success:false,

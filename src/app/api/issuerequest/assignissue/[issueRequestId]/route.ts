@@ -32,18 +32,18 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
                 message:"Task is not found!"
             } , {status:404})
         }
-        const {projectId} = issue;
+        const {projectId} = issueRequest;
         const authorizedUser = await authorizeRole(["TeamLead"])(projectId.toString());
         if("status" in authorizedUser){
             return authorizedUser;
         }
-        if(issue.assignedTo){
-            return NextResponse.json({
-                success:false,
-                status:400,
-                message:"Task is already assigned!"
-            } , {status:400})
-        }
+        // if(issue.assignedTo){
+        //     return NextResponse.json({
+        //         success:false,
+        //         status:400,
+        //         message:"Task is already assigned!"
+        //     } , {status:400})
+        // }
         const actionTakenBy = authorizedUser.user?._id;
         if(!actionTakenBy){
             return NextResponse.json({
@@ -68,9 +68,9 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
         if(!updatedIssueRequest){
             return NextResponse.json({
                 success:false,
-                status:400,
+                status:500,
                 message:"issueRequest is not updated! "
-            } , {status:400})
+            } , {status:500})
         }
         if(!requestedBy){
             return NextResponse.json({
@@ -87,9 +87,9 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
         if(!assignedIssue){
             return NextResponse.json({
                 success:false,
-                status:400,
+                status:500,
                 message:"issue is not updated! "
-            } , {status:400})
+            } , {status:500})
         }
         return NextResponse.json({
             success:true,

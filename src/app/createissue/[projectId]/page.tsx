@@ -1,38 +1,45 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { postAndPatchReq } from "@/apiCalls/apiCalls";
 import { useAuth } from "@/context/authcontext";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function CreateIssue(){
     const {projectId} = useParams();
     const {user} = useAuth();
     const [isLoading , setIsLoading] = useState(false);
     const [issueData , setIssueData] = useState({
-        title:"",
+        name:"",
         description:"",
         duedate:"",
-        createdBy:"",
-        projectId:"",
+        projectId:projectId ? projectId : null,
         priority:""
     });
-    const handleCreateIssue = (e)=>{
+    const handleCreateIssue = async (e:FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
         if(!user || !user._id || !projectId){
             return;
         }
         setIsLoading(true);
         try {
-            console.log("issue data is! " , issueData);
-        } catch (error) {
-            console.error("error from createIssue page!" , error);
+            const response = await postAndPatchReq(`/api/issue` , "POST" , issueData);
+            if(response.success){
+                // console.log("response from createIssue page! " , response);
+                toast.success("Task created successfully! ");
+            }
+        } catch (error: any) {
+            const errorMessage = error.response?.data?.message || "Server Error!.";
+            // console.error("error from getAllProjectPage! " , error);
+            toast.error(errorMessage);
         }finally{
             setIsLoading(false);
         }
     }
     const handleOnChange = (e)=>{
-        e.preventDefault();
-        setIssueData({...issueData , [e.target.name]:e.target.value});
+        setIssueData({...issueData , [e.target.name]:e.target.value})
     }
     const date = ()=>{
         const tomorrowDate = new Date();
@@ -42,17 +49,17 @@ export default function CreateIssue(){
     return(
         <div className="flex flex-col justify-center items-center min-h-screen gap-4 py-5 bg-base-200">
             <div className="max-w-sm w-full p-6 rounded-lg shadow-xl bg-base-100">
-                <h1 className="text-center font-bold text-2xl mb-4">New Issue</h1>
+                <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">New Task</h1>
                 <div className="">
                     <form className="flex flex-col gap-4" onSubmit={handleCreateIssue}>
-                    <label htmlFor="title" className="text-md font-medium">Title</label>    
+                    <label htmlFor="name" className="text-md font-medium">Title</label>    
                     <input
-                    name="title" 
+                    name="name" 
                     type="text"
-                    id="title" 
+                    id="name" 
                     placeholder="Task1" 
                     className="input w-full shadow-md"
-                    value={issueData.title}
+                    value={issueData.name}
                     onChange={handleOnChange} 
                     required
                     />
@@ -79,7 +86,7 @@ export default function CreateIssue(){
                     <label htmlFor="role" className="text-md font-medium mb-1">Select Priority</label>
                     <select value={issueData.priority} 
                     className="select w-full shadow-md" name="priority" id="priority" onChange={handleOnChange}>
-                        <option disabled={true}>Select a Priority</option>
+                        <option>Select a Priority</option>
                         <option value={"Low"}>Low</option>
                         <option value={"Medium"}>Medium</option>
                         <option value={"High"}>High</option>
@@ -87,7 +94,7 @@ export default function CreateIssue(){
                     <button 
                     type="submit" 
                     className="btn w-full btn-neutral text-lg font-semibold shadow-xl" 
-                    disabled={isLoading}>{isLoading ? "Processing..." :"Create"}</button>
+                    disabled={isLoading}>{isLoading ? <span className="loading loading-spinner loading-xs"></span> :"Create"}</button>
                     </form>
                 </div>
             </div>

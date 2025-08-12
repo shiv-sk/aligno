@@ -41,7 +41,7 @@ export async function GET(req: NextRequest , {params}:{params:{issueReviewId:str
             } , {status:404})
         }
         const {projectId , createdAt:issueCreatedAt , assignedTo , name , description , priority , 
-            createdBy , status:issueStatus , assignedAt} = issue;
+            createdBy , status:issueStatus , assignedAt , duedate} = issue;
         const authorizedUser = await authorizeRole(["Manager"])(projectId._id.toString());
         if("status" in authorizedUser){
             return authorizedUser;
@@ -62,7 +62,8 @@ export async function GET(req: NextRequest , {params}:{params:{issueReviewId:str
             description,
             issueStatus,
             projectName:projectId.name || null,
-            assignedTo:assignedTo.name || null
+            assignedTo:assignedTo.name || null,
+            duedate,
         }
         const timeLine = [
             {

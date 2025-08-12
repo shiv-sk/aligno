@@ -80,7 +80,7 @@ export default function Project(){
                                         : "Project Creation Date"}
                                     </p>
                                 </div>
-                                <div className="card-actions flex md:flex-wrap md:justify-end">
+                                <div className="card-actions flex justify-center md:flex-wrap md:justify-end">
                                     {
                                         user?.isAdmin && (
                                             <>
@@ -90,9 +90,9 @@ export default function Project(){
                                                 <Link href={`/updateproject/${projectId}`}>
                                                     <button className="btn btn-primary">Update</button>
                                                 </Link>
-                                                {/* <Link href={`/`}>
-                                                    <button className="btn btn-primary">Del</button>
-                                                </Link> */}
+                                                <Link href={`/`}>
+                                                    <button className="btn btn-primary">Delete</button>
+                                                </Link>
                                                 <Link href={`/admindashboard/${projectId}`}>
                                                     <button className="btn btn-primary">Analytics</button>
                                                 </Link>

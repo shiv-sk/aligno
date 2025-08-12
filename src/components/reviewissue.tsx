@@ -1,8 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
 import IssueReviewData from "./issuereviewdata";
 import { IssueTimelineResponse } from "@/types/issuereviewdetail";
 import IssueReviewSummary from "./issuereviewsummary";
+import { postAndPatchReq } from "@/apiCalls/apiCalls";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
-export default function ReviewIssue({issue}: {issue: IssueTimelineResponse}){
+export default function ReviewIssue({issue , issueReviewId}: {issue: IssueTimelineResponse , issueReviewId: string | undefined | null}){
     const createdAt = issue.timeLine && issue.timeLine.length > 0 ? issue.timeLine[0]?.timeStamp : null;
     const assignmentRequest = issue.timeLine && issue.timeLine.length > 0 ? issue.timeLine[1]?.timeStamp : null;
     const assignmentRequestReview = issue.timeLine && issue.timeLine.length > 0 ? issue.timeLine[2]?.timeStamp : null;
@@ -47,6 +53,25 @@ export default function ReviewIssue({issue}: {issue: IssueTimelineResponse}){
             delays.push(delayInDays);
         }
     })
+    const [isLoading , setIsLoading] = useState(false);
+    const handleAcceptIssueReview = async()=>{
+        if(!issueReviewId){
+            return;
+        }
+        try {
+            setIsLoading(true);
+            const response = await postAndPatchReq(`/api/issuereview/acceptissue/${issueReviewId}` , "PATCH" , {});
+            if(response.success){
+                console.log("response from issueReview page! " , response);
+                toast.success("Task Review Accepted!");
+            }
+        } catch (error: any) {
+            const errorMessage = error.response?.data?.message || "Server Error!.";
+            toast.error(errorMessage);
+        }finally{
+            setIsLoading(false);
+        }
+    }
 
     return(
         <div className="bg-base-100 py-6 px-4 rounded-lg md:w-[600px] w-96 space-y-6 shadow-lg">
@@ -63,7 +88,7 @@ export default function ReviewIssue({issue}: {issue: IssueTimelineResponse}){
                                     <p className="font-bold">
                                         {issue.label ?? "Task Label"}
                                     </p>
-                                    <p className="font-bold">by: 
+                                    <p className="font-bold"> 
                                         <span className="font-normal">{issue.by.name ?? "N/A"}</span>
                                     </p>
                                     <p className="font-bold">At:
@@ -108,7 +133,13 @@ export default function ReviewIssue({issue}: {issue: IssueTimelineResponse}){
             </div>
             <IssueReviewSummary issue={issue.reviewSummary}/>
             <div className="card-actions justify-end">
-                <button className="btn btn-primary">Accept</button>
+                <button
+                onClick={handleAcceptIssueReview}
+                disabled={isLoading}
+                title="click to accept review" 
+                className="btn btn-primary">{isLoading ? 
+                <span className="loading loading-spinner loading-xs"></span> : "Accept"}
+                </button>
                 <button className="btn btn-secondary">Reject</button>
             </div>
         </div>

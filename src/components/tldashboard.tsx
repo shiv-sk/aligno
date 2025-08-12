@@ -18,13 +18,15 @@ export default function TeamLeadDashboard({ projectId , projectName , userId }: 
     return(
         <div className="min-h-screen">
             <div className="flex flex-col items-center pt-6 pb-16 gap-6">
-                <div className="flex flex-wrap gap-3 py-6 px-3">
-                    <p>Actions View</p>
+                <div className="flex flex-wrap justify-center items-center gap-3 py-6 px-3">
+                    <p className={`text-lg ${!isAnalyticView ? "font-bold bg-base-100 shadow-lg py-2 px-3 rounded-lg" : 
+                    isAnalyticView ? "font-normal bg-base-100 shadow-lg py-2 px-3 rounded-lg" : ""}`}>Actions View</p>
                     <input type="checkbox"
                     checked={isAnalyticView}
                     onChange={handleAnalyticClick} 
-                    className="toggle" />
-                    <p>Analytic View</p>
+                    className="toggle toggle-xl" />
+                    <p className={`text-lg ${isAnalyticView ? "font-bold bg-base-100 shadow-lg py-2 px-3 rounded-lg" : 
+                    !isAnalyticView ? "font-normal bg-base-100 shadow-lg py-2 px-3 rounded-lg" : ""}`}>Analytic View</p>
                 </div>
                 {
                     isAnalyticView ? (
@@ -54,16 +56,16 @@ export default function TeamLeadDashboard({ projectId , projectName , userId }: 
                                     <ul className="menu p-4 w-64 min-h-full bg-base-100 text-base-content gap-2">
                                     {/* Sidebar content here */}
                                     <Link href={`/allissues/1234`}>
-                                        <li><button className="btn w-full">All Projects</button></li>
+                                        <li><button className="btn w-full">MyProjects</button></li>
                                     </Link>
                                     <Link href={`/allissues/${projectId}`}>
-                                        <li><button className="btn w-full btn-neutral">All Tasks</button></li>
+                                        <li><button className="btn w-full btn-neutral">AllTasks</button></li>
                                     </Link>
-                                    <Link href={`/allissuerequests`}>
-                                        <li><button className="btn w-full btn-neutral">Review Requests</button></li>
+                                    <Link href={`/allissuerequests/${projectId}`}>
+                                        <li><button className="btn w-full btn-neutral">ReviewRequests</button></li>
                                     </Link>
                                     <Link href={`/assignedissues`}>
-                                        <li><button className="btn w-full btn-neutral">Assigned Tasks</button></li>
+                                        <li><button className="btn w-full btn-neutral">AssignedTasks</button></li>
                                     </Link>
                                     <Link href={`/overview/${projectId}`}>
                                         <li className="btn w-full btn-neutral">Overview</li>
@@ -71,30 +73,28 @@ export default function TeamLeadDashboard({ projectId , projectName , userId }: 
                                     </ul>
                                 </div>
                             </div>
-                
-                            <div className="py-6">
-                                <ul className="hidden md:flex justify-around items-center max-w-4xl bg-base-100 rounded-xl shadow-xl py-6 px-6">
+                                <ul className="hidden md:flex justify-around items-center w-full max-w-4xl bg-base-100 rounded-xl shadow-xl py-6 px-6">
                                     <div className="hidden md:flex gap-4">
                                         <li>
                                             <Link href={`/allissues/1234`}>
-                                                <button className="btn text-lg shadow-xl">All Projects</button>
+                                                <button className="btn text-lg shadow-xl">MyProjects</button>
                                             </Link>
                                         </li>
                                     </div>
                                     <div className="hidden md:flex gap-4">
                                         <li>
                                             <Link href={`/allissues/${projectId}`}>
-                                                <button className="btn btn-neutral shadow-xl">All Tasks</button>
+                                                <button className="btn btn-neutral shadow-xl">AllTasks</button>
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href={`/allissuerequests`}>
-                                                <button className="btn btn-neutral shadow-xl">Review Requests</button>
+                                            <Link href={`/allissuerequests/${projectId}`}>
+                                                <button className="btn btn-neutral shadow-xl">ReviewRequests</button>
                                             </Link>
                                         </li>
                                         <li>
                                             <Link href={`/assignedissues`}>
-                                                <button className="btn btn-neutral shadow-xl">Assigned Tasks</button>
+                                                <button className="btn btn-neutral shadow-xl">AssignedTasks</button>
                                             </Link>
                                         </li>
                                         <li>
@@ -104,7 +104,6 @@ export default function TeamLeadDashboard({ projectId , projectName , userId }: 
                                         </li>
                                     </div>
                                 </ul>
-                            </div>
                             <div className="hidden md:flex justify-center flex-col w-full max-w-4xl bg-base-300 shadow-md rounded-xl py-4 px-6 text-center">
                                 <h2 className="text-2xl font-semibold text-gray-700">{projectName}</h2>
                                 <p className="text-sm text-gray-500 italic">

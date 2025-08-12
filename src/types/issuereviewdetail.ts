@@ -5,6 +5,7 @@ export interface IssueData{
     issueStatus: string;
     projectName: string | null;
     assignedTo: string | null;
+    duedate:Date,
 }
 export interface TimeLineEntry{
     label: string;

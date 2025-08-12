@@ -45,7 +45,7 @@ export default function ReviewIssue(){
                     ) :
                     issueReviewData ? (
                         <div className="flex justify-center py-6">
-                            <ReviewIssueComponent issue={issueReviewData}/>  
+                            <ReviewIssueComponent issue={issueReviewData} issueReviewId={issueReviewId?.toString()} />  
                         </div>
                     ) : (
                         <div className="flex justify-center items-center h-64">

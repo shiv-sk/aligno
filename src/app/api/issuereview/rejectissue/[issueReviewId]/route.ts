@@ -3,6 +3,7 @@ import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
 import IssueReview from "@/models/issueReview.model";
+import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(req: NextRequest , {params}:{params:{issueReviewId:string}}){
@@ -24,23 +25,16 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueReviewId:s
                 message:"TaskReviewRequest is not found! "
             } , {status:400})
         }
-        const {issueId} = issueReviewRequest;
-        const issue = await Issue.findById(issueId);
-        if(!issue){
-            return NextResponse.json({
-                success:false,
-                status:404,
-                message:"Issue not found! "
-            } , {status:404})
-        }
-        const {projectId} = issue;
+        const {issueId , projectId} = issueReviewRequest;
         const authorizedUser = await authorizeRole(["Manager"])(projectId.toString());
         if("status" in authorizedUser){
             return authorizedUser;
         }
-        const reviewedBy = authorizedUser.user._id
-        const updatedReviewRequest = await IssueReview.findByIdAndUpdate(issueReviewId , 
-            {status:Constants.Rejected , reviewedBy , reviewedAt:new Date()} , {new:true});
+        const reviewedBy = authorizedUser.user._id;
+        issueReviewRequest.status = Constants.Rejected;
+        issueReviewRequest.reviewedBy = reviewedBy as mongoose.Types.ObjectId;
+        issueReviewRequest.reviewedAt = new Date();
+        const updatedReviewRequest = await issueReviewRequest.save();
         if(!updatedReviewRequest){
             return NextResponse.json({
                 success:false,
@@ -48,8 +42,8 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueReviewId:s
                 message:"TaskReviewRequest is not updated or not found! "
             } , {status:400})
         }
-        issue.status = Constants.Reopened;
-        const updatedIssue = await issue.save();
+        const updatedIssue = await Issue.findByIdAndUpdate(issueId , 
+            {status:Constants.Reopened} , {new:true});
         if(!updatedIssue){
             return NextResponse.json({
                 success:false,

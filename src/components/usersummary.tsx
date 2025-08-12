@@ -2,9 +2,6 @@ import userSummary from "@/types/usersummary";
 
 export default function UserSummary({userSummary} : {userSummary: userSummary}){
     function setOverdueStatement(){
-        if(!userSummary?.highProrityIssues){
-            return;
-        }
         const completionRate = userSummary?.completionRate ?? 0;
         if(userSummary.highProrityIssues >= 3 && completionRate < 40){
             return(
@@ -50,7 +47,7 @@ export default function UserSummary({userSummary} : {userSummary: userSummary}){
                 </div>
                 <div className="flex flex-col justify-center items-center shadow-lg py-6 px-3 rounded-lg h-[100px] w-[180px]">
                     <p className="text-lg">High Priority Tasks</p> 
-                    <p className="text-base text-lg badge badge-warning">{userSummary.highProrityIssues ?? "HighPriorityTasks"}</p>
+                    <p className="text-base text-lg badge badge-error">{userSummary.highProrityIssues ?? "HighPriorityTasks"}</p>
                 </div>
                 <div className="flex flex-col justify-center items-center shadow-lg py-6 px-3 rounded-lg h-[100px] w-[180px]">
                     <p className="text-lg">Completion Rate</p> 
@@ -63,7 +60,7 @@ export default function UserSummary({userSummary} : {userSummary: userSummary}){
                     max={userSummary.totalIssues}>
                 </progress>
                 {`${userSummary.completedIssues} of ${userSummary.totalIssues} tasks completed`}
-                <p className="text-base text-lg">Summary: {setOverdueStatement()}</p>
+                <div className="text-base text-lg">Summary: {setOverdueStatement()}</div>
             </div>
         </div>
     )

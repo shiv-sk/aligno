@@ -30,8 +30,8 @@ export async function GET(req: NextRequest){
             return NextResponse.json({
             success:true,
             status:404,
-            message:"there are no issues! "
-        } , {status:404})
+            message:"no tasks for projects"
+            } , {status:404})
         } 
         const issues  = await Issue.find({assignedBy:userId}) 
         if(issues.length === 0){

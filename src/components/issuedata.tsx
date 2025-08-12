@@ -33,7 +33,7 @@ export default function IssueData({issueData} :{issueData:issueData}){
         else if(differenceInDays > 0){
             return (
                 <div className="tooltip" data-tip={`Due in ${differenceInDays} day(s)`}>
-                    <span className="badge badge-info">In Progress</span>
+                    <span className="badge badge-info">Upcoming</span>
                 </div>
             )
         }

@@ -3,13 +3,12 @@ import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
 import IssueReview from "@/models/issueReview.model";
-import IssueReviewInterface from "@/types/issueReview";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest){
     await dbConnect();
     try {
-        const {issueId , requestedBy , comment} = await req.json();
+        const {issueId , comment} = await req.json();
         const issue = await Issue.findById(issueId);
         if(!issue){
             return NextResponse.json({
@@ -19,11 +18,22 @@ export async function POST(req: NextRequest){
             } , {status:404})
         }
         const {projectId} = issue;
+        if(!projectId){
+            return NextResponse.json({
+                success:false,
+                status:400,
+                message:"projectId is required! "
+            } , {status:400})
+        }
+        console.log("the projectId is! " , projectId);
         const authorizedUser = await authorizeRole(["Employee"])(projectId.toString());
         if("status" in authorizedUser){
             return authorizedUser;
         }
-        const existIssueReviewRequest = await IssueReview.findOne({$and:[{issueId} , {requestedBy} , {status:Constants.Pending}]});
+        const {user} = authorizedUser;
+        const existIssueReviewRequest = await IssueReview.findOne({$and:[
+            {issueId} , {requestedBy:user._id} , {status:Constants.Pending}
+        ]});
         if(existIssueReviewRequest){
             return NextResponse.json({
                 success:false,
@@ -32,9 +42,10 @@ export async function POST(req: NextRequest){
             } , {status:400})
         }
         const newIssueReviewRequest = await IssueReview.create({
-            requestedBy,
+            requestedBy:user._id,
             issueId,
-            comment
+            comment,
+            projectId
         })
         if(!newIssueReviewRequest){
             return NextResponse.json({
@@ -43,7 +54,9 @@ export async function POST(req: NextRequest){
                 message:"IssueReview is not created! "
             } , {status:500})
         }
-        const updatedIssue = await Issue.findByIdAndUpdate(issueId , {status:Constants.Review} , {new:true});
+        issue.status = Constants.Review;
+        const updatedIssue = await issue.save();
+        console.log("issue is updated with review stage! " , updatedIssue);
         if(!updatedIssue){
             return NextResponse.json({
                 success:false,
@@ -63,47 +76,6 @@ export async function POST(req: NextRequest){
             success:false,
             status:500,
             message:"IssueReviewRequest creation error! "
-        } , {status:500})
-    }
-}
-
-export async function GET(){
-    await dbConnect();
-    try {
-        const issueReviewRequests = await IssueReview.find({status:Constants.Pending}).populate([
-            {path:"requestedBy" , select:"name email"}, 
-            {path:"issueId" , select:"name projectId description status priority"}
-        ]).lean<IssueReviewInterface[]>();
-        if(issueReviewRequests.length === 0){
-            return NextResponse.json({
-                success:true,
-                status:200,
-                message:"issueReviewRequests are not found! "
-            } , {status:200})
-        }
-        const {projectId} = issueReviewRequests[0]?.issueId;
-        if(!projectId){
-            return NextResponse.json({
-                status:400,
-                message:"projectId is required!"
-            } , {status:400})
-        }
-        const authorizedUser = await authorizeRole(["Manager"])(projectId.toString());
-        if("status" in authorizedUser){
-            return authorizedUser;
-        }
-        return NextResponse.json({
-            success:true,
-            status:200,
-            message:"issue Reviews are! ",
-            issueReviewRequests
-        } , {status:200})
-    } catch (err) {
-        console.error("error from get requestedReviewIssues!" , err);
-        return NextResponse.json({
-            success:false,
-            status:500,
-            message:"requestedReviewIssues error! "
         } , {status:500})
     }
 }

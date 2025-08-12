@@ -3,35 +3,41 @@
 
 import { getAndDeleteReq } from "@/apiCalls/apiCalls";
 import Constants from "@/constents/constants";
-import IssueReview from "@/types/issueReview";
+import IssueRequest  from "@/types/issuerequest";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CiFilter, CiSearch } from "react-icons/ci";
 import { toast } from "react-toastify";
 
-export default function ReviewClosure(){
+export default function AllIssueRequests(){ 
 
     const [isLoading , setIsLoading] = useState(false);
-    const [issueReviews , setIssueReviews] = useState<IssueReview[]>([]);
+    const [allIssueRequest , setAllIssueRequest] = useState<IssueRequest []>([]);
+    const {projectId} = useParams();
 
     useEffect(()=>{
-        const getAllIssueReviews = async()=>{
-            setIsLoading(true);
+        if(!projectId){
+            return;
+        }
+        setIsLoading(true);
+        const getAllIssues = async()=>{
             try {
-                const response = await getAndDeleteReq(`/api/issuereview/` , "GET");
+                const response = await getAndDeleteReq(`/api/issuerequest/requests/${projectId}` , "GET");
+                // console.log("response from AllIssueRequest page! " , response);
                 if(response.success){
-                    // console.log("response from all issue review page! " , response);
-                    setIssueReviews(response?.issueReviewRequests || []);
+                    setAllIssueRequest(response.issueRequests || []);
                 }
             } catch (error: any) {
-               const errorMessage = error.response?.data?.message || "Server Error!.";
-               toast.error(errorMessage); 
+                const errorMessage = error.response?.data?.message || "Server Error!.";
+                toast.error(errorMessage);
             }finally{
                 setIsLoading(false);
             }
         }
-        getAllIssueReviews();
-    } , []);
+        getAllIssues();
+    } , [projectId]);
+
     return(
         <div className="bg-base-300 min-h-screen">
             <div className="flex flex-col items-center py-5">
@@ -56,42 +62,42 @@ export default function ReviewClosure(){
                         </select>
                     </div>
                 </div>
-                <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">All Review Tasks</h1>
-                <div className="flex flex-wrap gap-3 justify-center items-center">
+                <h1 className="text-3xl font-bold text-center py-3.5 px-2 text-slate-700">All Requested Tasks</h1>
+                <div className="flex flex-wrap items-center justify-center gap-4 pt-2.5">
                     {
                         isLoading ? (
                             <div className="flex justify-center items-center h-64">
                                 <span className="loading loading-spinner loading-xl"></span>
                             </div>
                         ) :
-                        issueReviews && issueReviews.length > 0 ? issueReviews.map((issue)=>(
-                            <div className="card bg-base-100 w-96 shadow-sm" key={issue._id}>
+                        allIssueRequest && allIssueRequest.length > 0 ? allIssueRequest.map((issue)=>(
+                            <div className="card bg-base-100 w-96 shadow-xl" key={issue._id}>
                                 <div className="card-body">
-                                    <h2 className="card-title">{issue.issueId.name ?? "TaskName!"}</h2>
-                                    <p>description: {issue.issueId.description || "Task Description"}</p>
-                                    <p>status: {issue.issueId.status || "Task Status"}</p>
+                                    <h2 className="card-title">{issue.issueId.name || "TaskName"}</h2>
+                                    <p>requestedBy: {issue.requestedBy.name || "Requested UserName"}</p>
+                                    <p>status: {issue.status || "Task Status"}</p>
                                     <p>Priority: {issue.issueId.priority || "Task Priority"}</p>
                                     <div className="card-actions justify-end">
-                                        <Link href={`/issuedetail/${issue.issueId._id}`}>
-                                            <button className="btn btn-primary" title={"Task Detail"}>View Details</button>
-                                        </Link>
-                                        <Link href={`/reviewissue/${issue._id}`}>
-                                            <button className="btn btn-primary">Review Request</button>
-                                        </Link>
+                                    <Link href={`/issuedetail/${issue.issueId._id}`}>
+                                        <button className="btn btn-primary" title={"Task Detail"}>View Details</button>
+                                    </Link>
+                                    <Link href={`/reviewrequest/${issue._id}`}>
+                                        <button className="btn btn-primary">Review Request</button>
+                                    </Link>
                                     </div>
                                 </div>
                             </div>
-                        )) : issueReviews && issueReviews.length === 0 ? (
+                        )) : allIssueRequest && allIssueRequest.length === 0 ? (
                             <div className="flex justify-center items-center h-64">
                                 <p className="text-lg font-semibold">
-                                    Currently Task Review Requests are not Available!.
+                                    Currently Task Requests are not Available!.
                                 </p>
                             </div>
                         ) : (
                             <div className="flex justify-center items-center h-64">
                                 <p className="text-lg font-semibold">
                                     Sorry, we couldn&apos;t find the Task Requests. It might have been deleted or moved!.
-                                </p> 
+                                </p>
                             </div>
                         )
                     }
