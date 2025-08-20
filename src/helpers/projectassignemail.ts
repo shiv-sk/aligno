@@ -6,7 +6,7 @@ export async function sendProjectAssignmentEmail(projectName: string , userName:
         const { data, error } = await resend.emails.send({
             from: 'Acme <onboarding@resend.dev>',
             to: userMail,
-            subject: 'Hello world',
+            subject: `Assigned into new Project: ${projectName}`,
             react:ProjectAssignEmailTemplate({projectName , userName , role}),
         })
         if(error){

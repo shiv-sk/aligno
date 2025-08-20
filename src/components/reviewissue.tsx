@@ -7,6 +7,7 @@ import IssueReviewSummary from "./issuereviewsummary";
 import { postAndPatchReq } from "@/apiCalls/apiCalls";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import Constants from "@/constents/constants";
 
 export default function ReviewIssue({issue , issueReviewId}: {issue: IssueTimelineResponse , issueReviewId: string | undefined | null}){
     const createdAt = issue.timeLine && issue.timeLine.length > 0 ? issue.timeLine[0]?.timeStamp : null;
@@ -53,13 +54,14 @@ export default function ReviewIssue({issue , issueReviewId}: {issue: IssueTimeli
             delays.push(delayInDays);
         }
     })
-    const [isLoading , setIsLoading] = useState(false);
+    const [isAcceptLoading , setIsAcceptLoading] = useState(false);
+    const [isRejectLoading , setIsRejectLoading] = useState(false);
     const handleAcceptIssueReview = async()=>{
         if(!issueReviewId){
             return;
         }
         try {
-            setIsLoading(true);
+            setIsAcceptLoading(true);
             const response = await postAndPatchReq(`/api/issuereview/acceptissue/${issueReviewId}` , "PATCH" , {});
             if(response.success){
                 console.log("response from issueReview page! " , response);
@@ -69,7 +71,26 @@ export default function ReviewIssue({issue , issueReviewId}: {issue: IssueTimeli
             const errorMessage = error.response?.data?.message || "Server Error!.";
             toast.error(errorMessage);
         }finally{
-            setIsLoading(false);
+            setIsAcceptLoading(false);
+        }
+    }
+
+    const handleRejectIssueReview = async()=>{
+        if(!issueReviewId){
+            return;
+        }
+        try {
+            setIsRejectLoading(true);
+            const response = await postAndPatchReq(`/api/issuereview/rejectissue/${issueReviewId}` , "PATCH" , {});
+            if(response.success){
+                console.log("response from issueReview page! " , response);
+                toast.success("Task Review Rejected!");
+            }
+        } catch (error: any) {
+            const errorMessage = error.response?.data?.message || "Server Error!.";
+            toast.error(errorMessage);
+        }finally{
+            setIsRejectLoading(false);
         }
     }
 
@@ -135,12 +156,19 @@ export default function ReviewIssue({issue , issueReviewId}: {issue: IssueTimeli
             <div className="card-actions justify-end">
                 <button
                 onClick={handleAcceptIssueReview}
-                disabled={isLoading}
+                disabled={isAcceptLoading || !!(issue.reviewSummary.status !== Constants.Pending)}
                 title="click to accept review" 
-                className="btn btn-primary">{isLoading ? 
-                <span className="loading loading-spinner loading-xs"></span> : "Accept"}
+                className="btn btn-primary">{isAcceptLoading ? 
+                <span className="loading loading-spinner loading-xs"></span> : 
+                issue.reviewSummary && issue.reviewSummary.status === Constants.Approved ? "Accepted" : "Accept"}
                 </button>
-                <button className="btn btn-secondary">Reject</button>
+                <button
+                onClick={handleRejectIssueReview}
+                disabled={isRejectLoading || !!(issue.reviewSummary.status !== Constants.Pending)}
+                title="click to reject review"
+                className="btn btn-secondary">{isRejectLoading ? 
+                <span className="loading loading-spinner loading-xs"></span> : 
+                issue.reviewSummary && issue.reviewSummary.status === Constants.Rejected ? "Rejected" : "Reject"}</button>
             </div>
         </div>
     )

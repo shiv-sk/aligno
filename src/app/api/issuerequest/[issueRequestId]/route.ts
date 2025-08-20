@@ -21,7 +21,7 @@ export async function GET(req: NextRequest , {params}:{params:{issueRequestId:st
                 message:"issues request not found! "
             } , {status:404})
         }
-        const {issueId , requestedBy , projectId} = issueRequest;
+        const {issueId , requestedBy , projectId , status} = issueRequest;
         const issue = await Issue.findById(issueId);
         if(!issue){
             return NextResponse.json({
@@ -65,11 +65,14 @@ export async function GET(req: NextRequest , {params}:{params:{issueRequestId:st
             name:issueRequest.requestedBy?.name,
             email:issueRequest.requestedBy?.email
         }
+        const issueRequestData = {
+            status
+        }
         return NextResponse.json({
             success:true,
             status:200,
             message:"issues are! ",
-            data:{userData , issueData , userSummary}
+            data:{userData , issueData , userSummary , issueRequestData}
         } , {status:200})
     } catch (err) {
         console.error("error from get requestedIssues!" , err);

@@ -83,7 +83,7 @@ export default function AllIssues(){
                                     <p>status: {issue.status || "Task Status"}</p>
                                     <p>Priority: {issue.priority || "Task Priority"}</p>
                                     <div className="card-actions justify-end">
-                                    <Link href={`/aboutissue/${issue._id}`}>
+                                    <Link href={`/issuedetail/${issue._id}`}>
                                         <button className="btn btn-primary">View Details</button>
                                     </Link>
                                     <Link href={`/reviewrequests/${issue._id}`}>

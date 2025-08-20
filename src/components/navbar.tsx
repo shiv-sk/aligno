@@ -2,6 +2,7 @@
 
 import { useAuth } from "@/context/authcontext";
 import Link from "next/link";
+import { IoMdPerson } from "react-icons/io";
 
 export default function Navbar(){
     const {user , logoutUser} = useAuth();
@@ -85,7 +86,21 @@ export default function Navbar(){
                             </ul>
                         </div>
                         <div className="navbar-end">
-                            <button onClick={logoutUser} className="btn">Logout</button>
+                            <div className="dropdown dropdown-end">
+                                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                    <div className="w-16 rounded-full bg-base-300 flex justify-center items-center pl-1">
+                                        <IoMdPerson className="text-3xl"/>
+                                    </div>
+                                </div>
+                                <ul
+                                    tabIndex={0}
+                                    className="menu menu-sm dropdown-content bg-base-300 rounded-box z-1 mt-4 w-52 p-2 shadow space-y-2">
+                                    <li>
+                                        <Link className="btn" href={'/profile'}>Profile</Link>
+                                    </li>
+                                    <button onClick={logoutUser} className="btn btn-primary">Logout</button>
+                                </ul>
+                            </div>
                         </div>
                     </>
                 ) : (
@@ -94,7 +109,20 @@ export default function Navbar(){
                             <Link href={"/"} className="btn btn-ghost text-2xl bg-primary text-white shadow-lg border-b-2">Aligno</Link>
                         </div>
                         <div className="navbar-end">
-                            <Link href={"/login"} className="btn">Login</Link>
+                            <div className="dropdown dropdown-end">
+                                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                    <div className="w-16 rounded-full bg-base-300 flex justify-center items-center pl-1">
+                                        <IoMdPerson className="text-3xl"/>
+                                    </div>
+                                </div>
+                                <ul
+                                    tabIndex={0}
+                                    className="menu menu-sm dropdown-content bg-base-300 rounded-box z-1 mt-4 w-52 p-2 shadow">
+                                    <li className="space-y-2">
+                                        <Link className="btn btn-primary" href={'/login'}>Login</Link>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </>
                 )

@@ -12,7 +12,7 @@ export default function ActionableTable({issues}: {issues:Issue[]}){
                         <th>status</th>
                         <th>Priority</th>
                         <th>duedate</th>
-                        <th>riskLabel</th>
+                        <th>risk</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,7 +24,7 @@ export default function ActionableTable({issues}: {issues:Issue[]}){
                                 <td>{issue.status}</td>
                                 <td>{issue.priority}</td>
                                 <td>{issue.duedate ? new Date(issue.duedate).toDateString() : "Date"}</td>
-                                <td>{"riskLabel"}</td>
+                                <td>{"Comming Soon!"}</td>
                             </tr>
                         )) : (
                             <tr>

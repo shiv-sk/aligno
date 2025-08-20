@@ -58,12 +58,12 @@ export default function EmployeeDashboard({ projectId , projectName }: { project
                                     <label htmlFor="menu-drawer" className="drawer-overlay"></label>
                                     <ul className="menu p-4 w-64 min-h-full bg-base-100 text-base-content gap-2">
                                     {/* Sidebar content here */}
-                                    <Link href={`/allissues/1234`}>
+                                    <Link href={`/#`}>
                                         <li>
                                             <button className="btn w-full">MyProjects</button>
                                         </li>
                                     </Link>
-                                    <Link href={`/#`}>
+                                    <Link href={`/allissues/${projectId}`}>
                                         <li>
                                             <button className="btn w-full btn-neutral">AllTasks</button>
                                         </li>
@@ -89,14 +89,14 @@ export default function EmployeeDashboard({ projectId , projectName }: { project
                             <ul className="hidden md:flex justify-around items-center w-full max-w-4xl bg-base-100 rounded-xl shadow-xl py-6 px-6">
                                 <div className="hidden md:flex gap-4">
                                     <li>
-                                        <Link href={`/allissues/1234`}>
+                                        <Link href={`/#`}>
                                             <button className="btn text-lg shadow-xl">MyProjects</button>
                                         </Link>
                                     </li>
                                 </div>
                                 <div className="hidden md:flex gap-4">
                                     <li>
-                                        <Link href={`/allissues/1234`}>
+                                        <Link href={`/allissues/${projectId}`}>
                                             <button className="btn btn-neutral shadow-xl">AllTasks</button>
                                         </Link>
                                     </li>

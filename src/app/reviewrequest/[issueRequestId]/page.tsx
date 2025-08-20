@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import IssueDataComponent from "@/components/issuedata";
 import UserDataComponent from "@/components/userdata";
 import UserSummaryComponent from "@/components/usersummary";
+import Constants from "@/constents/constants";
 
 export default function IssueRequestReview(){
     const [isLoading , setIsLoading] = useState(false);
@@ -19,6 +20,7 @@ export default function IssueRequestReview(){
     const [userData , setUserData] = useState<UserData | null>(null);
     const [userSummary , setUserSummary] = useState<UserSummary | null>(null);
     const [issueData , setIssueData] = useState<IssueData | null>(null);
+    const [status , setStatus] = useState("");
     const {issueRequestId} = useParams();
     const router = useRouter();
 
@@ -35,6 +37,7 @@ export default function IssueRequestReview(){
                     setIssueData(response.data.issueData);
                     setUserData(response.data.userData);
                     setUserSummary(response.data.userSummary);
+                    setStatus(response.data.issueRequestData.status);
                 }
             } catch (error: any) {
                 const errorMessage = error.response?.data?.message || "Server Error!.";
@@ -58,7 +61,7 @@ export default function IssueRequestReview(){
             if(response.success){
                 toast.success("Task assigned successfully.");
                 const projectId = response?.data?.updatedIssueRequest?.projectId;
-                router.push(`/allissuerequests/${projectId}`);
+                router.push(`/allissues/${projectId}`);
             }
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || "Server Error!.";
@@ -108,11 +111,11 @@ export default function IssueRequestReview(){
                             </div>
                             <div className="flex justify-end items-center gap-3 py-6">
                                 {
-                                    !issueData.assignedTo && (
+                                    status && status === Constants.Pending &&(
                                         <>
                                             <button 
                                             className="btn btn-primary text-lg"
-                                            disabled={isAssignLoading} 
+                                            disabled={isAssignLoading || status !== Constants.Pending} 
                                             onClick={handleAssignIssue}
                                             title="Assign this task to the requested user"
                                             >{isAssignLoading ? 
@@ -121,12 +124,35 @@ export default function IssueRequestReview(){
                                             </button>
                                             <button 
                                             className="btn btn-secondary text-lg"
+                                            disabled={isRejectLoading || status !== Constants.Pending}
                                             onClick={handleRejectIssueRequest}
                                             title="Reject the Taskrequest"
                                             >{isRejectLoading ? 
                                             <span className="loading loading-spinner loading-xs"></span> 
                                             : "Reject"}
                                             </button>
+                                        </>
+                                    )
+                                }
+                                {
+                                    status && status === Constants.Approved &&(
+                                        <>
+                                            <button 
+                                            className="btn btn-primary text-lg"
+                                            disabled={true}
+                                            title="Request is Approved"
+                                            >Approved</button>
+                                        </>
+                                    )
+                                }
+                                {
+                                    status && status === Constants.Rejected &&(
+                                        <>
+                                            <button 
+                                            className="btn btn-primary text-lg"
+                                            disabled={true}
+                                            title="Request is Rejected"
+                                            >Rejected</button>
                                         </>
                                     )
                                 }

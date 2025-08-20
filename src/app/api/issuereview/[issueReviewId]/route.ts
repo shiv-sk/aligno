@@ -126,7 +126,7 @@ export async function GET(req: NextRequest , {params}:{params:{issueReviewId:str
         return NextResponse.json({
             success:false,
             status:500,
-            message:"IssueReviewRequest creation error! "
+            message:"IssueReviewRequest fetch error! "
         } , {status:500})
     }
 }

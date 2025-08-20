@@ -31,7 +31,7 @@ export async function GET(req: NextRequest){
             const issueOverview = {
             totalIssues:0,
             completedIssues:0,
-            assignedIssues:0,
+            openIssues:0,
             issueInReview:0,
             overdueIssues:0,
             reopenedIssues:0,
@@ -65,11 +65,11 @@ export async function GET(req: NextRequest){
         }
         const actionableIssues = issues.filter((issue)=>(issue.status !== Constants.Closed));
         const { totalIssues , completedIssues , issueInReview , overdueIssues , 
-            reopenedIssues , completionRate , overdueRate , activityRate , assignedIssues} = getFilteredIssues(issues);
+            reopenedIssues , completionRate , overdueRate , activityRate , openIssues} = getFilteredIssues(issues);
         const issueOverview = {
             totalIssues,
             completedIssues,
-            assignedIssues,
+            openIssues,
             issueInReview,
             overdueIssues,
             reopenedIssues,

@@ -8,6 +8,8 @@ interface User{
     _id:string,
     name:string,
     isAdmin:boolean,
+    email:string,
+    createdAt:string
 }
 
 interface RegisterData{
@@ -59,7 +61,7 @@ const AuthProvider = ({ children }: { children: ReactNode })=>{
                     // console.log(response);
                     setUser(response?.user);
                 }
-                console.log("user from current user function! " , user);
+                // console.log("user from current user function! " , user);
                 return { success: true, data: response?.user }; 
             } catch (error: any) {
                 const errorMessage = error.response?.data?.message || "Unable to find current user.";

@@ -4,6 +4,7 @@ export interface IssueOverview{
     issueInReview:number,
     overdueIssues:number,
     reopenedIssues:number,
+    openIssues:number,
     totalAssignedIssues:number,
     totalIssuesofProject:number,
     createdIssues:number,

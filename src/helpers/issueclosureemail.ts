@@ -6,7 +6,7 @@ export async function sendIssueClosureRequestEmail(taskName: string , userName: 
         const { data, error } = await resend.emails.send({
             from: 'Acme <onboarding@resend.dev>',
             to: userMail,
-            subject: 'Hello world',
+            subject: 'Task Review Request',
             react:IssueClosureRequestEmailTemplate({taskName , userName}),
         })
         if(error){

@@ -3,13 +3,14 @@
 
 import { postAndPatchReq } from "@/apiCalls/apiCalls";
 import { useAuth } from "@/context/authcontext";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function CreateIssue(){
     const {projectId} = useParams();
     const {user} = useAuth();
+    const router = useRouter();
     const [isLoading , setIsLoading] = useState(false);
     const [issueData , setIssueData] = useState({
         name:"",
@@ -29,6 +30,7 @@ export default function CreateIssue(){
             if(response.success){
                 // console.log("response from createIssue page! " , response);
                 toast.success("Task created successfully! ");
+                router.push(`/allissues/${projectId}`);
             }
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || "Server Error!.";

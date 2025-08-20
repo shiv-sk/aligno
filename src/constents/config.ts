@@ -12,7 +12,7 @@ export const managerIssueOverview = {
     "closedIssues":"closedTasks" , 
     "overdueIssues":"overdueTasks" , 
     "reopenedIssues":"reopenedTasks", 
-    "assignedIssues":"assignedTasks", 
+    "openIssues":"openTasks", 
 }
 export const adminIssueOverview = {
     "assignedIssues":"assignedTasks" , 

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ActionableTable from "@/components/actionabletable";
 import Barchart from "@/components/barchart";
-import StatusBasedIssue from "@/components/Prioritybased";
 import IssueOverview from "@/components/issueoverview";
 import ProjectHealth from "@/components/projecthealth";
 import { useEffect, useState } from "react";
@@ -16,7 +15,7 @@ import { IssueRates } from "@/types/prioritybased";
 export default function ManagerAnalyticDashboard({projectId}: {projectId:string}){
     interface ManagerAnalyticData {
         issueOverview:IssueOverviewType,
-        activity:Acticity,
+        managerAcitivity:Acticity,
         actionableIssues:Issue[],
         projectHealth:IssueRates
     } 
@@ -57,10 +56,9 @@ export default function ManagerAnalyticDashboard({projectId}: {projectId:string}
                     className="flex flex-col justify-center items-center md:w-[720px] w-96 mx-auto bg-base-100 py-6 px-3 
                     rounded-lg shadow-lg">
                         <IssueOverview role={"Manager"} issueOverview={managerAnalyticData?.issueOverview}/>
-                        <Barchart role={"Manager"} activityData={managerAnalyticData?.activity} isReview={false}/>
+                        <Barchart role={"Manager"} activityData={managerAnalyticData?.managerAcitivity} isReview={false}/>
                         <ActionableTable issues={managerAnalyticData?.actionableIssues || []} />
                         <ProjectHealth role={"Manager"} projecthealth={managerAnalyticData?.projectHealth} />
-                        <StatusBasedIssue role={""} priorityData={undefined}/>
                     </div>
                 )
             }

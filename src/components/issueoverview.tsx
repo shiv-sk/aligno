@@ -46,8 +46,8 @@ export default function IssueOverview({role , issueOverview}: {role:string , iss
                                 <p>{issueOverview?.totalIssues}</p>
                             </div>
                             <div className="flex flex-col text-center bg-base-100 rounded-lg shadow-lg py-6 px-3 w-[150px] h-[80px]">
-                                <p>{managerIssueOverview.assignedIssues}</p>
-                                <p>{issueOverview?.assignedIssues}</p>
+                                <p>{managerIssueOverview.openIssues}</p>
+                                <p>{issueOverview?.openIssues}</p>
                             </div>
                             <div className="flex flex-col text-center bg-base-100 rounded-lg shadow-lg py-6 px-3 w-[150px] h-[80px]">
                                 <p>{managerIssueOverview.closedIssues}</p>

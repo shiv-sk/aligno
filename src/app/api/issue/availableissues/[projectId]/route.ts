@@ -17,7 +17,7 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
         if("status" in authorizedUser){
             return authorizedUser;
         }
-        const issues = await Issue.find({projectId , status:{$in:["Open", "Reopened"]}});
+        const issues = await Issue.find({projectId , status:{$in:["Open"]}});
         return NextResponse.json({
             success:true,
             status:200,

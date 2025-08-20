@@ -6,7 +6,7 @@ export async function sendReopenedIssueEmail(taskName: string , userName: string
         const { data, error } = await resend.emails.send({
             from: 'Acme <onboarding@resend.dev>',
             to: userMail,
-            subject: 'Hello world',
+            subject: 'Task Review Request',
             react:IssueReopenedEmailTemplate({taskName , userName}),
         })
         if(error){

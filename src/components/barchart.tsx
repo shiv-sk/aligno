@@ -93,7 +93,7 @@ export default function Barchart({role , activityData , isReview = false}:
                             </p>
                         </div>
                     </>
-                ) : role === "Employee" && activityData && isReview && (
+                ) : role === "Employee" && activityData && isReview ? (
                     <>
                         <Bar data={employeeReviewData}></Bar>
                         <div className="border-bg-green-900 flex flex-wrap justify-evenly py-3">
@@ -110,6 +110,25 @@ export default function Barchart({role , activityData , isReview = false}:
                                 <span className="font-normal text-xl">{activityData?.issueReviewRejectRate ?? 0}%</span>
                             </p>
                         </div>
+                    </>
+                ) : role === "Manager" && activityData && !isReview ? (
+                    <>
+                        <Bar data={data}></Bar>
+                        <div className="border-bg-green-900 flex flex-wrap justify-evenly py-3">
+                            <p className="font-bold text-lg">AvgActionTime:&nbsp;
+                                <span className="font-normal text-xl">{activityData?.avgIssueReviewTime.toFixed(1) ?? 0}Days</span>
+                            </p>
+                            <p className="font-bold text-lg">Task Review Accept:
+                                <span className="font-normal text-xl">{activityData?.approvedIssues ?? 0}</span>
+                            </p>
+                            <p className="font-bold text-lg">Task Review Reject:
+                                <span className="font-normal text-xl">{activityData?.rejectedIssues ?? 0}</span>
+                            </p>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <p className="text-center text-xl">Not Enough Data</p>
                     </>
                 )
             }

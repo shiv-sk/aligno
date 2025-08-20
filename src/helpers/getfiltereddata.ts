@@ -20,10 +20,11 @@ interface IssueReview{
 }
 export function getFilteredIssues(issues: Issue[]){
     const overdueStatus = ["Reopened" , "Open" , "Assigned"];
-    const issueStatus = ["Assigned" , "Review"];
+    const issueStatus = ["Assigned" , "Review" , "Reopened"];
     const totalIssues = issues.length;
     const completedIssues = issues.filter((issue)=>(issue.status === Constants.Closed)).length;
     const assignedIssues = issues.filter((issue)=>(issue.status === Constants.Assigned)).length;
+    const openIssues = issues.filter((issue)=>(issue.status === Constants.Open)).length;
     const unAssignedIssues = issues.filter((issue)=>(!issue.assignedTo)).length;
     const onWorkingIssues = issues.filter((issue)=>(issueStatus.includes(issue.status))).length;
     const issueInReview = issues.filter((issue)=>(issue.status === Constants.Review)).length;
@@ -35,8 +36,9 @@ export function getFilteredIssues(issues: Issue[]){
     const highPriorityIssues = issues.filter((issue)=>(issue.priority === Constants.High)).length;
     const mediumPriorityIssues = issues.filter((issue)=>(issue.priority === Constants.Medium)).length;
     const lowPriorityIssues = issues.filter((issue)=>(issue.priority === Constants.Low)).length;
-    return { totalIssues , completedIssues , onWorkingIssues , issueInReview , overdueIssues , assignedIssues, unAssignedIssues,
-        reopenedIssues , completionRate , overdueRate , highPriorityIssues , mediumPriorityIssues , lowPriorityIssues , activityRate};
+    return { totalIssues , completedIssues , onWorkingIssues , issueInReview , overdueIssues , assignedIssues, unAssignedIssues, 
+        openIssues, reopenedIssues , completionRate , overdueRate , highPriorityIssues , mediumPriorityIssues , 
+        lowPriorityIssues , activityRate};
 }
 
 export function getFilteredRequestIssues(issues: IssueRequest[] , totalIssues: number){
