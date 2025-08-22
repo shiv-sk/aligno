@@ -2,12 +2,15 @@
 "use client";
 
 import { postAndPatchReq } from "@/apiCalls/apiCalls";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useAuth } from "@/context/authcontext";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FaEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 
 export default function AddUser(){
+    const router = useRouter();
     const [isLoading , setIsLoading] = useState(false);
     const [isPasswordShow , setIsPasswordShow] = useState(false);
     const [userData , setUserData] = useState({
@@ -15,6 +18,14 @@ export default function AddUser(){
         email:"",
         password:"",
     })
+    const {user, isLoading:authLoading} = useAuth();
+
+    useEffect(()=>{
+        if(!authLoading && !user){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+    } , [user , router , authLoading]);
 
     const handleOnChange = (e:ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>)=>{
         setUserData({...userData , [e.target.name]:e.target.value})

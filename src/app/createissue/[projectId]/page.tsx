@@ -4,12 +4,12 @@
 import { postAndPatchReq } from "@/apiCalls/apiCalls";
 import { useAuth } from "@/context/authcontext";
 import { useParams, useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function CreateIssue(){
     const {projectId} = useParams();
-    const {user} = useAuth();
+    const {user, isLoading:authLoading} = useAuth();
     const router = useRouter();
     const [isLoading , setIsLoading] = useState(false);
     const [issueData , setIssueData] = useState({
@@ -19,6 +19,14 @@ export default function CreateIssue(){
         projectId:projectId ? projectId : null,
         priority:""
     });
+
+    useEffect(()=>{
+        if(!authLoading && !user){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+    } , [user , router , authLoading]);
+    
     const handleCreateIssue = async (e:FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
         if(!user || !user._id || !projectId){

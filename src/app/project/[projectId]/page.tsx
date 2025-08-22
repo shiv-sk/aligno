@@ -4,7 +4,7 @@
 import { getAndDeleteReq } from "@/apiCalls/apiCalls";
 import { useAuth } from "@/context/authcontext";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 
@@ -25,8 +25,16 @@ export default function Project(){
 
     const [project , setProject] = useState<Project | null>(null);
     const {projectId} = useParams();
-    const {user} = useAuth();
+    const router = useRouter();
+    const {user, isLoading:authLoading} = useAuth();
     const [isLoading , setIsLoading] = useState(false);
+
+    useEffect(()=>{
+        if(!authLoading && !user){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+    } , [user , router , authLoading]);
 
     useEffect(()=>{
         if(!projectId){

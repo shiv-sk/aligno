@@ -39,7 +39,18 @@ export default function PriorityBasedIssue({role ,  priorityData}: {role:string 
                 role === "TeamLead" && priorityData && priorityData ? (
                     <>
                         <div className="md:w-[550px] md:h-[500px] flex justify-center items-center mx-auto">
-                            <Doughnut options={options} data={data} />
+                            {
+                                priorityData && Object.values(priorityData).every((val)=>(val === 0)) ? 
+                                (
+                                    <>
+                                        <p className="text-center font-semibold text-xl">No enough Data!</p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Doughnut options={options} data={data} />
+                                    </>
+                                )
+                            }
                         </div>
                         <div className="border-bg-green-900 flex flex-wrap justify-evenly py-3">
                             <p className="border-l-2 md:text-lg font-bold px-1.5">CompletionRate:
@@ -53,10 +64,22 @@ export default function PriorityBasedIssue({role ,  priorityData}: {role:string 
                             </p>
                         </div>
                     </>
-                ) : role === "Admin" && priorityData && (
+                ): role === "Admin" && priorityData && Object.values(priorityData).every((val)=>(val === 0)) ? (
+                    <>
+                        <div className="md:w-[550px] md:h-[500px] flex justify-center items-center mx-auto">
+                            <p className="text-center font-semibold text-xl">Not enough Data!</p>
+                        </div>
+                    </>
+                ): role === "Admin" && priorityData ? (
                     <>
                         <div className="md:w-[550px] md:h-[500px] flex justify-center items-center mx-auto">
                             <Doughnut options={options} data={data} />
+                        </div>
+                    </>
+                ): (
+                    <>
+                        <div className="md:w-[550px] md:h-[500px] flex justify-center items-center mx-auto">
+                            <p className="text-center">Not enough Data!</p>
                         </div>
                     </>
                 )

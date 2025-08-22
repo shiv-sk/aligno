@@ -5,7 +5,7 @@ import { getAndDeleteReq } from "@/apiCalls/apiCalls";
 import Issuedetail from "@/components/issuedetail"
 import { useAuth } from "@/context/authcontext";
 import { Issue } from "@/types/issue";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify";
 export default function IssueDetail(){
@@ -14,7 +14,15 @@ export default function IssueDetail(){
     const [role , setRole] = useState("");
     const [issue , setIssue] = useState<Issue | null>(null);
     const {issueId} = useParams();
-    const {user} = useAuth();
+    const router = useRouter();
+    const {user, isLoading:authLoading} = useAuth();
+
+    useEffect(()=>{
+        if(!authLoading && !user){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+    } , [user , router , authLoading]);
 
     useEffect(()=>{
         const getIssue = async()=>{

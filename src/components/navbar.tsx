@@ -111,7 +111,7 @@ export default function Navbar(){
                         <div className="navbar-end">
                             <div className="dropdown dropdown-end">
                                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                    <div className="w-16 rounded-full bg-base-300 flex justify-center items-center pl-1">
+                                    <div className="w-16 rounded-full bg-base-300 flex justify-center items-center pl-1 pt-1">
                                         <IoMdPerson className="text-3xl"/>
                                     </div>
                                 </div>

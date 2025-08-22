@@ -6,16 +6,24 @@ import EmployeeDashboard from "@/components/employeedashboard";
 import ManagerDashboard from "@/components/managerdashboard";
 import TeamLeadDashboard from "@/components/tldashboard";
 import { useAuth } from "@/context/authcontext";
-import { useParams } from "next/navigation";
+import { useParams , useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function Dashboard(){
     const {projectId} = useParams();
-    const {user} = useAuth();
+    const router = useRouter();
+    const {user , isLoading:authLoading} = useAuth();
     const [role , setRole] = useState("");
     const [projectName , setProjectName] = useState("");
     const [isLoading , setIsLoading] = useState(false);
+
+    useEffect(()=>{
+        if(!authLoading && !user){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+    } , [user , router , authLoading]);
 
     useEffect(()=>{
         const getUserRole = async()=>{

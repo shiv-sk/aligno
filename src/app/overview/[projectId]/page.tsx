@@ -2,8 +2,10 @@
 
 import { getAndDeleteReq } from "@/apiCalls/apiCalls";
 import GanttChart from "@/components/gnattchart";
-import { useParams } from "next/navigation";
+import { useAuth } from "@/context/authcontext";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 export default function Overview(){
     interface GanttChartData{
         id:string,
@@ -26,8 +28,18 @@ export default function Overview(){
         activeIssues:number
     }
     const {projectId} = useParams();
+    const router = useRouter();
     const [tasks , setTasks] = useState<GanttChartData[]>([]);
     const [taskSummary , setTaskSummary] = useState<Projectsummary | null>(null);
+    const {user, isLoading:authLoading} = useAuth();
+
+    useEffect(()=>{
+        if(!authLoading && !user){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+    } , [user , router , authLoading]);
+    
     useEffect(()=>{
         const ganttChartData = async()=>{
             if(!projectId){

@@ -6,14 +6,23 @@ import Constants from "@/constents/constants";
 import { useAuth } from "@/context/authcontext";
 import { Issue } from "@/types/issue";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CiFilter, CiSearch } from "react-icons/ci";
 import { toast } from "react-toastify";
 
 export default function MyTasks(){
-    const {user} = useAuth();
+    const router = useRouter();
+    const {user , isLoading:authLoading} = useAuth();
     const [isLoading , setIsLoading] = useState(false);
     const [issues , setAllIssues] = useState<Issue[]>([]);
+
+    useEffect(()=>{
+        if(!authLoading && !user){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+    } , [user , router , authLoading]);
 
     useEffect(()=>{
         const getAllAssignedIssues = async()=>{

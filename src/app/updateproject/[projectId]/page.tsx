@@ -2,15 +2,16 @@
 "use client";
 import { getAndDeleteReq, postAndPatchReq } from "@/apiCalls/apiCalls";
 import { useAuth } from "@/context/authcontext";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function UpdateProject(){
-    const {user} = useAuth();
+    const {user, isLoading:authLoading} = useAuth();
     const [isLoading , setIsLoading] = useState(false);
     const [isEdit , setIsEdit] = useState(false);
     const {projectId} = useParams();
+    const router = useRouter();
 
     interface Project{
         name:string,
@@ -21,6 +22,13 @@ export default function UpdateProject(){
         e.preventDefault();
         setIsEdit(!isEdit);
     }
+
+    useEffect(()=>{
+        if(!authLoading && !user){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+    } , [user , router , authLoading]);
 
     useEffect(()=>{
         if(!projectId){

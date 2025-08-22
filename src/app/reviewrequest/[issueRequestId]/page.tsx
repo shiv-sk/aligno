@@ -12,6 +12,7 @@ import IssueDataComponent from "@/components/issuedata";
 import UserDataComponent from "@/components/userdata";
 import UserSummaryComponent from "@/components/usersummary";
 import Constants from "@/constents/constants";
+import { useAuth } from "@/context/authcontext";
 
 export default function IssueRequestReview(){
     const [isLoading , setIsLoading] = useState(false);
@@ -23,6 +24,14 @@ export default function IssueRequestReview(){
     const [status , setStatus] = useState("");
     const {issueRequestId} = useParams();
     const router = useRouter();
+    const {user, isLoading:authLoading} = useAuth();
+
+    useEffect(()=>{
+        if(!authLoading && !user){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+    } , [user , router , authLoading]);
 
     useEffect(()=>{
         if(!issueRequestId){

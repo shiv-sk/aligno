@@ -24,7 +24,7 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
             return NextResponse.json({
                 success:false,
                 status:404,
-                message:"IssueRequests are not found! "
+                message:"TaskRequests are not found! "
             } , {status:404})
         }
         if(!projectId){
@@ -40,15 +40,15 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
         return NextResponse.json({
             success:true,
             status:200,
-            message:"issue Requests are! ",
+            message:"Task Requests are! ",
             issueRequests
         } , {status:200})
     } catch (err) {
-        console.error("error from get requestedIssues!" , err);
+        console.error("error from get requestedTasks!" , err);
         return NextResponse.json({
             success:false,
             status:500,
-            message:"requestedIssues error! "
+            message:"requestedTasks error! "
         } , {status:500})
     }
 }

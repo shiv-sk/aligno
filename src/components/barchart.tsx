@@ -51,12 +51,12 @@ export default function Barchart({role , activityData , isReview = false}:
             role === "Manager" ? "ManagerActivity" : 
             role === "Employee" ? "EmployeeActivity": "ActivitySection"}</h1>
             {
-                role === "TeamLead" && activityData ? (
+                role === "TeamLead" && activityData && !isReview ? (
                     <>
                         <Bar data={data}></Bar>
                         <div className="border-bg-green-900 flex flex-wrap justify-evenly py-3">
                             <p className="font-bold text-lg">AvgActionTime:
-                                <span className="font-normal text-xl">{activityData?.avgIssueAcionTime ?? 0} Days</span>
+                                <span className="font-normal text-xl">{activityData?.avgIssueAcionTime.toFixed(1) ?? 0} Days</span>
                             </p>
                             <p className="font-bold text-lg">Task Assignement Accept:
                                 <span className="font-normal text-xl">{activityData?.issueAcceptanceRate ?? 0}%</span>
@@ -66,7 +66,7 @@ export default function Barchart({role , activityData , isReview = false}:
                             </p>
                         </div>
                     </>
-                ): role === "TeamLead" && activityData ? (
+                ): role === "TeamLead" && activityData && !isReview ? (
                     <>
                         <Bar data={data}></Bar>
                         <div className="border-bg-green-900 flex flex-wrap justify-evenly py-3">

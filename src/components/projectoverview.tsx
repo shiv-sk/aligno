@@ -48,10 +48,14 @@ export default function ProjectOverview({projectOverview}: {projectOverview:Proj
             workLoadtooltip = `Each user has an average of ${projectOverview.perUserIssue} Tasks, with a ${projectOverview.completionRate}% completion rate and ${projectOverview.overdueRate}% overdue rate.`
         }
         else if(projectOverview?.completionRate <= 30 && projectOverview?.overdueRate > 40){
-            workLoad = "Moderate";
+            workLoad = "Danger";
             workLoadbadge = "badge badge-error";
             workLoadtooltip = `Each user has an average of ${projectOverview.perUserIssue} Tasks, with a ${projectOverview.completionRate}% completion rate and ${projectOverview.overdueRate}% overdue rate.`
         }
+    }else{
+        workLoad = "no Data";
+        workLoadbadge = "badge badge-secondary";
+        workLoadtooltip = `Each user has an average of 0 Tasks, with a 0% completion rate and 0% overdue rate.`
     }
     return(
         <div className="bg-base-300 rounded-lg shadow-lg py-6 px-3 space-y-6 w-full mb-6">

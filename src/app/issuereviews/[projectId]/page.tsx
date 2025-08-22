@@ -3,9 +3,10 @@
 
 import { getAndDeleteReq } from "@/apiCalls/apiCalls";
 import Constants from "@/constents/constants";
+import { useAuth } from "@/context/authcontext";
 import IssueReview from "@/types/issueReview";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CiFilter, CiSearch } from "react-icons/ci";
 import { toast } from "react-toastify";
@@ -15,6 +16,15 @@ export default function ReviewClosure(){
     const [isLoading , setIsLoading] = useState(false);
     const [issueReviews , setIssueReviews] = useState<IssueReview[]>([]);
     const {projectId} = useParams();
+    const router = useRouter();
+    const {user, isLoading:authLoading} = useAuth();
+
+    useEffect(()=>{
+        if(!authLoading && !user){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+    } , [user , router , authLoading]);
 
     useEffect(()=>{
         const getAllIssueReviews = async()=>{

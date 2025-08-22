@@ -8,12 +8,14 @@ import { toast } from "react-toastify";
 export default function Profile(){
     const router = useRouter();
     const {user , isLoading} = useAuth();
+    
     useEffect(()=>{
         if(!isLoading && !user){
             router.push("/login");
             toast.warning("please login!");
         }
     } , [user , router , isLoading]);
+
     const handlePasswordRest = async(e)=>{
         e.preventDefault();
         toast.success("Comming Soon!");

@@ -26,7 +26,7 @@ export async function GET(req: NextRequest){
             return authorizeUser;
         }
         let managerAcitivity;
-        const issues  = await Issue.find({createdBy: userId}).populate("assignedTo" , "name email"); 
+        const issues  = await Issue.find({projectId}).populate("assignedTo" , "name email"); 
         if(issues.length === 0){
             const issueOverview = {
             totalIssues:0,

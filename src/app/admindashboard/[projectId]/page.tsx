@@ -6,11 +6,11 @@ import PriorityBasedIssue from "@/components/Prioritybased";
 import IssueOverview from "@/components/issueoverview";
 import ProjectHealth from "@/components/projecthealth";
 import ProjectOverview from "@/components/projectoverview";
-import StatusBasedIssue from "@/components/statusbasedchart";
+import { useAuth } from "@/context/authcontext";
 import { IssueOverview as IssueOverviewType } from "@/types/issueoverview";
 import { IssueRates } from "@/types/prioritybased";
 import { ProjectOverview as ProjectOverviewType } from "@/types/projectoverview";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -22,8 +22,20 @@ export default function AdminDashboard(){
         projectInsights:ProjectOverviewType
     }
     const {projectId} = useParams();
+    const router = useRouter();
     const [isLoading , setIsLoading] = useState(false);
     const [projectAnalyticData , setProjectAnalyticData] = useState<AdminAnalytic | null>(null);
+    const {user, isLoading:authLoading} = useAuth();
+
+    useEffect(()=>{
+        if(!authLoading && !user){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+        if(!user?.isAdmin){
+            toast.warning("Admin only route");
+        }
+    } , [user , router , authLoading]);
 
     useEffect(()=>{
         if(!projectId){
@@ -61,7 +73,6 @@ export default function AdminDashboard(){
                     py-6 px-3 rounded-lg shadow-lg">
                         <IssueOverview role={"Admin"} issueOverview={projectAnalyticData?.issueOverview}/>
                         <PriorityBasedIssue role={"Admin"} priorityData={projectAnalyticData?.issuePriority}/>
-                        <StatusBasedIssue/>
                         <ProjectHealth role={"Admin"} projecthealth={projectAnalyticData?.issueSummary}/>
                         <ProjectOverview projectOverview={projectAnalyticData?.projectInsights} />
                     </div>

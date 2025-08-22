@@ -2,17 +2,26 @@
 "use client";
 import { postAndPatchReq } from "@/apiCalls/apiCalls";
 import { useAuth } from "@/context/authcontext";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function AddProject(){
-    const {user} = useAuth();
+    const {user, isLoading:authLoading} = useAuth();
+    const router = useRouter();
     const [isLoading , setIsLoading] = useState(false);
     const [projectData , setProjectData] = useState({
         name:"",
         description:"",
         createdBy:user ? user._id : null
     })
+
+    useEffect(()=>{
+        if(!authLoading && !user){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+    } , [user , router , authLoading]);
 
     const handleOnChange = (e:ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>)=>{
         setProjectData({...projectData , [e.target.name]:e.target.value})

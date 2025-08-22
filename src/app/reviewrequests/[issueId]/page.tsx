@@ -3,8 +3,9 @@
 
 import { getAndDeleteReq } from "@/apiCalls/apiCalls";
 import Constants from "@/constents/constants";
+import { useAuth } from "@/context/authcontext";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CiFilter, CiSearch } from "react-icons/ci";
 import { toast } from "react-toastify";
@@ -27,6 +28,16 @@ export default function ReviewRequest(){
     const {issueId} = useParams();
     const [isLoading , setIsLoading] = useState(false);
     const [issueRequests , setIssueRequests] = useState<IssueRequests []>([]);
+    const {user, isLoading:authLoading} = useAuth();
+    const router = useRouter();
+
+    useEffect(()=>{
+        if(!authLoading && !user){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+    } , [user , router , authLoading]);
+    
     useEffect(()=>{
         if(!issueId){
             return;

@@ -3,7 +3,8 @@
 
 import { getAndDeleteReq, postAndPatchReq } from "@/apiCalls/apiCalls";
 import AssignedusersTable from "@/components/assigneduserstable";
-import { useParams } from "next/navigation";
+import { useAuth } from "@/context/authcontext";
+import { useParams, useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -14,6 +15,15 @@ export default function AddUsers(){
         email:string
     }
     const [allUsers , setAllUsers] = useState<AllUsers[]>([]);
+    const {user:authUser, isLoading:authLoading} = useAuth();
+    const router = useRouter();
+
+    useEffect(()=>{
+        if(!authLoading && !authUser){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+    } , [authUser , router , authLoading]);
     useEffect(()=>{
         const fetchAllUsers = async()=>{
             setIsLoading(true);

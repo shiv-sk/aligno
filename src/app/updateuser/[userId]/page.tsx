@@ -2,8 +2,9 @@
 "use client";
 
 import { getAndDeleteReq, postAndPatchReq } from "@/apiCalls/apiCalls";
+import { useAuth } from "@/context/authcontext";
 import User from "@/types/userinput";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FaEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
@@ -13,6 +14,15 @@ export default function UpdateUser(){
     const [isLoading , setIsLoading] = useState(false);
     const [isPasswordShow , setIsPasswordShow] = useState(false);
     const {userId} = useParams();
+    const router = useRouter();
+    const {user, isLoading:authLoading} = useAuth();
+
+    useEffect(()=>{
+        if(!authLoading && !user){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+    } , [user , router , authLoading]);
 
     useEffect(()=>{
         if(!userId){

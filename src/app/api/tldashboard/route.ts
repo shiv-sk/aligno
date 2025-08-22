@@ -25,17 +25,43 @@ export async function GET(req: NextRequest){
             return authorizeUser;
         }
         let teamLeadActivity;
+        let issueOverview;
+        let issuePriority;
+        let assignedissues;
         const totalIssuesofProject = await Issue.find({projectId});
         if(totalIssuesofProject.length === 0){
+            issueOverview = {
+            totalIssuesofProject:0,
+            totalAssignedIssues:0,
+            completedIssues:0,
+            issueInReview:0,
+            overdueIssues:0,
+            reopenedIssues:0,
+            actionableIssues:0,
+            issues:0
+            }
+            teamLeadActivity = {
+                approvedIssues:0,
+                rejectedIssues:0,
+                avgIssueAcionTime:0,
+            }
+            issuePriority = {
+                activityRate:0,
+                completionRate:0,
+                overdueRate:0,
+                prioritybased:0
+            }
+            assignedissues = 0
             return NextResponse.json({
-            success:true,
-            status:404,
-            message:"no tasks for projects"
-            } , {status:404})
-        } 
-        const issues  = await Issue.find({assignedBy:userId}) 
+                success:true,
+                status:200,
+                data:{issueOverview , teamLeadActivity , issuePriority , assignedissues},
+                message:"Issues are not found!"
+            } , {status:200})
+        }
+        const issues  = totalIssuesofProject.filter((issue)=>(issue.assignedBy.equals(userId))); 
         if(issues.length === 0){
-            const issueOverview = {
+            issueOverview = {
             totalIssuesofProject:totalIssuesofProject.length ?? 0,
             totalAssignedIssues:0,
             completedIssues:0,
@@ -44,19 +70,19 @@ export async function GET(req: NextRequest){
             reopenedIssues:0,
             actionableIssues:0,
             issues:0
-            },
+            }
             teamLeadActivity = {
                 approvedIssues:0,
                 rejectedIssues:0,
                 avgIssueAcionTime:0,
             }
-            const issuePriority = {
+            issuePriority = {
                 activityRate:0,
                 completionRate:0,
                 overdueRate:0,
                 prioritybased:0
             }
-            const assignedissues = 0
+            assignedissues = 0
             return NextResponse.json({
                 success:true,
                 status:200,
@@ -83,7 +109,7 @@ export async function GET(req: NextRequest){
                 issuePriorityMap.set(issue.priority , (issuePriorityMap.get(issue.priority) || 0) +1)
             }
         }
-        const issueOverview = {
+        issueOverview = {
             totalIssuesofProject:totalIssuesofProject.length,
             totalAssignedIssues:totalIssues,
             completedIssues,
@@ -100,7 +126,7 @@ export async function GET(req: NextRequest){
             issueAcceptanceRate:issueAcceptanceRate.toFixed(),
             issueRejectionRate:issueRejectionRate.toFixed()
         }
-        const assignedissues = issues.map((issue)=>({
+        assignedissues = issues.map((issue)=>({
             name:issue.name,
             priority:issue.priority,
             status:issue.status,
@@ -115,7 +141,7 @@ export async function GET(req: NextRequest){
                 })
             }
         }
-        const issuePriority = {
+        issuePriority = {
             activityRate,
             completionRate,
             overdueRate,

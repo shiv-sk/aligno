@@ -3,7 +3,8 @@
 
 import { getAndDeleteReq } from "@/apiCalls/apiCalls";
 import ReviewIssueComponent from "@/components/reviewissue";
-import { useParams } from "next/navigation";
+import { useAuth } from "@/context/authcontext";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -12,6 +13,15 @@ export default function ReviewIssue(){
     const [isLoading , setIsLoading] = useState(false);
     const [issueReviewData , setIssueReviewData] = useState(null);
     const {issueReviewId} = useParams();
+    const router = useRouter();
+    const {user, isLoading:authLoading} = useAuth();
+
+    useEffect(()=>{
+        if(!authLoading && !user){
+            router.push("/login");
+            toast.warning("please login!");
+        }
+    } , [user , router , authLoading]);
 
     useEffect(()=>{
         if(!issueReviewId){
