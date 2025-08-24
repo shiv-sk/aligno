@@ -13,4 +13,5 @@ export interface Acticity{
     rejectedIssueReviews:number,
     issueReviewAcceptRate:number,
     issueReviewRejectRate:number,
+    reviewAcceptedIssues:number,
 } 

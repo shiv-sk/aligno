@@ -1,4 +1,5 @@
 import Constants from "@/constents/constants";
+import { sendIssueClosureRequestEmail } from "@/helpers/issueclosureemail";
 import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
@@ -17,7 +18,7 @@ export async function POST(req: NextRequest){
                 message:"Issue not found! "
             } , {status:404})
         }
-        const {projectId} = issue;
+        const {projectId, name} = issue;
         if(!projectId){
             return NextResponse.json({
                 success:false,
@@ -56,13 +57,18 @@ export async function POST(req: NextRequest){
         }
         issue.status = Constants.Review;
         const updatedIssue = await issue.save();
-        console.log("issue is updated with review stage! " , updatedIssue);
         if(!updatedIssue){
             return NextResponse.json({
                 success:false,
                 status:404,
                 message:"Issue not found! "
             } , {status:404})
+        }
+        const userName = user.name;
+        const userEmail = user.email;
+        const taskName = name;
+        if(userEmail && userName && taskName){
+            await sendIssueClosureRequestEmail(taskName , userName , userEmail);
         }
         return NextResponse.json({
             success:true,

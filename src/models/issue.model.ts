@@ -14,7 +14,9 @@ interface IssueModel extends Document{
     completedAt:Date,
     assignedAt:Date,
     createdAt:Date,
-    updatedAt:Date
+    updatedAt:Date,
+    attachments:string[],
+    links:string[],
 }
 
 const IssueSchema:Schema<IssueModel> = new Schema({
@@ -67,6 +69,14 @@ const IssueSchema:Schema<IssueModel> = new Schema({
     assignedAt:{
         type:Date,
         default:null
+    },
+    attachments:{
+        type:[String],
+        default:[]
+    },
+    links:{
+        type:[String],
+        default:[]
     },
 } , {timestamps:true});
 

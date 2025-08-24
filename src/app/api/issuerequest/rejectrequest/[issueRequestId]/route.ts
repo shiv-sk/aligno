@@ -1,4 +1,5 @@
 import Constants from "@/constents/constants";
+import { sendIssueAssignmentRejectedEmail } from "@/helpers/issueassignmentrejectemail";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import IssueRequest from "@/models/issueRequest.model";
 import { Types } from "mongoose";
@@ -14,7 +15,8 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
                 message:"TaskRequestId is required!"
             } , {status:400})
         }
-        const issueRequest = await IssueRequest.findById(issueRequestId);
+        const issueRequest = await IssueRequest.findById(issueRequestId)
+        .populate([{path:"requestedBy" , select:"name email"} , {path:"issueId" , select:"name"}]);
         if(!issueRequest){
             return NextResponse.json({
                 success:false,
@@ -46,6 +48,13 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
                 message:"IssueRequest is not found or not updated!"
             } , {status:500})
         }
+        
+        const userName = issueRequest.requestedBy.name;
+        const userEmail = issueRequest.requestedBy.email;
+        const taskName = issueRequest.issueId.name;
+        if(userEmail && userName && taskName){
+            await sendIssueAssignmentRejectedEmail(taskName, userName, userEmail);
+        } 
         return NextResponse.json({
             success:true,
             status:200,

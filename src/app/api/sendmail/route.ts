@@ -5,13 +5,14 @@ import { NextResponse } from "next/server";
 export async function GET(){
     await dbConnect();
     try {
-        const userEmail = "shivanandykk7829@gmail.com";
+        const userEmail = "userEmail";
         const userName = "userTwo";
         const projectName = "project1";
         const role = "role1"
         let emailResponse;
         if(userEmail && userName && projectName && role){
             emailResponse = await sendProjectAssignmentEmail(projectName , userName , userEmail , role)
+            console.log("response from email sending.. " , emailResponse);
         }
         if(!emailResponse){
             return NextResponse.json({

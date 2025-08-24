@@ -7,7 +7,8 @@ interface IssueReviewModel extends Document{
     projectId: mongoose.Types.ObjectId,
     status:string,
     reviewedAt:Date,
-    attachment:string,
+    attachments:string[],
+    links:string[],
     comment:string,
     createdAt:Date,
     updatedAt:Date,
@@ -44,9 +45,13 @@ const IssueReviewSchema:Schema<IssueReviewModel> = new Schema({
         trim:true,
         lowercase:true
     },
-    attachment:{
-        type:String,
-        default:null
+    attachments:{
+        type:[String],
+        default:[]
+    },
+    links:{
+        type:[String],
+        default:[]
     },
     status:{
         type:String,

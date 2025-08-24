@@ -12,12 +12,14 @@ export default function CreateIssue(){
     const {user, isLoading:authLoading} = useAuth();
     const router = useRouter();
     const [isLoading , setIsLoading] = useState(false);
+    const [links , setLinks] = useState<string[]>([]);
+    const [link , setLink] = useState("");
     const [issueData , setIssueData] = useState({
         name:"",
         description:"",
         duedate:"",
         projectId:projectId ? projectId : null,
-        priority:""
+        priority:"",
     });
 
     useEffect(()=>{
@@ -49,13 +51,30 @@ export default function CreateIssue(){
         }
     }
     const handleOnChange = (e)=>{
-        setIssueData({...issueData , [e.target.name]:e.target.value})
+        setIssueData({...issueData , [e.target.name]:e.target.value}) 
     }
     const date = ()=>{
         const tomorrowDate = new Date();
         tomorrowDate.setDate(tomorrowDate.getDate() + 1);
         return tomorrowDate.toISOString().split("T")[0];
     }
+    const addLinks = ()=>{
+        if(!link.trim()){
+            toast.warning("please add valid links");
+            return;
+        }
+        const duplicateLink = links.some((val)=>(val === link));
+        if(duplicateLink){
+            toast.warning("link is already added!");
+            return;
+        }
+        setLinks([...links , link]);
+        setLink("");
+    }
+    const removeLink = (link)=>{
+        const updatedLinks = links.filter((val)=>(val !== link));
+        setLinks(updatedLinks);
+    } 
     return(
         <div className="flex flex-col justify-center items-center min-h-screen gap-4 py-5 bg-base-200">
             <div className="max-w-sm w-full p-6 rounded-lg shadow-xl bg-base-100">
@@ -101,6 +120,35 @@ export default function CreateIssue(){
                         <option value={"Medium"}>Medium</option>
                         <option value={"High"}>High</option>
                     </select>
+                    <label htmlFor="links" className="text-md font-medium">Links</label>
+                    <div className="flex flex-col gap-1.5">  
+                    <input
+                    name="links" 
+                    type="text"
+                    id="links" 
+                    placeholder="https://docs.google.com" 
+                    className="input w-full shadow-md"
+                    value={link}
+                    onChange={(e)=>setLink(e.target.value)} 
+                    required
+                    />
+                    <p className="btn btn-primary w-[50px]" onClick={addLinks}>Add</p>
+                    </div>
+                    {
+                        links && links.length > 0 && (
+                            links.map((link , index)=>(
+                                <div key={index} className="flex gap-1.5">
+                                   <input 
+                                    type="text"
+                                    disabled={true}  
+                                    className="input w-full shadow-md"
+                                    value={link}
+                                    />
+                                    <p className="btn btn-primary w-[80px]" onClick={()=>removeLink(link)}>remove</p> 
+                                </div>
+                            ))
+                        )
+                    }
                     <button 
                     type="submit" 
                     className="btn w-full btn-neutral text-lg font-semibold shadow-xl" 

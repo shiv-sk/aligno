@@ -102,7 +102,7 @@ export default function ManagerDashboard({ projectId , projectName }: { projectI
                                         </li>
                                         <li>
                                             <Link href={`/createissue/${projectId}`}>
-                                                <button className="btn btn-neutral shadow-xl">CreateIssue</button>
+                                                <button className="btn btn-neutral shadow-xl">CreateTask</button>
                                             </Link>
                                         </li>
                                         <li>

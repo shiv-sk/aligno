@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 export default function Profile(){
     const router = useRouter();
     const {user , isLoading} = useAuth();
-    
+
     useEffect(()=>{
         if(!isLoading && !user){
             router.push("/login");
@@ -20,6 +20,7 @@ export default function Profile(){
         e.preventDefault();
         toast.success("Comming Soon!");
     }
+    
     return(
         <div className="min-h-screen gap-4 py-5 bg-base-300">
             <div className="max-w-sm w-full p-6 rounded-lg shadow-lg bg-base-100 mx-auto my-20">

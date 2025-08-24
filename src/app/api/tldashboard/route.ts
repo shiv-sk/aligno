@@ -59,7 +59,7 @@ export async function GET(req: NextRequest){
                 message:"Issues are not found!"
             } , {status:200})
         }
-        const issues  = totalIssuesofProject.filter((issue)=>(issue.assignedBy.equals(userId))); 
+        const issues  = totalIssuesofProject.filter((issue)=>(issue.assignedBy && issue.assignedBy?.equals(userId))); 
         if(issues.length === 0){
             issueOverview = {
             totalIssuesofProject:totalIssuesofProject.length ?? 0,

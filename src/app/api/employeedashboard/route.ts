@@ -89,18 +89,18 @@ export async function GET(req: NextRequest){
         const onWorkingIssues = issues.filter((issue)=>(issueStatus.includes(issue.status))).length;
         const activityRate = totalIssues ? Math.round((onWorkingIssues / totalIssues) * 100) : 0;
 
-        const { acceptedIssueRequests, rejectedIssueRequests , totalIssueRequests,
+        const { acceptedIssueRequests, rejectedIssueRequests , totalIssueRequests:totalAssignmentRequestedIssues,
             issueRequestAcceptRate, issueRequestRejectRate } = getIssueRequestsData(issueRequests);
 
-        const { acceptedIssueReviews, rejectedIssueReviews, totalIssueReviews, 
+        const { acceptedIssueReviews:reviewAcceptedIssues, rejectedIssueReviews, totalIssueReviews:totalReviewRequest, 
             issueReviewAcceptRate, issueReviewRejectRate } = getIssueReviewsData(issueReviews);
         
         const issueOverview = {
-            totalIssueRequests,
+            totalAssignmentRequestedIssues,
             assignedIssues,
             completedIssues,
-            totalIssueReviews,
-            acceptedIssueReviews,
+            totalReviewRequest,
+            reviewAcceptedIssues,
             reopenedIssues,
         }
 
@@ -118,7 +118,7 @@ export async function GET(req: NextRequest){
         }
         
         issueReviewData = {
-            acceptedIssueReviews,
+            reviewAcceptedIssues,
             rejectedIssueReviews,
             issueReviewAcceptRate,
             issueReviewRejectRate,

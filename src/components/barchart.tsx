@@ -37,7 +37,7 @@ export default function Barchart({role , activityData , isReview = false}:
         datasets:[
             {
                 label: "Task Review Count",
-                data:[activityData?.acceptedIssueReviews ?? 0 , activityData?.rejectedIssueReviews ?? 0],
+                data:[activityData?.reviewAcceptedIssues ?? 0 , activityData?.rejectedIssueReviews ?? 0],
                 backgroundColor: ['rgba(255, 99, 132, 0.5)' , 'rgba(53, 162, 235, 0.5)'],
                 borderWidth: 0.5,
                 barThickness: 35,
@@ -56,7 +56,7 @@ export default function Barchart({role , activityData , isReview = false}:
                         <Bar data={data}></Bar>
                         <div className="border-bg-green-900 flex flex-wrap justify-evenly py-3">
                             <p className="font-bold text-lg">AvgActionTime:
-                                <span className="font-normal text-xl">{activityData?.avgIssueAcionTime.toFixed(1) ?? 0} Days</span>
+                                <span className="font-normal text-xl">{activityData?.avgIssueAcionTime ?? 0} Days</span>
                             </p>
                             <p className="font-bold text-lg">Task Assignement Accept:
                                 <span className="font-normal text-xl">{activityData?.issueAcceptanceRate ?? 0}%</span>
@@ -86,10 +86,10 @@ export default function Barchart({role , activityData , isReview = false}:
                                 <span className="font-normal text-xl">{activityData?.rejectedIssueRequests ?? 0}</span>
                             </p>
                             <p className="font-bold text-lg">RequestAcceptRate:
-                                <span className="font-normal text-xl">{activityData?.issueRequestAcceptRate ?? 0}%</span>
+                                <span className="font-normal text-xl">{activityData?.issueRequestAcceptRate.toFixed(2) ?? 0}%</span>
                             </p>
                             <p className="font-bold text-lg">RequestRejectRate:
-                                <span className="font-normal text-xl">{activityData?.issueRequestRejectRate ?? 0}%</span>
+                                <span className="font-normal text-xl">{activityData?.issueRequestRejectRate.toFixed(2) ?? 0}%</span>
                             </p>
                         </div>
                     </>
@@ -98,16 +98,16 @@ export default function Barchart({role , activityData , isReview = false}:
                         <Bar data={employeeReviewData}></Bar>
                         <div className="border-bg-green-900 flex flex-wrap justify-evenly py-3">
                             <p className="font-bold text-lg">AcceptedTaskReviews:
-                                <span className="font-normal text-xl">{activityData?.acceptedIssueReviews ?? 0}</span>
+                                <span className="font-normal text-xl">{activityData?.reviewAcceptedIssues ?? 0}</span>
                             </p>
                             <p className="font-bold text-lg">RejectedTaskReviews:
                                 <span className="font-normal text-xl">{activityData?.rejectedIssueReviews ?? 0}</span>
                             </p>
                             <p className="font-bold text-lg">ReviewAcceptRate:
-                                <span className="font-normal text-xl">{activityData?.issueReviewAcceptRate ?? 0}%</span>
+                                <span className="font-normal text-xl">{activityData?.issueReviewAcceptRate.toFixed(2) ?? 0}%</span>
                             </p>
                             <p className="font-bold text-lg">ReviewRejectRate:
-                                <span className="font-normal text-xl">{activityData?.issueReviewRejectRate ?? 0}%</span>
+                                <span className="font-normal text-xl">{activityData?.issueReviewRejectRate.toFixed(2) ?? 0}%</span>
                             </p>
                         </div>
                     </>
