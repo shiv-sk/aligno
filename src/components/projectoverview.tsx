@@ -36,7 +36,7 @@ export default function ProjectOverview({projectOverview}: {projectOverview:Proj
         default:
             projectHealthtooltip = `This project is 0% complete with an overdue rate of 0%.`
     }
-    if(projectOverview?.completionRate && projectOverview?.overdueRate){
+    if((projectOverview?.completionRate && projectOverview?.overdueRate) || projectOverview?.perUserIssue){
         if(projectOverview?.completionRate >= 40 && projectOverview?.overdueRate <= 30){
             workLoad = "Healthy";
             workLoadbadge = "badge badge-success";
@@ -48,7 +48,7 @@ export default function ProjectOverview({projectOverview}: {projectOverview:Proj
             workLoadtooltip = `Each user has an average of ${projectOverview.perUserIssue} Tasks, with a ${projectOverview.completionRate}% completion rate and ${projectOverview.overdueRate}% overdue rate.`
         }
         else if(projectOverview?.completionRate <= 30 && projectOverview?.overdueRate > 40){
-            workLoad = "Danger";
+            workLoad = "Overload";
             workLoadbadge = "badge badge-error";
             workLoadtooltip = `Each user has an average of ${projectOverview.perUserIssue} Tasks, with a ${projectOverview.completionRate}% completion rate and ${projectOverview.overdueRate}% overdue rate.`
         }

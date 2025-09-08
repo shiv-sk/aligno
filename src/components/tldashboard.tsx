@@ -64,7 +64,7 @@ export default function TeamLeadDashboard({ projectId , projectName , userId }: 
                                     <Link href={`/allissuerequests/${projectId}`}>
                                         <li><button className="btn w-full btn-neutral">ReviewRequests</button></li>
                                     </Link>
-                                    <Link href={`/assignedissues`}>
+                                    <Link href={`/assignedissues/${projectId}`}>
                                         <li><button className="btn w-full btn-neutral">AssignedTasks</button></li>
                                     </Link>
                                     <Link href={`/overview/${projectId}`}>
@@ -93,7 +93,7 @@ export default function TeamLeadDashboard({ projectId , projectName , userId }: 
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href={`/assignedissues`}>
+                                            <Link href={`/assignedissues/${projectId}`}>
                                                 <button className="btn btn-neutral shadow-xl">AssignedTasks</button>
                                             </Link>
                                         </li>

@@ -44,16 +44,31 @@ export default function IssueReviewData({issue}:  {issue: IssueData}){
         }
         const today = new Date();
         const due = new Date(issue.duedate);
-        if(today > due){
+        if(today > due && issue.issueStatus !== Constants.Closed){
             return(
-                <div className="tooltip tooltip-error" data-tip="Issue is overdue!">
+                <div className="tooltip tooltip-error" data-tip="Task is overdue!">
                     <span className="badge badge-error">Overdue</span>
                 </div>
             )
-        }else{
+        }
+        else if(issue.issueStatus === Constants.Closed){
+            return(
+                <div className="tooltip tooltip-success" data-tip="Task is marked as completed">
+                    <span className="badge badge-success">Completed</span>
+                </div>
+            )
+        }
+        else if(today < due && issue.issueStatus !== Constants.Closed){
             return(
                 <div className="tooltip tooltip-info" data-tip="Upcoming due date">
                     <span className="badge badge-info">Upcoming</span>
+                </div>
+            )
+        }
+        else{
+            return(
+                <div className="tooltip tooltip-secondary" data-tip="No data">
+                    <span className="badge badge-secondary">No data</span>
                 </div>
             )
         }

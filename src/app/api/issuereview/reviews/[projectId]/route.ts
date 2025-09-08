@@ -1,4 +1,3 @@
-import Constants from "@/constents/constants";
 import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import IssueReview from "@/models/issueReview.model";
@@ -16,7 +15,7 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
                 message:"projectId is required!"
             } , {status:400})
         }
-        const issueReviewRequests = await IssueReview.find({status:Constants.Pending , projectId})
+        const issueReviewRequests = await IssueReview.find({projectId})
         .populate( "issueId" ,"name status priority duedate").lean<IssueReviewInterface[]>();
         if(issueReviewRequests.length === 0){
             return NextResponse.json({

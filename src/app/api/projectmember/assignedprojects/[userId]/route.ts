@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/connection.db";
 import ProjectUser from "@/models/projectMember.model";
 import mongoose from "mongoose";
+import Project from "@/models/project.model";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest , {params}:{params:{userId:string}}){

@@ -6,13 +6,14 @@ import Constants from "@/constents/constants";
 import { useAuth } from "@/context/authcontext";
 import { Issue } from "@/types/issue";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CiFilter, CiSearch } from "react-icons/ci";
 import { toast } from "react-toastify";
 
 export default function MyTasks(){
     const router = useRouter();
+    const {projectId} = useParams();
     const {user, isLoading:authLoading} = useAuth();
     const [isLoading , setIsLoading] = useState(false);
     const [issues , setAllIssues] = useState<Issue[]>([]);
@@ -26,12 +27,9 @@ export default function MyTasks(){
 
     useEffect(()=>{
         const getAllAssignedIssues = async()=>{
-            if(!user || !user._id){
-                return;
-            }
             setIsLoading(true);
             try {
-                const response = await getAndDeleteReq(`/api/issue/myassignedissues/${user._id}` , "GET");
+                const response = await getAndDeleteReq(`/api/issue/myassignedissues/${projectId}` , "GET");
                 if(response.success){
                     // console.log("the assigned issues are! " , response);
                     setAllIssues(response?.issues);
@@ -44,13 +42,13 @@ export default function MyTasks(){
             }
         }
         getAllAssignedIssues();
-    } , [user]);
+    } , [projectId]);
 
     return(
         <div className="bg-base-200 min-h-screen">
             <div className="flex flex-col py-6 items-center">
-                <div className="w-full max-w-xl md:max-w-4xl mb-6 flex flex-row justify-between gap-3">
-                    <div className="relative w-full">
+                <div className="w-full max-w-sm md:max-w-4xl mb-6 flex flex-col md:flex-row justify-between gap-3 items-center">
+                    <div className="relative w-full max-w-[320px] md:max-w-[550px]">
                         <CiSearch className="absolute z-10 left-3 top-1/2 -translate-y-1/2 text-xl text-gray-500"/>
                         <input
                         type="text" 
@@ -60,7 +58,7 @@ export default function MyTasks(){
                         className="input md:w-full w-xs shadow-xl h-12"
                         />
                     </div>
-                    <div className="relative w-full max-w-[200px]">
+                    <div className="relative w-full max-w-[320px]">
                         <CiFilter className="absolute z-10 left-3 top-1/2 -translate-y-1/2 text-xl text-gray-500"/>
                         <select className="select shadow-xl pl-9 w-full h-12">
                             <option disabled={true}>Pick a Priority</option>

@@ -77,7 +77,7 @@ export default function Profile(){
                         className="btn w-full btn-neutral text-lg font-semibold shadow-xl" 
                         disabled={isLoading}
                         onClick={handlePasswordRest}>
-                            {"PasswordReset"}
+                            {"PasswordResetRequest"}
                         </button>
                     </form>
                 </div>

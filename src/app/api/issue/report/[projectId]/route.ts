@@ -22,7 +22,8 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
         const endDate = new Date();
         const startDate = new Date();
         startDate.setDate(startDate.getDate() - 7);
-        const issues = await Issue.find({projectId , updatedAt: { $gte: startDate, $lte: endDate }}).populate("assignedTo" , "name");
+        const issues = await Issue.find({projectId , updatedAt: { $gte: startDate, $lte: endDate }})
+        .populate("assignedTo" , "name");
         if(issues.length === 0){
             return NextResponse.json({
                 success:false,

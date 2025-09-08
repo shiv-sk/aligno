@@ -12,7 +12,7 @@ export default function CreateIssue(){
     const {user, isLoading:authLoading} = useAuth();
     const router = useRouter();
     const [isLoading , setIsLoading] = useState(false);
-    const [links , setLinks] = useState<string[]>([]);
+    // const [links , setLinks] = useState<string[]>([]);
     const [link , setLink] = useState("");
     const [issueData , setIssueData] = useState({
         name:"",
@@ -59,22 +59,23 @@ export default function CreateIssue(){
         return tomorrowDate.toISOString().split("T")[0];
     }
     const addLinks = ()=>{
-        if(!link.trim()){
-            toast.warning("please add valid links");
-            return;
-        }
-        const duplicateLink = links.some((val)=>(val === link));
-        if(duplicateLink){
-            toast.warning("link is already added!");
-            return;
-        }
-        setLinks([...links , link]);
-        setLink("");
+        // if(!link.trim()){
+        //     toast.warning("please add valid links");
+        //     return;
+        // }
+        // const duplicateLink = links.some((val)=>(val === link));
+        // if(duplicateLink){
+        //     toast.warning("link is already added!");
+        //     return;
+        // }
+        // setLinks([...links , link]);
+        // setLink("");
+        toast.warning("please avoid links work is in progress");
     }
-    const removeLink = (link)=>{
-        const updatedLinks = links.filter((val)=>(val !== link));
-        setLinks(updatedLinks);
-    } 
+    // const removeLink = (link: string)=>{
+    //     const updatedLinks = links.filter((val)=>(val !== link));
+    //     setLinks(updatedLinks);
+    // } 
     return(
         <div className="flex flex-col justify-center items-center min-h-screen gap-4 py-5 bg-base-200">
             <div className="max-w-sm w-full p-6 rounded-lg shadow-xl bg-base-100">
@@ -134,7 +135,7 @@ export default function CreateIssue(){
                     />
                     <p className="btn btn-primary w-[50px]" onClick={addLinks}>Add</p>
                     </div>
-                    {
+                    {/* {
                         links && links.length > 0 && (
                             links.map((link , index)=>(
                                 <div key={index} className="flex gap-1.5">
@@ -148,7 +149,7 @@ export default function CreateIssue(){
                                 </div>
                             ))
                         )
-                    }
+                    } */}
                     <button 
                     type="submit" 
                     className="btn w-full btn-neutral text-lg font-semibold shadow-xl" 

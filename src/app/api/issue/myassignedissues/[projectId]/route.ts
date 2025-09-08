@@ -1,19 +1,25 @@
 import dbConnect from "@/lib/connection.db";
+import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest , {params}:{params:{userId:string}}){
+export async function GET(req: NextRequest , {params}:{params:{projectId:string}}){
     await dbConnect();
     try {
-        const userId = params.userId;
-        if(!userId){
+        const projectId = params.projectId;
+        if(!projectId){
             return NextResponse.json({
                 success: false,
                 status:400,
-                message:"userId is required!"
+                message:"ProjectId is required!"
             } , {status:400})
         }
-        const issues = await Issue.find({assignedTo:userId});
+        const authorizedUser = await authorizeRole(["TeamLead"])(projectId);
+        if("status" in authorizedUser){
+            return authorizedUser;
+        }
+        const {user} = authorizedUser;
+        const issues = await Issue.find({assignedBy:user._id , projectId});
         return NextResponse.json({
             success:true,
             status:200,

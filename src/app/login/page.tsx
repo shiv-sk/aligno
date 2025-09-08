@@ -38,7 +38,7 @@ export default function Login(){
             console.log(response);
             if(response.success){
                 toast.success("login success!");
-                router.push("/allprojects")
+                router.push("/assignedprojects")
             }
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || "Server Error!.";

@@ -48,6 +48,10 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
         }
     }
 
+    const handleUnAssignIssue = ()=>{
+        toast.warning("work is in progress")
+    }
+
     const closeModal = async (e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
         if(!reviewIssueData.issueId){
@@ -127,10 +131,10 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
                     )
                 }
                 {
-                    role === Constants.Employee && issue?.assignedTo?._id === user?._id &&(
+                    role === Constants.Employee && issue?.assignedTo?._id === user?._id && (
                         <button 
                         className="btn btn-primary" 
-                        disabled={issue?.status === Constants.Review}
+                        disabled={issue?.status === Constants.Review || issue?.status === Constants.Closed}
                         onClick={openModal}
                         title="Click to send completion request for this task"
                         >{isReviewLoading ? <span className="loading loading-spinner loading-xs"></span> : "Mark As Done"}</button>
@@ -149,8 +153,9 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
                     role === Constants.TeamLead && issue?.assignedBy?._id === user?._id &&(
                         <button 
                         className="btn btn-primary" 
-                        disabled={isLoading}
+                        disabled={isLoading || issue?.status === Constants.Review || issue?.status === Constants.Closed}
                         title="Click to unassign this task"
+                        onClick={handleUnAssignIssue}
                         >{isLoading ? <span className="loading loading-spinner loading-xs"></span> : "UnAssign"}</button>
                     )
                 }
@@ -158,7 +163,7 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
                     role === Constants.Manager && (
                         <button 
                         className="btn btn-primary" 
-                        disabled={isLoading}
+                        disabled={isLoading || issue?.status === Constants.Closed}
                         title="update task"
                         >{isLoading ? <span className="loading loading-spinner loading-xs"></span> : "Update"}</button>
                     )

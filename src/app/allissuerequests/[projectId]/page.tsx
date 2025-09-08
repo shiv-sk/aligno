@@ -51,9 +51,9 @@ export default function AllIssueRequests(){
     return(
         <div className="bg-base-300 min-h-screen">
             <div className="flex flex-col items-center py-5">
-                <div className="w-full max-w-xl md:max-w-4xl mb-6 flex flex-row justify-between gap-3">
+                <div className="w-full max-w-sm md:max-w-4xl mb-6 flex flex-col md:flex-row justify-between gap-3 items-center">
                     <div className="relative w-full">
-                        <CiSearch className="absolute z-10 left-3 top-1/2 -translate-y-1/2 text-xl text-gray-500"/>
+                        <CiSearch className="relative w-full max-w-[320px] md:max-w-[550px]"/>
                         <input
                         type="text" 
                         name="search"
@@ -62,7 +62,7 @@ export default function AllIssueRequests(){
                         className="input md:w-full w-xs shadow-xl h-12 pl-9"
                         />
                     </div>
-                    <div className="relative w-full max-w-[200px]">
+                    <div className="relative w-full max-w-[320px]">
                         <CiFilter className="absolute z-10 left-3 top-1/2 -translate-y-1/2 text-xl text-gray-500"/>
                         <select className="select shadow-xl pl-9 w-full h-12">
                             <option disabled={true}>Pick a Priority</option>

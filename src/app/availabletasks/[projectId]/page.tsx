@@ -8,7 +8,7 @@ import { Issue } from "@/types/issue";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { CiFilter } from "react-icons/ci";
+import { CiFilter, CiSearch } from "react-icons/ci";
 import { toast } from "react-toastify";
 
 export default function AvailableTasks(){
@@ -50,14 +50,18 @@ export default function AvailableTasks(){
         <div className="bg-base-200 min-h-screen">
             <div className="flex flex-col pt-8 items-center">
                 <div className="w-full max-w-xl md:max-w-4xl mb-6 flex flex-row justify-between gap-3">
-                    <input
-                    type="text" 
-                    name="search"
-                    id="search" 
-                    placeholder="Search by name or description" 
-                    className="input md:w-full w-xs shadow-xl h-12"
-                    />
-                    <div className="relative w-full max-w-[200px]">
+                    <div className="relative w-full max-w-[320px] md:max-w-[550px]">
+                        <CiSearch className="absolute z-10 left-3 top-1/2 -translate-y-1/2 text-xl text-gray-500"/>
+                        <input
+                        type="text" 
+                        name="search"
+                        id="search" 
+                        placeholder="Search by name or description" 
+                        className="input md:w-full w-xs shadow-xl h-12"
+                        />
+                    </div>
+                    
+                    <div className="relative w-full max-w-[320px]">
                         <CiFilter className="absolute z-10 left-3 top-1/2 -translate-y-1/2 text-xl text-gray-500"/>
                         <select className="select shadow-xl pl-9 w-full h-12">
                             <option disabled={true}>Pick a Priority</option>

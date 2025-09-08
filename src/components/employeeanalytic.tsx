@@ -32,7 +32,7 @@ export default function EmployeeAnalyticDashboard({projectId}: {projectId:string
             try {
                 const response = await getAndDeleteReq(`/api/employeedashboard?projectId=${projectId}&userId=${user._id}` , "GET");
                 if(response.success){
-                    console.log("response from managerAnalytic! " , response);
+                    // console.log("response from EmployeeAnalytic! " , response);
                     setEmployeeAnalyticData(response?.data || null);
                 }
             } catch (error: any) {

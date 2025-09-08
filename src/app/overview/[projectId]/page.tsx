@@ -58,6 +58,9 @@ export default function Overview(){
         }
         ganttChartData();
     } , [projectId]);
+    const handleWeeklyReport = ()=>{
+        toast.warning("Work is in progress!");
+    }
     return(
         <div className="min-h-screen py-6 bg-base-300">
             <h2 className="text-xl font-semibold mb-4 text-center">Project Overview</h2>
@@ -87,7 +90,7 @@ export default function Overview(){
                         {taskSummary?.completionRate}%
                     </span>
                 </p>
-                <button className="btn btn-neutral shadow-xl" >Weekly-Report</button>
+                <button className="btn btn-neutral shadow-xl" onClick={handleWeeklyReport}>Weekly-Report</button>
                 
             </div>
         </div>

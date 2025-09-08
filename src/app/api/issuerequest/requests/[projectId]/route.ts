@@ -1,4 +1,3 @@
-import Constants from "@/constents/constants";
 import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import IssueRequest from "@/models/issueRequest.model";
@@ -16,7 +15,7 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
         } , {status:400})
     }
     try {
-        const issueRequests = await IssueRequest.find({status:Constants.Pending , projectId}).populate([
+        const issueRequests = await IssueRequest.find({projectId}).populate([
             {path:"requestedBy" , select:"name email"}, 
             {path:"issueId" , select:"name projectId priority"}
         ]).lean<issueRequest[]>();
