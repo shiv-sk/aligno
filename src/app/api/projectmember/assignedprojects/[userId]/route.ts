@@ -1,11 +1,9 @@
 import dbConnect from "@/lib/connection.db";
 import ProjectUser from "@/models/projectMember.model";
-import mongoose from "mongoose";
 import Project from "@/models/project.model";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest , {params}:{params:{userId:string}}){
-    console.log("registered models!" , mongoose.modelNames());
     await dbConnect();
     const userId = params.userId;
     if(!userId){
@@ -16,14 +14,16 @@ export async function GET(req: NextRequest , {params}:{params:{userId:string}}){
         } , {status:400})
     }
     try {
-        const projects = await ProjectUser.find({userId}).populate("projectId" , "name description");
-        if(projects.length === 0){
+        const userProjects = await ProjectUser.find({userId})
+        if(userProjects.length === 0){
             return NextResponse.json({
                 success:false,
-                status:404,
-                message:"user assigned projects not found! "
-            } , {status:404})
+                status:200,
+                message:"projects are not assigned yet "
+            } , {status:200})
         }
+        const projectIds = userProjects.map((project)=>(project.projectId));
+        const projects = await Project.find({_id:{$in:projectIds}} , "name description")
         return NextResponse.json({
             success:true,
             status:200,

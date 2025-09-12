@@ -31,3 +31,11 @@ export const employeeIssueOverview = {
     "reopenedIssues":"reopenedTasks"
 }
 
+export const weeklyProgressOverview = {
+    "overdueIssues":"overdueTasks" , 
+    "totalIssues":"totalTasks" , 
+    "completedIssues":"completedTasks" , 
+    "onWorkingIssues":"onWorkingTasks" , 
+    "issueInReview":"TaskInReview" , 
+    "reopenedIssues":"reopenedTasks"
+}

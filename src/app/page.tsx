@@ -91,12 +91,11 @@ export default function Home(){
               <div 
               className="card bg-base-100 w-96 shadow-xl hover:scale-105 transition-transform duration-300 border-t-2 border-t-gray-600" 
               key={number}>
-                <figure>
+                <figure className="w-full h-60 relative">
                   <Image
                     src={src}
                     alt="Shoes"
-                    width="500"
-                    height="500"
+                    fill
                     className="object-contain bg-gray-100 rounded-lg" />
                 </figure>
                 <div className="card-body">
@@ -112,11 +111,11 @@ export default function Home(){
       {/* Preview Section */}
       <div className="bg-base-300 flex flex-col py-12 px-2">
         <h1 className="text-3xl font-semibold text-center text-slate-600 mb-6">Live Product Preview</h1>
-        {/* <div className="flex justify-center items-center gap-3.5 flex-wrap py-6 px-3 rounded-lg">
+        <div className="flex justify-center items-center gap-3.5 flex-wrap py-6 px-3 rounded-lg">
           {
             productScreenshots.map(({number , src , alt})=>(
               <div className="bg-base-100 w-96 shadow-xl hover:scale-90 transition-transform duration-300 hover:rounded-lg" key={number}>
-                <figure className="aspect-square w-[500px] h-[500px]">
+                <figure className="w-full h-60 relative">
                   <Image
                     src={src}
                     alt={alt}
@@ -127,7 +126,7 @@ export default function Home(){
             ))
           }
           
-        </div> */}
+        </div>
       </div>
       {/* How It Works */}
       <div className="bg-base-300 py-12 px-4">

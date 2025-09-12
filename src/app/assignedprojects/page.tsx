@@ -12,11 +12,8 @@ import { toast } from "react-toastify";
 export default function UserProjects(){
     interface Project{
         _id:string,
-        projectId:{
-            _id:string,
-            name:string,
-            description:string
-        },
+        name:string,
+        description:string 
     }
 
     const [allProjects , setAllProjects] = useState<Project[]>([]);
@@ -90,10 +87,10 @@ export default function UserProjects(){
                         allProjects && allProjects.length > 0 ? allProjects.map((project)=>(
                             <div className="card bg-base-100 w-96 shadow-xl" key={project._id}>
                                 <div className="card-body">
-                                    <h2 className="card-title">{project.projectId?.name || "Project-Name"}</h2>
-                                    <p>{project.projectId?.description || "Project-Description"}</p>
+                                    <h2 className="card-title">{project.name || "Project-Name"}</h2>
+                                    <p>{project.description || "Project-Description"}</p>
                                     <div className="card-actions justify-end">
-                                    <Link href={`/project/${project.projectId?._id}`}>
+                                    <Link href={`/project/${project._id}`}>
                                         <button className="btn btn-primary">View</button>
                                     </Link>
                                     </div>

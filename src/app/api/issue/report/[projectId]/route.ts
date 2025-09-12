@@ -1,3 +1,4 @@
+import { getFilteredIssues } from "@/helpers/getfiltereddata";
 import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
@@ -19,33 +20,46 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
         if("status" in authorizedUser){
             return authorizedUser;
         }
+        const generatedBy = authorizedUser.user.name
+        const role = authorizedUser.userRole;
         const endDate = new Date();
         const startDate = new Date();
         startDate.setDate(startDate.getDate() - 7);
         const issues = await Issue.find({projectId , updatedAt: { $gte: startDate, $lte: endDate }})
         .populate("assignedTo" , "name");
         if(issues.length === 0){
+            const issueSummary = {
+                totalIssues:0,
+                overdueIssues:0,
+                completedIssues:0,
+                onWorkingIssues:0,
+                issueInReview:0,
+                reopenedIssues:0,
+            }
+            const projectInsights = {
+                teamEfficiency:"noData",
+                projectHealth:"noData"
+            }
+            const projectActivity = {
+                overdueRate:0,
+                activityRate:0,
+                completionRate:0,
+            }
+            const sanitizedIssues = 0
             return NextResponse.json({
-                success:false,
-                status:404,
-                message:"Issues is not found!"
-            } , {status:404})
+                success:true,
+                status:200,
+                message:"Issues is not found!",
+                data:{issueSummary , projectInsights , sanitizedIssues , generatedBy , projectActivity , role}
+            } , {status:200})
         }
-        const overdueStatus = ["Reopened" , "Open" , "Assigned"];
-        const issueStatus = ["Assigned" , "Review"];
-        const totalIssues = issues.length;
-        const completedIssues = issues.filter((issue)=>(issue.status === "Closed")).length;
-        const onProcessIssues = issues.filter((issue)=>(issueStatus.includes(issue.status))).length;
-        const issueInReview = issues.filter((issue)=>(issue.status === "Review")).length;
-        const reopenedIssues = issues.filter((issue)=>(issue.status === "Reopened")).length;
-        const completionRate = Math.round((completedIssues / totalIssues) * 100);
-        const overdueIssues = issues.filter((issue)=>((overdueStatus.includes(issue.status)) && new Date() > new Date(issue.duedate))).length;
-        const overdueRate = Math.round((overdueIssues / totalIssues) * 100);
+        const {totalIssues , completedIssues , onWorkingIssues , overdueIssues , 
+            issueInReview , reopenedIssues , overdueRate , activityRate , completionRate} = getFilteredIssues(issues)
         let projectHealth = "Balanced";
         let teamEfficiency = "Medium";
         if(overdueRate > 40){
             projectHealth = "Delayed";
-        }else if(onProcessIssues > completedIssues && overdueRate > 20){
+        }else if(onWorkingIssues > completedIssues && overdueRate > 20){
             projectHealth = "Overloaded";
         }
         if(completionRate >= 80 && overdueIssues <= 1){
@@ -57,15 +71,18 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
             totalIssues,
             overdueIssues,
             completedIssues,
-            onProcessIssues,
+            onWorkingIssues,
             issueInReview,
-            reopenedIssues,
-            overdueRate,
-            completionRate
+            reopenedIssues
         }
         const projectInsights = {
             teamEfficiency,
             projectHealth
+        }
+        const projectActivity = {
+            overdueRate,
+            activityRate,
+            completionRate,
         }
         const sanitizedIssues = issues.map((issue)=>({
             name:issue.name,
@@ -76,14 +93,12 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
             completedAt:issue.completedAt ? issue.completedAt.toISOString().split("T")[0] : "-",
             duedate:issue.duedate ? issue.duedate.toISOString().split("T")[0] : "-",
         }))
-        const footer = {
-            generatedBy:authorizedUser.user.name
-        }
+        
         return NextResponse.json({
             success:true,
             status:200,
             message:"formated Issues are! ",
-            data:{issueSummary , projectInsights , sanitizedIssues , footer}
+            data:{issueSummary , projectInsights , sanitizedIssues , generatedBy , projectActivity , role}
         } , {status:200})
     } catch (err) {
         console.error("PdfReport error!" , err);

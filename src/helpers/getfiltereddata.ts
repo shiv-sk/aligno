@@ -21,22 +21,25 @@ interface IssueReview{
 export function getFilteredIssues(issues: Issue[]){
     const overdueStatus = ["Reopened" , "Open" , "Assigned"];
     const issueStatus = ["Assigned" , "Review" , "Reopened"];
-    const totalIssues = issues.length;
-    const completedIssues = issues.filter((issue)=>(issue.status === Constants.Closed)).length;
-    const assignedIssues = issues.filter((issue)=>(issue.status === Constants.Assigned)).length;
-    const openIssues = issues.filter((issue)=>(issue.status === Constants.Open)).length;
-    const unAssignedIssues = issues.filter((issue)=>(!issue.assignedTo)).length;
-    const onWorkingIssues = issues.filter((issue)=>(issueStatus.includes(issue.status))).length;
-    const issueInReview = issues.filter((issue)=>(issue.status === Constants.Review)).length;
-    const reopenedIssues = issues.filter((issue)=>(issue.status === Constants.Reopened)).length;
+    const totalIssues = issues.length ?? 0;
+    const completedIssues = issues.filter((issue)=>(issue.status === Constants.Closed)).length ?? 0;
+    const assignedIssues = issues.filter((issue)=>(issue.status === Constants.Assigned)).length ?? 0;
+    const openIssues = issues.filter((issue)=>(issue.status === Constants.Open)).length ?? 0;
+    const unAssignedIssues = issues.filter((issue)=>(!issue.assignedTo)).length ?? 0;
+    const onWorkingIssues = issues.filter((issue)=>(issueStatus.includes(issue.status))).length ?? 0;
+    const issueInReview = issues.filter((issue)=>(issue.status === Constants.Review)).length ?? 0;
+    const reopenedIssues = issues.filter((issue)=>(issue.status === Constants.Reopened)).length ?? 0;
     const completionRate = totalIssues ? Math.round((completedIssues / totalIssues) * 100) : 0;
     const activityRate = totalIssues ? Math.round((onWorkingIssues / totalIssues) * 100) : 0;
-    const overdueIssues = issues.filter((issue)=>((overdueStatus.includes(issue.status)) && new Date() > new Date(issue.duedate))).length;
+    const overdueIssues = issues.filter((issue)=>(
+        (overdueStatus.includes(issue.status)) && new Date() > new Date(issue.duedate)
+    )).length;
     const overdueRate = totalIssues ? Math.round((overdueIssues / totalIssues) * 100) : 0;
-    const highPriorityIssues = issues.filter((issue)=>(issue.priority === Constants.High)).length;
-    const mediumPriorityIssues = issues.filter((issue)=>(issue.priority === Constants.Medium)).length;
-    const lowPriorityIssues = issues.filter((issue)=>(issue.priority === Constants.Low)).length;
-    return { totalIssues , completedIssues , onWorkingIssues , issueInReview , overdueIssues , assignedIssues, unAssignedIssues, 
+    const highPriorityIssues = issues.filter((issue)=>(issue.priority === Constants.High)).length ?? 0;
+    const mediumPriorityIssues = issues.filter((issue)=>(issue.priority === Constants.Medium)).length ?? 0;
+    const lowPriorityIssues = issues.filter((issue)=>(issue.priority === Constants.Low)).length ?? 0;
+    return { totalIssues , completedIssues , onWorkingIssues , issueInReview , overdueIssues , 
+        assignedIssues, unAssignedIssues, 
         openIssues, reopenedIssues , completionRate , overdueRate , highPriorityIssues , mediumPriorityIssues , 
         lowPriorityIssues , activityRate};
 }
@@ -84,9 +87,9 @@ export function getFilteredReviewIssues(issues: IssueReview[]){
 
 export function getFilteredRequestedIssues(requestedIssues: IssueRequest[]){
     const totalrequestedIssues = requestedIssues.length;
-    const pendingRequestIssues = requestedIssues.filter((issue)=>(issue.status === "Pending")).length;
-    const approvedRequestIssues = requestedIssues.filter((issue)=>(issue.status === "Approved")).length;
-    const rejectedRequestIssues = requestedIssues.filter((issue)=>(issue.status === "Rejected")).length;
+    const pendingRequestIssues = requestedIssues.filter((issue)=>(issue.status === "Pending")).length ?? 0;
+    const approvedRequestIssues = requestedIssues.filter((issue)=>(issue.status === "Approved")).length ?? 0;
+    const rejectedRequestIssues = requestedIssues.filter((issue)=>(issue.status === "Rejected")).length ?? 0;
     const requestIssueAcceptanceRate = totalrequestedIssues ? (approvedRequestIssues / totalrequestedIssues) * 100 : 0;
     const requestIssueRejectionRate = totalrequestedIssues ? (rejectedRequestIssues / totalrequestedIssues) * 100 : 0;
     return { pendingRequestIssues , approvedRequestIssues , rejectedRequestIssues , requestIssueAcceptanceRate , 
@@ -133,8 +136,8 @@ export function getStatusCount(issues: Issue[]){
 
 export function getIssueRequestsData(issueRequests: IssueRequest[]){
     const totalIssueRequests = issueRequests.length;
-    const acceptedIssueRequests = issueRequests.filter((issue)=>(issue.status === Constants.Approved)).length;
-    const rejectedIssueRequests = issueRequests.filter((issue)=>(issue.status === Constants.Rejected)).length;
+    const acceptedIssueRequests = issueRequests.filter((issue)=>(issue.status === Constants.Approved)).length ?? 0;
+    const rejectedIssueRequests = issueRequests.filter((issue)=>(issue.status === Constants.Rejected)).length ?? 0;
     const issueRequestAcceptRate = totalIssueRequests > 0 ? (acceptedIssueRequests / totalIssueRequests) * 100 : 0;
     const issueRequestRejectRate = totalIssueRequests > 0 ? (rejectedIssueRequests / totalIssueRequests) * 100 : 0;
     return { totalIssueRequests, acceptedIssueRequests, rejectedIssueRequests , issueRequestAcceptRate, issueRequestRejectRate }
@@ -142,8 +145,8 @@ export function getIssueRequestsData(issueRequests: IssueRequest[]){
 
 export function getIssueReviewsData(issueReviews: IssueReview[]){
     const totalIssueReviews = issueReviews.length;
-    const acceptedIssueReviews = issueReviews.filter((issue)=>(issue.status === Constants.Approved)).length;
-    const rejectedIssueReviews = issueReviews.filter((issue)=>(issue.status === Constants.Rejected)).length;
+    const acceptedIssueReviews = issueReviews.filter((issue)=>(issue.status === Constants.Approved)).length ?? 0;
+    const rejectedIssueReviews = issueReviews.filter((issue)=>(issue.status === Constants.Rejected)).length ?? 0;
     const issueReviewAcceptRate = totalIssueReviews > 0 ? (acceptedIssueReviews / totalIssueReviews) * 100 : 0;
     const issueReviewRejectRate = totalIssueReviews > 0 ? (rejectedIssueReviews / totalIssueReviews) * 100 : 0;
     return { totalIssueReviews, acceptedIssueReviews, rejectedIssueReviews, issueReviewAcceptRate, issueReviewRejectRate }
