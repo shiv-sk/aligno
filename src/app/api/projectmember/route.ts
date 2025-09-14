@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import dbConnect from "@/lib/connection.db";
 import { validateInput } from "@/lib/validate";
 import ProjectUser from "@/models/projectMember.model";
