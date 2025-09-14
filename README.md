@@ -78,7 +78,7 @@ Admin, Manager, Team Lead, Employee
 ![Alt text](public/images/Aligno-assign-users.png)
 ![Alt text](public/images/Aligno-graphs.png)
 ![Alt text](public/images/Aligno-insights-Analytics.png)
-![Alt text](public/images/Aligno-mobile-view.png)
+![](public/images/Aligno-mobile-view.png)
 ![Alt text](public/images/Aligno-page.png)
 ![Alt text](public/images/Aligno-rolebased.png)
 ![Alt text](public/images/Aligno-time-line.png)
