@@ -39,6 +39,9 @@ Admin, Manager, Team Lead, Employee
 - git clone ```https://github.com/shiv-sk/aligno```
 - cd aligno
 
+### Installation
+- npm install
+
 ### Setup environment variables
 - MONGODB_URI=Mongodb url
 - JWT_SECRET=JWT token secret
@@ -48,6 +51,20 @@ Admin, Manager, Team Lead, Employee
 ### Run the app locally
 - npm run dev
 - http://localhost:3000
+
+### Demo credentials
+- Admin:
+email - admin@email.com
+password - admin123
+- Userone:
+email - userOne@email.com
+password - 123456
+- Usertwo:
+email - userTwo@email.com
+password - 123456
+- userThree:
+email - userThree@email.com
+password - 123456
 
 ### Project Status
 - v1 (Complete) → Core features: project-specific roles, dashboards, task lifecycle, analytics.

@@ -35,14 +35,20 @@ export default function Login(){
         setIsLoading(true);
         try {
             const response = await loginUser(loginData);
-            console.log(response);
+            // console.log(response);
             if(response.success){
                 toast.success("login success!");
-                router.push("/assignedprojects")
+                if(response.data?.isAdmin){
+                    router.push("/allprojects");
+                } else if(!response.data?.isAdmin){
+                    router.push("/assignedprojects");
+                }else{
+                    router.push("/");
+                }
             }
         } catch (error: any) {
-            const errorMessage = error.response?.data?.message || "Server Error!.";
-            // console.error("error loginPage! " , error);
+            const errorMessage = error.error || "Server Error!.";
+            // console.error("error loginPage! " , error.error);
             toast.error(errorMessage);
         }finally{
             setIsLoading(false);

@@ -95,12 +95,18 @@ export default function AddUsers(){
             projectId
         }));
         try {
+            setIsLoading(true);
             const response = await postAndPatchReq(`/api/projectmember` , "POST" , dataToSend);
             console.log("response from add users! " , response);
+            if(response.success){
+                toast.success("users added successfully!");
+            }
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || "Server Error!.";
             // console.error("error addProjectPage! " , error);
             toast.error(errorMessage);
+        }finally{
+            setIsLoading(false);
         }
     }
     return(
@@ -128,7 +134,9 @@ export default function AddUsers(){
                     <button 
                     type="submit" 
                     className="btn w-full btn-neutral text-lg font-semibold shadow-xl" 
-                    disabled={isLoading}>{isLoading ? "Processing..." :"Add Users"}</button>
+                    disabled={isLoading}>{isLoading ? 
+                    <span className="loading loading-spinner loading-xs"></span> :"Add Users"}
+                    </button>
                     </form>
                 </div>
             </div>
@@ -183,7 +191,9 @@ export default function AddUsers(){
             type="button" 
             className="btn w-full btn-neutral text-lg font-semibold shadow-xl max-w-sm"
             onClick={handleAssignUsers} 
-            disabled={isLoading}>{isLoading ? "Processing..." :"Assign Users"}</button>
+            disabled={isLoading}>{isLoading ? 
+            <span className="loading loading-spinner loading-xs"></span> :"Assign Users"}
+            </button>
             <div>
                 <AssignedusersTable projectId={projectId}/>
             </div>

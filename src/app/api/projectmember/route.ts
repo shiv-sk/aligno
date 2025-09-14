@@ -13,7 +13,7 @@ export async function POST(req: NextRequest){
         if(validation.success){
             userDocuments = validation.data
         }
-        const assignedUsers = await ProjectUser.insertMany(userDocuments);
+        const assignedUsers = await ProjectUser.insertMany(userDocuments , {ordered:false});
         if(assignedUsers.length === 0){
             return NextResponse.json({
             success:false,
@@ -39,8 +39,20 @@ export async function POST(req: NextRequest){
             message:"projectUser is created! ",
             userDocuments
         } , {status:201})
-    } catch (err) {
+    } catch (err: any) {
         console.error("error from projectUser!" , err);
+        if(err.code === 11000 || err?.writeErrors){
+            const duplicates = err.writeErrors?.map((e)=>({
+                index:e.index,
+                keyValue:e.keyValue
+            }))
+            return NextResponse.json({
+            success:false,
+            status:409,
+            duplicates,
+            message:"Some projectUser entries were duplicates",
+        } , {status:409})
+        }
         return NextResponse.json({
             success:false,
             status:500,

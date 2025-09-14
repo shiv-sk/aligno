@@ -24,6 +24,7 @@ const projectUserSchema:Schema<ProjectUserModel> = new Schema({
     },
 } , {timestamps:true});
 
+projectUserSchema.index({ projectId: 1, userId: 1 }, { unique: true });
 const ProjectUser = (mongoose.models.ProjectUser as mongoose.Model<ProjectUserModel>) 
 || mongoose.model<ProjectUserModel>("ProjectUser" , projectUserSchema);
 export default ProjectUser;

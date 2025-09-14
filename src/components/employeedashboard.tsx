@@ -58,7 +58,7 @@ export default function EmployeeDashboard({ projectId , projectName }: { project
                                     <label htmlFor="menu-drawer" className="drawer-overlay"></label>
                                     <ul className="menu p-4 w-64 min-h-full bg-base-100 text-base-content gap-2">
                                     {/* Sidebar content here */}
-                                    <Link href={`/#`}>
+                                    <Link href={"/assignedprojects"}>
                                         <li>
                                             <button className="btn w-full">MyProjects</button>
                                         </li>
@@ -89,7 +89,7 @@ export default function EmployeeDashboard({ projectId , projectName }: { project
                             <ul className="hidden md:flex justify-around items-center w-full max-w-4xl bg-base-100 rounded-xl shadow-xl py-6 px-6">
                                 <div className="hidden md:flex gap-4">
                                     <li>
-                                        <Link href={`/#`}>
+                                        <Link href={"/assignedprojects"}>
                                             <button className="btn text-lg shadow-xl">MyProjects</button>
                                         </Link>
                                     </li>

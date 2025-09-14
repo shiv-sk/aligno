@@ -82,7 +82,7 @@ const AuthProvider = ({ children }: { children: ReactNode })=>{
             return { success: true, data: response?.data };
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || "Unable to find current user.";
-            return { success:false , error:errorMessage }
+            throw { success:false , error:errorMessage }
         }finally{
             setIsLoading(false);
         }
@@ -94,10 +94,10 @@ const AuthProvider = ({ children }: { children: ReactNode })=>{
             const response = await postAndPatchReq(`/api/user/login` , "POST" , data);
             console.log(response);
             setUser(response?.foundUser);
-            return { success: true, data: response?.data };
+            return { success: true, data: response?.foundUser };
         } catch (error: any) {
-            const errorMessage = error.response?.data?.message || "Unable to find current user.";
-            return { success:false , error:errorMessage }
+            const errorMessage = error?.response?.data?.messgae || "Unable to find current user.";
+            throw { success:false , error:errorMessage }
         }finally{
             setIsLoading(false);
         }
@@ -112,7 +112,7 @@ const AuthProvider = ({ children }: { children: ReactNode })=>{
             return { success: true, data: response?.data };
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || "Unable to find current user.";
-            return { success:false , error:errorMessage }
+            throw { success:false , error:errorMessage }
         }finally{
             setIsLoading(false);
         }
