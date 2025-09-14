@@ -177,10 +177,10 @@ export default function Home(){
           <h2 className="text-2xl font-bold mb-3 text-gray-800">Get in Touch</h2>
           <hr className="border-t-2 border-black w-24 my-4" />
           <div className="flex gap-4 mt-3 text-2xl text-gray-600">
-            <a href="http://" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/shiv-sk" target="_blank" rel="noopener noreferrer">
               <SiGithub className="hover:text-black transition duration-200"/>
             </a>
-            <a href="http://" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.linkedin.com/in/shivanand-khudanapur-a809a8274" target="_blank" rel="noopener noreferrer">
               <GrLinkedin className="hover:text-blue-500 transition duration-200"/>
             </a>
             <a href="https://www.reddit.com/user/Material_Rub8407/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button" target="_blank" rel="noopener noreferrer">

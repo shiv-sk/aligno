@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aligno
+“Aligno – Role-based workflow management made simple for modern teams”
 
-## Getting Started
+### Summary
+Aligno is designed to streamline workflow management in small to mid-sized teams. Every project in Aligno comes with role-specific access, ensuring structured collaboration between Admins, Managers, Team Leads, and Employees.
+The system covers the entire task lifecycle — from task assignment requests to approvals and closures — while keeping everyone updated with email notifications and project-wide insights.
+Aligno covers the full task cycle with dashboards and analytics for better visibility.
 
-First, run the development server:
+### Tech Stack
+- Frontend: React
+- Backend: Node.js 
+- Framework: Next.js (App Router) (Full-stack: frontend + backend APIs)
+- Styling: Tailwind CSS
+- Database: MongoDB + Mongoose
+- Authentication: JWT-based + Project-specific - - Role-based Access Control
+- Notifications: Resend
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Features in v1
+- Project-Specific Roles
+Admin, Manager, Team Lead, Employee
+- Role-Based Dashboards
+- Unique dashboards for each role with tailored navigation
+- Task Management Cycle
+- Request → Approve → Assign → Work → Closure
+- Analytics & Graphs
+- Workload distribution, efficiency tracking, and project progress
+- Deployed on Vercel for scalability and simplicity
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Work in Progress / Coming Soon (v2)
+- Reminders (due dates & follow-ups)
+- File Attachments & Links
+- In-app Notifications (real-time alerts inside dashboard) , Email Notifications
+- Team Chat (communication between members assigned to the same project)
+- Advanced Reporting & Export Options
+- AI-Powered Insights (task optimization, workload balancing)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Getting Started
+1. Clone the repository
+- git clone ```https://github.com/shiv-sk/aligno```
+- cd aligno
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Setup environment variables
+- MONGODB_URI=Mongodb url
+- JWT_SECRET=JWT token secret
+- JWT_EXIPRY=JWT token expiry
+- RESEND_API_KEY=Resend api key
 
-## Learn More
+### Run the app locally
+- npm run dev
+- http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+### Project Status
+- v1 (Complete) → Core features: project-specific roles, dashboards, task lifecycle, analytics.
+- Currently Working On → Reminders , Email notifications & polishing the UI.
+- v2 (Planned) → Reminders, file system, in-app notifications, team chat, reports, and AI-powered insights.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Feedback & Contributions
+- I’d love to hear your thoughts!
+- Have suggestions to improve Aligno?
+- Want to collaborate or contribute?
+- Found a bug or have a feature request?
+- Feel free to reach out
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Contact
+- You can connect with me here:
+- discord: shivanandkhudanapur_40149, 
+- reddit: https://www.reddit.com/user/Material_Rub8407 
+- email: shivanandcrew034@gmail.com
+- linkedIn: https://www.linkedin.com/in/shivanand-khudanapur-a809a8274
+- x: https://x.com/YkShivanand
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Architecture
+- Flow-chart
+![Alt text](public/images/Aligno-flowchart-v1.png)
+- Data modeling
+![Alt text](public/images/Aligno-v1-data-modeling.png)
+### Screenshots
+![Alt text](public/images/Aligno-assign-users.png)
+![Alt text](public/images/Aligno-graphs.png)
+![Alt text](public/images/Aligno-insights-Analytics.png)
+![Alt text](public/images/Aligno-mobile-view.png)
+![Alt text](public/images/Aligno-page.png)
+![Alt text](public/images/Aligno-rolebased.png)
+![Alt text](public/images/Aligno-time-line.png)
+![Alt text](public/images/Aligno-task-overview.png)
+![Alt text](public/images/Aligno-task-assignment-request.png)
+### Demo
+Coming Soon!
+### Live
+Coming Soon!

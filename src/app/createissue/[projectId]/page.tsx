@@ -130,8 +130,7 @@ export default function CreateIssue(){
                     placeholder="https://docs.google.com" 
                     className="input w-full shadow-md"
                     value={link}
-                    onChange={(e)=>setLink(e.target.value)} 
-                    required
+                    onChange={(e)=>setLink(e.target.value)}
                     />
                     <p className="btn btn-primary w-[50px]" onClick={addLinks}>Add</p>
                     </div>
