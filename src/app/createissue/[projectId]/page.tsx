@@ -50,7 +50,7 @@ export default function CreateIssue(){
             setIsLoading(false);
         }
     }
-    const handleOnChange = (e)=>{
+    const handleOnChange = (e:any)=>{
         setIssueData({...issueData , [e.target.name]:e.target.value}) 
     }
     const date = ()=>{

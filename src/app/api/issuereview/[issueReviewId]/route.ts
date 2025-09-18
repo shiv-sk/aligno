@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Constants from "@/constents/constants";
 import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
@@ -9,7 +10,7 @@ import { Issue as IssueType } from "@/types/issue";
 import IssueRequestType from "@/types/issuerequest";
 import IssueReviewType from "@/types/issueReview";
 
-export async function GET(req: NextRequest , {params}:{params:{issueReviewId:string}}){
+export async function GET(req: NextRequest , { params }: any){
     await dbConnect();
     try {
         const issueReviewId = params.issueReviewId;

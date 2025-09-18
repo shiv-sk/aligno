@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getFilteredIssues } from "@/helpers/getfiltereddata";
 import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
@@ -5,10 +6,10 @@ import Issue from "@/models/issue.model";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = 'nodejs';
-export async function GET(req: NextRequest , {params}:{params:{projectId:string}}){
+export async function GET(req: NextRequest , { params }: any){
     await dbConnect();
     try {
-        const projectId = params.projectId;
+        const {projectId} = params;
         if(!projectId){
             return NextResponse.json({
                 success:false,
@@ -84,15 +85,18 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
             activityRate,
             completionRate,
         }
-        const sanitizedIssues = issues.map((issue)=>({
-            name:issue.name,
-            status:issue.status,
-            priority:issue.priority,
-            assignedTo:issue.assignedTo?.name || "unAssigned",
-            assignedAt:issue.assignedAt ? issue.assignedAt.toISOString().split("T")[0] : "-",
-            completedAt:issue.completedAt ? issue.completedAt.toISOString().split("T")[0] : "-",
-            duedate:issue.duedate ? issue.duedate.toISOString().split("T")[0] : "-",
-        }))
+        const sanitizedIssues = issues.map((issue)=>{
+            const assignedUser = issue.assignedTo as { name?: string } | null;
+            return {
+                name:issue.name,
+                status:issue.status,
+                priority:issue.priority,
+                assignedTo:assignedUser?.name || "unAssigned",
+                assignedAt:issue.assignedAt ? issue.assignedAt.toISOString().split("T")[0] : "-",
+                completedAt:issue.completedAt ? issue.completedAt.toISOString().split("T")[0] : "-",
+                duedate:issue.duedate ? issue.duedate.toISOString().split("T")[0] : "-",
+            }
+        })
         
         return NextResponse.json({
             success:true,

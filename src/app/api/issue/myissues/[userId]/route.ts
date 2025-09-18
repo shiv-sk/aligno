@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import dbConnect from "@/lib/connection.db";
 import Issue from "@/models/issue.model";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest , {params}:{params:{userId:string}}){
+export async function GET(req: NextRequest , { params }: any){
     await dbConnect();
     try {
-        const userId = params.userId;
+        const {userId} = params;
         if(!userId){
             return NextResponse.json({
                 success: false,

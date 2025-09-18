@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Constants from "@/constents/constants";
-import { sendIssueAssignmentEmail } from "@/helpers/issueassignmentemail";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
 import IssueRequest from "@/models/issueRequest.model";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:string}}){
+
+export async function PATCH(req: NextRequest , { params }: any){
     try {
-        const issueRequestId = params.issueRequestId;
+        const {issueRequestId} = params;
         if(!issueRequestId){
             return NextResponse.json({
                 success:false,
@@ -16,7 +17,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
                 message:"TaskRequestId is required!"
             } , {status:400})
         }
-        const issueRequest = await IssueRequest.findById(issueRequestId).populate("requestedBy" , "name email");
+        const issueRequest = await IssueRequest.findById(issueRequestId)
         if(!issueRequest){
             return NextResponse.json({
                 success:false,
@@ -24,7 +25,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
                 message:"TaskRequest is not found!"
             } , {status:404})
         }
-        const {issueId} = issueRequest;
+        const {issueId , projectId} = issueRequest;
         const issue = await Issue.findById(issueId);
         if(!issue){
             return NextResponse.json({
@@ -33,7 +34,6 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
                 message:"Task is not found!"
             } , {status:404})
         }
-        const {projectId} = issueRequest;
         const authorizedUser = await authorizeRole(["TeamLead"])(projectId.toString());
         if("status" in authorizedUser){
             return authorizedUser;
@@ -45,7 +45,6 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
                 message:"Task is already assigned!"
             } , {status:400})
         }
-        const {name, duedate} = issue;
         const actionTakenBy = authorizedUser.user?._id;
         if(!actionTakenBy){
             return NextResponse.json({
@@ -92,13 +91,6 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
                 status:500,
                 message:"issue is not updated! "
             } , {status:500})
-        }
-        const userEmail = issueRequest.requestedBy.email;
-        const userName = issueRequest.requestedBy.name;
-        const taskName = name;
-        const Duedate = duedate;
-        if(userEmail && userName && taskName && Duedate){
-            await sendIssueAssignmentEmail(taskName , userName , userEmail , new Date(Duedate).toLocaleDateString());
         }
         return NextResponse.json({
             success:true,

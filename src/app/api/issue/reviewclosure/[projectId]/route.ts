@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest , {params}:{params:{projectId:string}}){
+export async function GET(req: NextRequest , { params }: any){
     try {
-        const projectId = params.projectId;
+        const {projectId} = params;
         if(!projectId){
             return NextResponse.json({
                 success:false,

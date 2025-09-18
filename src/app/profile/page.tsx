@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useAuth } from "@/context/authcontext";
@@ -16,7 +17,7 @@ export default function Profile(){
         }
     } , [user , router , isLoading]);
 
-    const handlePasswordRest = async(e)=>{
+    const handlePasswordRest = async(e:any)=>{
         e.preventDefault();
         toast.success("Comming Soon!");
     }

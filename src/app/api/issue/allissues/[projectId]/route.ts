@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import dbConnect from "@/lib/connection.db";
 import Issue from "@/models/issue.model";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest , {params}:{params:{projectId:string}}){
+export async function GET(req: NextRequest , { params }: any){
     await dbConnect();
     try {
-        const projectId = params.projectId;
+        const { projectId } = params;
         if(!projectId){
             return NextResponse.json({
                 status:400,

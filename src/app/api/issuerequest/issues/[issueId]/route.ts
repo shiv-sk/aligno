@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
 import IssueRequest from "@/models/issueRequest.model";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest , {params}:{params:{issueId:string}}){
+export async function GET(req: NextRequest , { params }: any){
     await dbConnect();
     try {
-        const issueId = params.issueId;
+        const {issueId} = params;
         if(!issueId){
             return NextResponse.json({
                 status:400,

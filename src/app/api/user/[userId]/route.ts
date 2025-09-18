@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import User from "@/models/user.model";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: NextRequest , {params}:{params:{userId:string}}){
+export async function PATCH(req: NextRequest , { params }: any){
     try {
         const userId = params.userId;
         if(!userId){
@@ -41,7 +42,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{userId:string}}
     }
 }
 
-export async function GET(req: NextRequest , {params}:{params:{userId:string}}){
+export async function GET(req: NextRequest , { params }: any){
     try {
         const userId = params.userId;
         if(!userId){
@@ -75,7 +76,7 @@ export async function GET(req: NextRequest , {params}:{params:{userId:string}}){
     }
 }
 
-export async function DELETE(req: NextRequest , {params}:{params:{userId:string}}){
+export async function DELETE(req: NextRequest , { params }: any){
     try {
         const userId = params.userId;
         if(!userId){

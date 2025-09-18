@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Issue from "@/models/issue.model";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}}){
+export async function PATCH(req: NextRequest , { params }: any){
     try {
-        const issueId = params.issueId;
+        const { issueId } = params;
         if(!issueId){
             return NextResponse.json({
                 success:false,
@@ -36,9 +37,9 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueId:string}
     }
 }
 
-export async function GET(req: NextRequest , {params}:{params:{issueId:string}}){
+export async function GET(req: NextRequest , { params }: any){
     try {
-        const issueId = params.issueId;
+        const { issueId } = params;
         if(!issueId){
             return NextResponse.json({
                 success:false,
@@ -76,9 +77,9 @@ export async function GET(req: NextRequest , {params}:{params:{issueId:string}})
     }
 }
 
-export async function DELETE(req: NextRequest , {params}:{params:{issueId:string}}){
+export async function DELETE(req: NextRequest , { params }: any){
     try {
-        const issueId = params.issueId;
+        const { issueId } = params;
         if(!issueId){
             return NextResponse.json({
                 success:false,

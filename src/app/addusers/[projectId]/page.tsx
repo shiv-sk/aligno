@@ -53,7 +53,7 @@ export default function AddUsers(){
         setAddUserData({...addUserData , [e.target.name]:e.target.value})
     }
 
-    const handleRemoveSelectedUser = async(user)=>{
+    const handleRemoveSelectedUser = async(user: any)=>{
         const userId = user?._id;
         const filteredUser = selectedusers.filter((user)=>(user.userId !== userId));
         setSelectedUsers([...filteredUser]);

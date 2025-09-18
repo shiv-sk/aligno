@@ -6,12 +6,11 @@ import Issue from "@/models/issue.model";
 import IssueRequest from "@/models/issueRequest.model";
 import requestIssueSchema from "@/schemas/issueRequest.schema";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 
 export async function POST(req: NextRequest){
     await dbConnect();
     try {
-        const validation = await validateInput<z.infer<typeof requestIssueSchema>>(req , requestIssueSchema);
+        const validation = await validateInput(req , requestIssueSchema);
         if(!validation.success){
             return NextResponse.json({
                 success:false,

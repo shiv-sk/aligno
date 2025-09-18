@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Project from "@/models/project.model";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: NextRequest , {params}:{params:{projectId:string}}){
+export async function PATCH(req: NextRequest , { params }: any){
     try {
         const projectId = params.projectId;
         if(!projectId){
@@ -37,7 +38,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{projectId:strin
     }
 }
 
-export async function GET(req: NextRequest , {params}:{params:{projectId:string}}){
+export async function GET(req: NextRequest , { params }: any){
     try {
         const projectId = params.projectId;
         if(!projectId){
@@ -71,7 +72,7 @@ export async function GET(req: NextRequest , {params}:{params:{projectId:string}
     }
 }
 
-export async function DELETE(req: NextRequest , {params}:{params:{projectId:string}}){
+export async function DELETE(req: NextRequest , { params }: any){
     try {
         const projectId = params.projectId;
         if(!projectId){

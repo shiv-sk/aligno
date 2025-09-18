@@ -1,13 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Constants from "@/constents/constants";
-import { sendIssueAssignmentRejectedEmail } from "@/helpers/issueassignmentrejectemail";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import IssueRequest from "@/models/issueRequest.model";
 import { Types } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:string}}){
+export async function PATCH(req: NextRequest , { params }: any){
     try {
-        const issueRequestId = params.issueRequestId;
+        const {issueRequestId} = params;
         if(!issueRequestId){
             return NextResponse.json({
                 success:false,
@@ -48,13 +48,6 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueRequestId:
                 message:"IssueRequest is not found or not updated!"
             } , {status:500})
         }
-        
-        const userName = issueRequest.requestedBy.name;
-        const userEmail = issueRequest.requestedBy.email;
-        const taskName = issueRequest.issueId.name;
-        if(userEmail && userName && taskName){
-            await sendIssueAssignmentRejectedEmail(taskName, userName, userEmail);
-        } 
         return NextResponse.json({
             success:true,
             status:200,

@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import dbConnect from "@/lib/connection.db";
 import ProjectUser from "@/models/projectMember.model";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: NextRequest , {params}:{params:{projectuserId:string}}){
+export async function PATCH(req: NextRequest , { params }: any){
     await dbConnect();
     try {
         const projectuserId = params.projectuserId;
@@ -38,7 +39,7 @@ export async function PATCH(req: NextRequest , {params}:{params:{projectuserId:s
     }
 }
 
-export async function DELETE(req: NextRequest , {params}:{params:{projectuserId:string}}){
+export async function DELETE(req: NextRequest , { params }: any){
     await dbConnect();
     try {
         const projectuserId = params.projectuserId;

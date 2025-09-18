@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import dbConnect from "@/lib/connection.db";
 import ProjectUser from "@/models/projectMember.model";
 import Project from "@/models/project.model";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest , {params}:{params:{userId:string}}){
+export async function GET(req: NextRequest , { params }: any){
     await dbConnect();
     const userId = params.userId;
     if(!userId){

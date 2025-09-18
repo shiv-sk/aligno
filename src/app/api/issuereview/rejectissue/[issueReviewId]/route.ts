@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Constants from "@/constents/constants";
-import { sendReopenedIssueEmail } from "@/helpers/reopenedissueemail";
 import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
@@ -7,7 +7,7 @@ import IssueReview from "@/models/issueReview.model";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: NextRequest , {params}:{params:{issueReviewId:string}}){
+export async function PATCH(req: NextRequest , { params }: any){
     await dbConnect();
     try {
         const issueReviewId = params.issueReviewId;
@@ -39,7 +39,6 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueReviewId:s
                 message:"Task is not found! "
             } , {status:400})
         }
-        const {name} = issue;
         const reviewedBy = authorizedUser.user._id;
         issueReviewRequest.status = Constants.Rejected;
         issueReviewRequest.reviewedBy = reviewedBy as mongoose.Types.ObjectId;
@@ -54,14 +53,6 @@ export async function PATCH(req: NextRequest , {params}:{params:{issueReviewId:s
         }
         issue.status = Constants.Reopened;
         const updatedIssue = await issue.save();
-        // const updatedIssue = await Issue.findByIdAndUpdate(issueId , 
-        //     {status:Constants.Reopened} , {new:true});
-        const taskName = name;
-        const userName = issueReviewRequest.requestedBy.name;
-        const userEmail = issueReviewRequest.requestedBy.email;
-        if(userEmail && userName && taskName){
-            await sendReopenedIssueEmail(taskName , userName , userEmail);        
-        }
         if(!updatedIssue){
             return NextResponse.json({
                 success:false,

@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import IssueReview from "@/models/issueReview.model";
 import { NextRequest, NextResponse } from "next/server";
 import IssueReviewInterface from "@/types/issueReview";
 
-export async function GET(req: NextRequest , {params}:{params:{projectId:string}}){
+export async function GET(req: NextRequest , { params }: any){
     await dbConnect();
     try {
         const projectId = params.projectId;

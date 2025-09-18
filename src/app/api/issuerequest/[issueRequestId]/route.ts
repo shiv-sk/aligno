@@ -1,20 +1,36 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import Issue from "@/models/issue.model";
 import IssueRequest from "@/models/issueRequest.model";
+import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
+interface IssueRequestType{
+    projectId:mongoose.Types.ObjectId,
+    issueId:mongoose.Types.ObjectId,
+    _id:string,
+    requestedBy: {
+        name:string,
+        email:string
+    },
+    status:string,
+    actionTakenAt:Date,
+    createdAt:Date,
+    updatedAt:Date,
+}
 
-export async function GET(req: NextRequest , {params}:{params:{issueRequestId:string}}){
+export async function GET(req: NextRequest , { params }: any){
     await dbConnect();
     try {
-        const issueRequestId = params.issueRequestId;
+        const {issueRequestId} = params;
         if(!issueRequestId){
             return NextResponse.json({
                 status:400,
                 message:"issueId is required!" 
             } , {status:400})
         }
-        const issueRequest = await IssueRequest.findById(issueRequestId).populate("requestedBy" , "name email");
+        const issueRequest = await IssueRequest.findById(issueRequestId).populate("requestedBy" , "name email")
+        .lean<IssueRequestType>();
         if(!issueRequest){
             return NextResponse.json({
                 status:404,

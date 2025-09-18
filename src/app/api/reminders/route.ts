@@ -1,4 +1,3 @@
-import { sendOverdueEmail } from "@/helpers/overdueemail";
 import dbConnect from "@/lib/connection.db";
 import Issue from "@/models/issue.model";
 import { NextResponse } from "next/server";
@@ -16,15 +15,6 @@ export async function GET(){
             status:404,
             message:"overdue issues are not found! "
             } , {status:404}) 
-        }
-        for(const issue of issues){
-            const issueName = issue.name;
-            const duedate = issue.duedate;
-            const userName = issue?.assignedTo?.name;
-            const userEmail = issue?.assignedTo?.email;
-            if(issueName && duedate && userEmail && userName){
-                await sendOverdueEmail(issueName , userName , userEmail , new Date(duedate).toDateString());
-            }
         }
         return NextResponse.json({
             success:true,

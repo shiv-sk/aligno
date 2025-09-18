@@ -4,7 +4,6 @@ import { validateInput } from "@/lib/validate";
 import ProjectUser from "@/models/projectMember.model";
 import { NextRequest, NextResponse } from "next/server";
 import projectMemberSchema from "@/schemas/addProjectMember.schema"
-import { sendProjectAssignmentEmail } from "@/helpers/projectassignemail";
 
 export async function POST(req: NextRequest){
     await dbConnect();
@@ -22,18 +21,6 @@ export async function POST(req: NextRequest){
             message:"projectUser creation error! "
             } , {status:500})
         }
-        const assignUsersData = await ProjectUser.find({_id:{$in: assignedUsers.map((doc)=>(doc._id))}})
-        .populate([{path:"userId" , select:"name , email"} , {path:"projectId" , select:"name"}])
-        .lean();
-        for(const assignInfo of assignUsersData){
-            const userEmail = assignInfo?.userId?.email;
-            const userName = assignInfo?.userId?.name;
-            const projectName = assignInfo?.projectId.name;
-            const role = assignInfo?.role
-            if(userEmail && userName && projectName && role){
-                await sendProjectAssignmentEmail(projectName as string , userName as string , userEmail as string , role as string)
-            }  
-        }
         return NextResponse.json({
             success:true,
             status:201,
@@ -43,7 +30,7 @@ export async function POST(req: NextRequest){
     } catch (err: any) {
         console.error("error from projectUser!" , err);
         if(err.code === 11000 || err?.writeErrors){
-            const duplicates = err.writeErrors?.map((e)=>({
+            const duplicates = err.writeErrors?.map((e: any)=>({
                 index:e.index,
                 keyValue:e.keyValue
             }))

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getFilteredIssues, getPriorityCount } from "@/helpers/getfiltereddata";
 import dbConnect from "@/lib/connection.db";
 import checkIsAdmin from "@/lib/middleware/checkisadmin";
@@ -6,10 +7,10 @@ import ProjectUser from "@/models/projectMember.model";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = 'nodejs';
-export async function GET(req: NextRequest , {params}:{params:{projectId:string}}){
+export async function GET(req: NextRequest , { params }: any){
     await dbConnect();
     try {
-        const projectId = params.projectId;
+        const { projectId } = params;
         if(!projectId){
             return NextResponse.json({
                 success:false,
