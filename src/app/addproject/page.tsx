@@ -82,7 +82,7 @@ export default function AddProject(){
                     required></textarea>
                     <button 
                     type="submit" 
-                    className="btn w-full mt-2 btn-neutral text-lg font-semibold shadow-xl" 
+                    className="btn w-full mt-2 btn-neutral text-lg font-semibold shadow-xl rounded-2xl" 
                     disabled={isLoading}>{isLoading ? "Processing..." :"Add"}</button>
                     </form>
                 </div>

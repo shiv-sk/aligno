@@ -132,7 +132,7 @@ export default function CreateIssue(){
                     value={link}
                     onChange={(e)=>setLink(e.target.value)}
                     />
-                    <p className="btn btn-primary w-[50px]" onClick={addLinks}>Add</p>
+                    <p className="btn btn-primary rounded-2xl w-[50px]" onClick={addLinks}>Add</p>
                     </div>
                     {/* {
                         links && links.length > 0 && (
@@ -149,10 +149,12 @@ export default function CreateIssue(){
                             ))
                         )
                     } */}
-                    <button 
-                    type="submit" 
-                    className="btn w-full btn-neutral text-lg font-semibold shadow-xl" 
-                    disabled={isLoading}>{isLoading ? <span className="loading loading-spinner loading-xs"></span> :"Create"}</button>
+                        <button 
+                        type="submit" 
+                        className="btn w-full btn-neutral rounded-2xl text-lg font-semibold shadow-xl" 
+                        disabled={isLoading}>
+                            {isLoading ? <span className="loading loading-spinner loading-xs"></span> :"Create"}
+                        </button>
                     </form>
                 </div>
             </div>

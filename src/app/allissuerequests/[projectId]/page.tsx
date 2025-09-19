@@ -89,10 +89,10 @@ export default function AllIssueRequests(){
                                     <p>Priority: {issue.issueId.priority || "Task Priority"}</p>
                                     <div className="card-actions justify-end">
                                     <Link href={`/issuedetail/${issue.issueId._id}`}>
-                                        <button className="btn btn-primary" title={"Task Detail"}>View Details</button>
+                                        <button className="btn btn-primary rounded-2xl" title={"Task Detail"}>View Details</button>
                                     </Link>
                                     <Link href={`/reviewrequest/${issue._id}`}>
-                                        <button className="btn btn-primary">Review Request</button>
+                                        <button className="btn btn-primary rounded-2xl">Review Request</button>
                                     </Link>
                                     </div>
                                 </div>

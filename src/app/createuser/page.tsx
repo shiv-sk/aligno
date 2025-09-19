@@ -104,7 +104,7 @@ export default function AddUser(){
                     </div>
                     <button 
                     type="submit" 
-                    className="btn w-full mt-2 btn-neutral text-lg font-semibold shadow-xl" 
+                    className="btn w-full mt-2 btn-neutral text-lg font-semibold shadow-xl rounded-2xl" 
                     disabled={isLoading}>
                         {isLoading ? <span className="loading loading-spinner loading-xs"></span> :"Add"}
                     </button>

@@ -49,7 +49,7 @@ export default function EmployeeDashboard({ projectId , projectName }: { project
                                         <li className="flex flex-col justify-center items-center">
                                             <h2 className="text-2xl font-semibold text-gray-700">{projectName}</h2>
                                             <p className="text-sm text-gray-500 italic">
-                                                Assigned as <span className="font-medium badge badge-info">Employee</span>
+                                                Assigned as <span className="font-medium badge badge-secondary">Employee</span>
                                             </p>
                                         </li>
                                     </ul>
@@ -60,27 +60,29 @@ export default function EmployeeDashboard({ projectId , projectName }: { project
                                     {/* Sidebar content here */}
                                     <Link href={"/assignedprojects"}>
                                         <li>
-                                            <button className="btn w-full">MyProjects</button>
+                                            <button className="btn w-full rounded-full">
+                                                MyProjects
+                                            </button>
                                         </li>
                                     </Link>
                                     <Link href={`/allissues/${projectId}`}>
                                         <li>
-                                            <button className="btn w-full btn-neutral">AllTasks</button>
+                                            <button className="btn w-full btn-neutral rounded-2xl">AllTasks</button>
                                         </li>
                                     </Link>
                                     <Link href={`/availabletasks/${projectId}`}>
                                         <li>
-                                            <button className="btn w-full btn-neutral">AvailableTasks</button>
+                                            <button className="btn w-full btn-neutral rounded-2xl">AvailableTasks</button>
                                         </li>
                                     </Link>
                                     <Link href={`/assignedtasks/${projectId}`}>
                                         <li>
-                                            <button className="btn w-full btn-neutral">MyTasks</button>
+                                            <button className="btn w-full btn-neutral rounded-2xl">MyTasks</button>
                                         </li>
                                     </Link>
                                     <Link href={`/overview/${projectId}`}>
                                         <li>
-                                            <button className="btn w-full btn-neutral">Overview</button>
+                                            <button className="btn w-full btn-neutral rounded-2xl">Overview</button>
                                         </li>
                                     </Link>
                                     </ul>
@@ -90,29 +92,29 @@ export default function EmployeeDashboard({ projectId , projectName }: { project
                                 <div className="hidden md:flex gap-4">
                                     <li>
                                         <Link href={"/assignedprojects"}>
-                                            <button className="btn text-lg shadow-xl">MyProjects</button>
+                                            <button className="btn text-lg shadow-xl rounded-full">MyProjects</button>
                                         </Link>
                                     </li>
                                 </div>
                                 <div className="hidden md:flex gap-4">
                                     <li>
                                         <Link href={`/allissues/${projectId}`}>
-                                            <button className="btn btn-neutral shadow-xl">AllTasks</button>
+                                            <button className="btn btn-neutral shadow-xl rounded-2xl">AllTasks</button>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link href={`/availabletasks/${projectId}`}>
-                                            <button className="btn btn-neutral shadow-xl">AvailableTasks</button>
+                                            <button className="btn btn-neutral shadow-xl rounded-2xl">AvailableTasks</button>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link href={`/assignedtasks/${projectId}`}>
-                                            <button className="btn btn-neutral shadow-xl">MyTasks</button>
+                                            <button className="btn btn-neutral shadow-xl rounded-2xl">MyTasks</button>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link href={`/overview/${projectId}`}>
-                                            <button className="btn btn-neutral shadow-xl">Overview</button>
+                                            <button className="btn btn-neutral shadow-xl rounded-2xl">Overview</button>
                                         </Link>
                                     </li>
                                 </div>
@@ -120,7 +122,7 @@ export default function EmployeeDashboard({ projectId , projectName }: { project
                             <div className="hidden md:flex justify-center flex-col w-full max-w-4xl bg-base-300 shadow-md rounded-xl py-4 px-6 text-center">
                                 <h2 className="text-2xl font-semibold text-gray-700">{projectName}</h2>
                                 <p className="text-sm text-gray-500 italic">
-                                    Assigned as <span className="font-medium badge badge-info">Employee</span>
+                                    Assigned as <span className="font-medium badge badge-secondary">Employee</span>
                                 </p>
                             </div>
                             <div className="">

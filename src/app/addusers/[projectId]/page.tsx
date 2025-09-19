@@ -133,7 +133,7 @@ export default function AddUsers(){
                     </select>
                     <button 
                     type="submit" 
-                    className="btn w-full btn-neutral text-lg font-semibold shadow-xl" 
+                    className="btn w-full btn-neutral text-lg font-semibold shadow-xl rounded-2xl" 
                     disabled={isLoading}>{isLoading ? 
                     <span className="loading loading-spinner loading-xs"></span> :"Add Users"}
                     </button>
@@ -189,7 +189,7 @@ export default function AddUsers(){
             </div>
             <button 
             type="button" 
-            className="btn w-full btn-neutral text-lg font-semibold shadow-xl max-w-sm"
+            className="btn w-full btn-neutral text-lg font-semibold shadow-xl max-w-sm rounded-2xl"
             onClick={handleAssignUsers} 
             disabled={isLoading}>{isLoading ? 
             <span className="loading loading-spinner loading-xs"></span> :"Assign Users"}

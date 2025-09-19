@@ -64,7 +64,7 @@ export default function ReviewClosure(){
                     <div className="relative w-full max-w-[320px]">
                         <CiFilter className="absolute z-10 left-3 top-1/2 -translate-y-1/2 text-xl text-gray-500"/>
                         <select className="select shadow-xl pl-9 w-full h-12">
-                            <option disabled={true}>Pick a Priority</option>
+                            <option>Pick a Priority</option>
                             <option value={Constants.Low}>Low</option>
                             <option value={Constants.Medium}>Medium</option>
                             <option value={Constants.High}>High</option>
@@ -83,15 +83,21 @@ export default function ReviewClosure(){
                             <div className="card bg-base-100 w-96 shadow-sm" key={issue._id}>
                                 <div className="card-body">
                                     <h2 className="card-title">{issue.issueId.name ?? "TaskName!"}</h2>
-                                    <p>description: {issue.issueId.description || "Task Description"}</p>
-                                    <p>status: {issue.issueId.status || "Task Status"}</p>
-                                    <p>Priority: {issue.issueId.priority || "Task Priority"}</p>
+                                    <p className="font-semibold text-lg">description: 
+                                        <span className="font-normal">{issue.issueId.description || "Task Description"}</span>
+                                    </p>
+                                    <p className="font-semibold text-lg">status: 
+                                        <span className="font-normal">{issue.issueId.status || "Task Status"}</span>
+                                    </p>
+                                    <p className="font-semibold text-lg">Priority: 
+                                        <span className="font-normal">{issue.issueId.priority || "Task Priority"}</span>
+                                    </p>
                                     <div className="card-actions justify-end">
                                         <Link href={`/issuedetail/${issue.issueId._id}`}>
-                                            <button className="btn btn-primary" title={"Task Detail"}>View Details</button>
+                                            <button className="btn btn-primary rounded-2xl" title={"Task Detail"}>View Details</button>
                                         </Link>
                                         <Link href={`/reviewissue/${issue._id}`}>
-                                            <button className="btn btn-primary">Review Request</button>
+                                            <button className="btn btn-primary rounded-2xl">Review Request</button>
                                         </Link>
                                     </div>
                                 </div>

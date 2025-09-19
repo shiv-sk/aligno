@@ -33,7 +33,8 @@ export default function Navbar(){
                                     </li>
                                 </ul>
                             </div>
-                            <Link href={"/"} className="btn btn-ghost text-2xl bg-primary text-white shadow-lg border-b-2">Aligno</Link>
+                            <Link href={"/"} 
+                            className="btn btn-ghost rounded-full text-2xl bg-primary text-white shadow-lg border-b-2">Aligno</Link>
                         </div>
                         <div className="navbar-center hidden lg:flex">
                             <ul className="menu menu-horizontal px-1">
@@ -49,7 +50,7 @@ export default function Navbar(){
                             </ul>
                         </div>
                         <div className="navbar-end">
-                            <button onClick={logoutUser} className="btn">Logout</button>
+                            <button onClick={logoutUser} className="btn rounded-2xl">Logout</button>
                         </div>
                     </>
                 ): user && !user.isAdmin ? (
@@ -73,7 +74,8 @@ export default function Navbar(){
                                     </li>
                                 </ul>
                             </div>
-                            <Link href={"/"}className="btn btn-ghost text-2xl bg-primary text-white shadow-lg border-b-2">Aligno</Link>
+                            <Link href={"/"} 
+                            className="btn btn-ghost rounded-full text-2xl bg-primary text-white shadow-lg border-b-2">Aligno</Link>
                         </div>
                         <div className="navbar-center hidden lg:flex">
                             <ul className="menu menu-horizontal px-1">
@@ -98,7 +100,7 @@ export default function Navbar(){
                                     <li>
                                         <Link className="btn" href={'/profile'}>Profile</Link>
                                     </li>
-                                    <button onClick={logoutUser} className="btn btn-primary">Logout</button>
+                                    <button onClick={logoutUser} className="btn btn-primary rounded-2xl">Logout</button>
                                 </ul>
                             </div>
                         </div>
@@ -106,7 +108,8 @@ export default function Navbar(){
                 ) : (
                     <>
                         <div className="navbar-start">
-                            <Link href={"/"} className="btn btn-ghost text-2xl bg-primary text-white shadow-lg border-b-2">Aligno</Link>
+                            <Link href={"/"} 
+                            className="btn btn-ghost rounded-full text-2xl bg-primary text-white shadow-lg border-b-2">Aligno</Link>
                         </div>
                         <div className="navbar-end">
                             <div className="dropdown dropdown-end">
@@ -119,7 +122,7 @@ export default function Navbar(){
                                     tabIndex={0}
                                     className="menu menu-sm dropdown-content bg-base-300 rounded-box z-1 mt-4 w-52 p-2 shadow">
                                     <li className="space-y-2">
-                                        <Link className="btn btn-primary" href={'/login'}>Login</Link>
+                                        <Link className="btn btn-primary rounded-full" href={'/login'}>Login</Link>
                                     </li>
                                 </ul>
                             </div>

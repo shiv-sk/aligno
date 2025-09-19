@@ -90,7 +90,7 @@ export default function AllProjects(){
                                     <p>{project?.description || "Project-Description"}</p>
                                     <div className="card-actions justify-end">
                                     <Link href={`/project/${project._id}`}>
-                                        <button className="btn btn-neutral shadow-xl">View</button>
+                                        <button className="btn btn-neutral rounded-2xl shadow-xl">View</button>
                                     </Link>
                                     </div>
                                 </div>

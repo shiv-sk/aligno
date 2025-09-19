@@ -37,7 +37,7 @@ export default function UserProjects(){
             setIsLoading(true);
             try {
                 const response = await getAndDeleteReq(`/api/projectmember/assignedprojects/${user?._id}` , "GET");
-                console.log("response from all user Projects assigned Page! " , response);
+                // console.log("response from all user Projects assigned Page! " , response);
                 if(response.success){
                     setAllProjects(response?.projects || []);
                 }
@@ -91,7 +91,7 @@ export default function UserProjects(){
                                     <p>{project.description || "Project-Description"}</p>
                                     <div className="card-actions justify-end">
                                     <Link href={`/project/${project._id}`}>
-                                        <button className="btn btn-primary">View</button>
+                                        <button className="btn btn-primary rounded-2xl">View</button>
                                     </Link>
                                     </div>
                                 </div>

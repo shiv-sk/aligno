@@ -76,7 +76,7 @@ export default function Home(){
                 A modern solution to manage projects, assign tasks, and track team progress — built with role-based workflows, 
                 smart insights, and auto-generated reports.
               </p>
-              <button className="btn btn-primary">Watch Demo</button>
+              <button className="btn btn-primary rounded-full">Watch Demo</button>
             </div>
           </div>
         </div>

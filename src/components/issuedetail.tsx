@@ -123,7 +123,7 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
                 {
                     role === Constants.Employee && (
                         <button 
-                        className="btn btn-primary" 
+                        className="btn btn-primary rounded-2xl" 
                         disabled={!!issue?.assignedTo?._id}
                         title={!!issue?.assignedTo?._id ? "This task has already been claimed." : "Click to claim this task."}
                         onClick={handleClaimIssue}
@@ -133,7 +133,7 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
                 {
                     role === Constants.Employee && issue?.assignedTo?._id === user?._id && (
                         <button 
-                        className="btn btn-primary" 
+                        className="btn btn-primary rounded-2xl" 
                         disabled={issue?.status === Constants.Review || issue?.status === Constants.Closed}
                         onClick={openModal}
                         title="Click to send completion request for this task"
@@ -143,7 +143,7 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
                 {
                     role === Constants.TeamLead &&(
                         <button 
-                        className="btn btn-primary" 
+                        className="btn btn-primary rounded-2xl" 
                         disabled={!!issue?.assignedTo?._id && issue.status !== Constants.Open}
                         title={issue?.status === Constants.Assigned ? "Task is assigned" : "Assign Task"}
                         >{isLoading ? <span className="loading loading-spinner loading-xs"></span> : "Assign"}</button>
@@ -152,7 +152,7 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
                 {
                     role === Constants.TeamLead && issue?.assignedBy?._id === user?._id &&(
                         <button 
-                        className="btn btn-primary" 
+                        className="btn btn-primary rounded-2xl" 
                         disabled={isLoading || issue?.status === Constants.Review || issue?.status === Constants.Closed}
                         title="Click to unassign this task"
                         onClick={handleUnAssignIssue}
@@ -162,7 +162,7 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
                 {
                     role === Constants.Manager && (
                         <button 
-                        className="btn btn-primary" 
+                        className="btn btn-primary rounded-2xl" 
                         disabled={isLoading || issue?.status === Constants.Closed}
                         title="update task"
                         >{isLoading ? <span className="loading loading-spinner loading-xs"></span> : "Update"}</button>

@@ -95,7 +95,7 @@ export default function Login(){
                     </div>
                     <button 
                     type="submit" 
-                    className="btn w-full btn-neutral text-lg font-semibold shadow-xl" 
+                    className="btn w-full btn-neutral rounded-2xl text-lg font-semibold shadow-xl" 
                     disabled={isLoading}>
                         {isLoading ? <span className="loading loading-spinner loading-xs"></span> :"Login"}
                     </button>

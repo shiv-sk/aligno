@@ -123,7 +123,7 @@ export default function IssueRequestReview(){
                                     status && status === Constants.Pending &&(
                                         <>
                                             <button 
-                                            className="btn btn-primary text-lg"
+                                            className="btn btn-primary rounded-2xl text-lg"
                                             disabled={isAssignLoading || status !== Constants.Pending} 
                                             onClick={handleAssignIssue}
                                             title="Assign this task to the requested user"
@@ -132,7 +132,7 @@ export default function IssueRequestReview(){
                                             : "Approve"}
                                             </button>
                                             <button 
-                                            className="btn btn-secondary text-lg"
+                                            className="btn btn-secondary rounded-2xl text-lg"
                                             disabled={isRejectLoading || status !== Constants.Pending}
                                             onClick={handleRejectIssueRequest}
                                             title="Reject the Taskrequest"
@@ -147,7 +147,7 @@ export default function IssueRequestReview(){
                                     status && status === Constants.Approved &&(
                                         <>
                                             <button 
-                                            className="btn btn-primary text-lg"
+                                            className="btn btn-primary rounded-2xl text-lg"
                                             disabled={true}
                                             title="Request is Approved"
                                             >Approved</button>
@@ -158,7 +158,7 @@ export default function IssueRequestReview(){
                                     status && status === Constants.Rejected &&(
                                         <>
                                             <button 
-                                            className="btn btn-primary text-lg"
+                                            className="btn btn-primary rounded-2xl text-lg"
                                             disabled={true}
                                             title="Request is Rejected"
                                             >Rejected</button>

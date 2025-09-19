@@ -56,19 +56,19 @@ export default function TeamLeadDashboard({ projectId , projectName , userId }: 
                                     <ul className="menu p-4 w-64 min-h-full bg-base-100 text-base-content gap-2">
                                     {/* Sidebar content here */}
                                     <Link href={"/assignedprojects"}>
-                                        <li><button className="btn w-full">MyProjects</button></li>
+                                        <li><button className="btn w-full rounded-full">MyProjects</button></li>
                                     </Link>
                                     <Link href={`/allissues/${projectId}`}>
-                                        <li><button className="btn w-full btn-neutral">AllTasks</button></li>
+                                        <li><button className="btn w-full btn-neutral rounded-2xl">AllTasks</button></li>
                                     </Link>
                                     <Link href={`/allissuerequests/${projectId}`}>
-                                        <li><button className="btn w-full btn-neutral">ReviewRequests</button></li>
+                                        <li><button className="btn w-full btn-neutral rounded-2xl">ReviewRequests</button></li>
                                     </Link>
                                     <Link href={`/assignedissues/${projectId}`}>
-                                        <li><button className="btn w-full btn-neutral">AssignedTasks</button></li>
+                                        <li><button className="btn w-full btn-neutral rounded-2xl">AssignedTasks</button></li>
                                     </Link>
                                     <Link href={`/overview/${projectId}`}>
-                                        <li className="btn w-full btn-neutral">Overview</li>
+                                        <li className="btn w-full btn-neutral rounded-2xl">Overview</li>
                                     </Link>
                                     </ul>
                                 </div>
@@ -77,29 +77,29 @@ export default function TeamLeadDashboard({ projectId , projectName , userId }: 
                                     <div className="hidden md:flex gap-4">
                                         <li>
                                             <Link href={"/assignedprojects"}>
-                                                <button className="btn text-lg shadow-xl">MyProjects</button>
+                                                <button className="btn text-lg shadow-xl rounded-full">MyProjects</button>
                                             </Link>
                                         </li>
                                     </div>
                                     <div className="hidden md:flex gap-4">
                                         <li>
                                             <Link href={`/allissues/${projectId}`}>
-                                                <button className="btn btn-neutral shadow-xl">AllTasks</button>
+                                                <button className="btn btn-neutral shadow-xl rounded-2xl">AllTasks</button>
                                             </Link>
                                         </li>
                                         <li>
                                             <Link href={`/allissuerequests/${projectId}`}>
-                                                <button className="btn btn-neutral shadow-xl">ReviewRequests</button>
+                                                <button className="btn btn-neutral shadow-xl rounded-2xl">ReviewRequests</button>
                                             </Link>
                                         </li>
                                         <li>
                                             <Link href={`/assignedissues/${projectId}`}>
-                                                <button className="btn btn-neutral shadow-xl">AssignedTasks</button>
+                                                <button className="btn btn-neutral shadow-xl rounded-2xl">AssignedTasks</button>
                                             </Link>
                                         </li>
                                         <li>
                                             <Link href={`/overview/${projectId}`}>
-                                                <button className="btn btn-neutral shadow-xl">Overview</button>
+                                                <button className="btn btn-neutral shadow-xl rounded-2xl">Overview</button>
                                             </Link>
                                         </li>
                                     </div>

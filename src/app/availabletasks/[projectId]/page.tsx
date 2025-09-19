@@ -134,7 +134,7 @@ export default function AvailableTasks(){
                                     </p>
                                     <div className="card-actions justify-end">
                                     <Link href={`/issuedetail/${issue._id}`}>
-                                        <button className="btn btn-primary">View Details</button>
+                                        <button className="btn btn-primary rounded-2xl">View Details</button>
                                     </Link>
                                     </div>
                                 </div>

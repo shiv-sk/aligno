@@ -93,16 +93,16 @@ export default function Project(){
                                         user?.isAdmin && (
                                             <>
                                                 <Link href={`/addusers/${projectId}`}>
-                                                    <button className="btn btn-primary">Assign User</button>
+                                                    <button className="btn btn-primary rounded-2xl">Assign User</button>
                                                 </Link>
                                                 <Link href={`/updateproject/${projectId}`}>
-                                                    <button className="btn btn-primary">Update</button>
+                                                    <button className="btn btn-primary rounded-2xl">Update</button>
                                                 </Link>
                                                 <Link href={`/`}>
-                                                    <button className="btn btn-primary">Delete</button>
+                                                    <button className="btn btn-primary rounded-2xl">Delete</button>
                                                 </Link>
                                                 <Link href={`/admindashboard/${projectId}`}>
-                                                    <button className="btn btn-primary">Analytics</button>
+                                                    <button className="btn btn-primary rounded-2xl">Analytics</button>
                                                 </Link>
                                             </>
                                         )
@@ -111,7 +111,9 @@ export default function Project(){
                                         !user?.isAdmin && (
                                             <>
                                                 <Link href={`/dashboard/${projectId}`}>
-                                                    <button className="btn btn-primary">Dashboard</button>
+                                                    <button className="btn btn-primary rounded-2xl">
+                                                        Dashboard
+                                                    </button>
                                                 </Link>
                                             </>
                                         )

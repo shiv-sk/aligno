@@ -218,7 +218,7 @@ export default function Overview(){
                         </div>
                     </div>
                     <div className="card-actions justify-end">
-                        <button className="btn btn-primary" onClick={handleExport}>Export</button>
+                        <button className="btn btn-primary rounded-2xl" onClick={handleExport}>Export</button>
                     </div>
                 </div>
             </div>

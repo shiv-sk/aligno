@@ -49,7 +49,7 @@ export default function ManagerDashboard({ projectId , projectName }: { projectI
                                         <li className="flex flex-col justify-center items-center">
                                             <h2 className="text-2xl font-semibold text-gray-700">{projectName}</h2>
                                             <p className="text-sm text-gray-500 italic">
-                                                Assigned as <span className="font-medium badge badge-info">Manager</span>
+                                                Assigned as <span className="font-medium badge badge-primary">Manager</span>
                                             </p>
                                         </li>
                                     </ul>
@@ -60,27 +60,27 @@ export default function ManagerDashboard({ projectId , projectName }: { projectI
                                     {/* Sidebar content here */}
                                     <Link href={"/assignedprojects"}>
                                         <li>
-                                            <button className="btn w-full shadow-xl">MyProjects</button>
+                                            <button className="btn w-full shadow-xl rounded-full">MyProjects</button>
                                         </li>
                                     </Link>
                                     <Link href={`/allissues/${projectId}`}>
                                         <li>
-                                            <button className="btn w-full btn-neutral shadow-xl">AllTasks</button>
+                                            <button className="btn w-full btn-neutral shadow-xl rounded-2xl">AllTasks</button>
                                         </li>
                                     </Link>
                                     <Link href={`/createissue/${projectId}`}>
                                         <li>
-                                            <button className="btn w-full btn-neutral shadow-xl">CreateTask</button>
+                                            <button className="btn w-full btn-neutral shadow-xl rounded-2xl">CreateTask</button>
                                         </li>
                                     </Link>
                                     <Link href={`/issuereviews/${projectId}`}>
                                         <li>
-                                            <button className="btn w-full btn-neutral shadow-xl">ReviewRequests</button>
+                                            <button className="btn w-full btn-neutral shadow-xl rounded-2xl">ReviewRequests</button>
                                         </li>
                                     </Link>
                                     <Link href={`/overview/${projectId}`}>
                                         <li>
-                                            <button className="btn w-full btn-neutral shadow-xl">Overview</button>
+                                            <button className="btn w-full btn-neutral shadow-xl rounded-2xl">Overview</button>
                                         </li>
                                     </Link>
                                     </ul>
@@ -90,29 +90,29 @@ export default function ManagerDashboard({ projectId , projectName }: { projectI
                                     <div className="hidden md:flex gap-4">
                                         <li>
                                             <Link href={"/assignedprojects"}>
-                                                <button className="btn text-lg shadow-xl">MyProjects</button>
+                                                <button className="btn text-lg shadow-xl rounded-full">MyProjects</button>
                                             </Link>
                                         </li>
                                     </div>
                                     <div className="hidden md:flex gap-4">
                                         <li>
                                             <Link href={`/allissues/${projectId}`}>
-                                                <button className="btn btn-neutral shadow-xl">AllTasks</button>
+                                                <button className="btn btn-neutral shadow-xl rounded-2xl">AllTasks</button>
                                             </Link>
                                         </li>
                                         <li>
                                             <Link href={`/createissue/${projectId}`}>
-                                                <button className="btn btn-neutral shadow-xl">CreateTask</button>
+                                                <button className="btn btn-neutral shadow-xl rounded-2xl">CreateTask</button>
                                             </Link>
                                         </li>
                                         <li>
                                             <Link href={`/issuereviews/${projectId}`}>
-                                                <button className="btn btn-neutral shadow-xl">ReviewRequests</button>
+                                                <button className="btn btn-neutral shadow-xl rounded-2xl">ReviewRequests</button>
                                             </Link>
                                         </li>
                                         <li>
                                             <Link href={`/overview/${projectId}`}>
-                                                <button className="btn btn-neutral shadow-xl">Overview</button>
+                                                <button className="btn btn-neutral shadow-xl rounded-2xl">Overview</button>
                                             </Link>
                                         </li>
                                     </div>
@@ -120,7 +120,7 @@ export default function ManagerDashboard({ projectId , projectName }: { projectI
                             <div className="hidden md:flex justify-center flex-col w-full max-w-4xl bg-base-300 shadow-md rounded-xl py-4 px-6 text-center">
                                 <h2 className="text-2xl font-semibold text-gray-700">{projectName}</h2>
                                 <p className="text-sm text-gray-500 italic">
-                                    Assigned as <span className="font-medium badge badge-info">Manager</span>
+                                    Assigned as <span className="font-medium badge badge-primary">Manager</span>
                                 </p>
                             </div>
                             <div className="">

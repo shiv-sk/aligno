@@ -158,7 +158,7 @@ export default function ReviewIssue({issue , issueReviewId}: {issue: IssueTimeli
                 onClick={handleAcceptIssueReview}
                 disabled={isAcceptLoading || !!(issue.reviewSummary.status !== Constants.Pending)}
                 title="click to accept review" 
-                className="btn btn-primary">{isAcceptLoading ? 
+                className="btn btn-primary rounded-2xl">{isAcceptLoading ? 
                 <span className="loading loading-spinner loading-xs"></span> : 
                 issue.reviewSummary && issue.reviewSummary.status === Constants.Approved ? "Accepted" : "Accept"}
                 </button>
@@ -166,7 +166,7 @@ export default function ReviewIssue({issue , issueReviewId}: {issue: IssueTimeli
                 onClick={handleRejectIssueReview}
                 disabled={isRejectLoading || !!(issue.reviewSummary.status !== Constants.Pending)}
                 title="click to reject review"
-                className="btn btn-secondary">{isRejectLoading ? 
+                className="btn btn-secondary rounded-2xl">{isRejectLoading ? 
                 <span className="loading loading-spinner loading-xs"></span> : 
                 issue.reviewSummary && issue.reviewSummary.status === Constants.Rejected ? "Rejected" : "Reject"}</button>
             </div>
