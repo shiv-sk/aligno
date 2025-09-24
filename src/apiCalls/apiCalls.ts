@@ -11,7 +11,7 @@ const getAndDeleteReq = async(url: string , method: "GET" | "DELETE")=>{
             },
             withCredentials:true,
         })
-        console.log("response from getAndDeleteReq! " , response?.data);
+        // console.log("response from getAndDeleteReq! " , response?.data);
         return response?.data;
     } catch (error: any) {
         console.log("error from getAndDeleteReq! " , error?.response?.data);
@@ -30,7 +30,7 @@ const postAndPatchReq = async(url: string , method: "POST" | "PATCH" , data: obj
             },
             withCredentials:true
         })
-        console.log("response from postAndPatchReq! " , response?.data);
+        // console.log("response from postAndPatchReq! " , response?.data);
         return response?.data;
     } catch (error: any) {
         console.log("error from getAndDeleteReq! " , error?.response);
