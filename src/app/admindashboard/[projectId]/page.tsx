@@ -46,7 +46,7 @@ export default function AdminDashboard(){
             try {
                 const response = await getAndDeleteReq(`/api/issue/admininsigth/${projectId}` , "GET");
                 if(response.success){
-                    console.log("response from Admininsigth page! " , response);
+                    // console.log("response from Admininsigth page! " , response);
                     setProjectAnalyticData(response.data);
                 }
             } catch (error: any) {

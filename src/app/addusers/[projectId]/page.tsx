@@ -97,7 +97,7 @@ export default function AddUsers(){
         try {
             setIsLoading(true);
             const response = await postAndPatchReq(`/api/projectmember` , "POST" , dataToSend);
-            console.log("response from add users! " , response);
+            // console.log("response from add users! " , response);
             if(response.success){
                 toast.success("users added successfully!");
             }

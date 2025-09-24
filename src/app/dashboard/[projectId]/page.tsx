@@ -33,7 +33,7 @@ export default function Dashboard(){
             setIsLoading(true);
             try {
                 const response = await getAndDeleteReq(`/api/projectmember/role?projectId=${projectId}&userId=${user._id}` , "GET");
-                console.log("role of user in this project! " , response);
+                // console.log("role of user in this project! " , response);
                 if(response.success){
                     setRole(response.role || "");
                     setProjectName(response.projectName || "projectName");

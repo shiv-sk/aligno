@@ -39,7 +39,7 @@ export default function UpdateProject(){
             try {
                 const response = await getAndDeleteReq(`/api/project/${projectId}` , "GET");
                 if(response.success){
-                    console.log("response from updateProject! " , response);
+                    // console.log("response from updateProject! " , response);
                     setProjectData(response?.project);
                 }
             } catch (error: any) {

@@ -51,7 +51,7 @@ export default function Overview(){
             try {
                 const response = await getAndDeleteReq(`/api/issue/report/${projectId}` , "GET");
                 if(response.success){
-                    console.log("response of ganttChart! " , response.data);
+                    // console.log("response of ganttChart! " , response.data);
                     setWeeklyProgress(response.data);
                     setIssues(response.data.sanitizedIssues);
                 }

@@ -32,7 +32,7 @@ export default function UpdateUser(){
             try {
                 const response = await getAndDeleteReq(`/api/user/${userId}` , "GET");
                 if(response.success){
-                    console.log("response from updateuser page!")
+                    // console.log("response from updateuser page!")
                 }
             } catch (error: any) {
                 const errorMessage = error.response?.data?.message || "Server Error!.";

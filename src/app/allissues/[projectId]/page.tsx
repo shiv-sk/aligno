@@ -40,7 +40,7 @@ export default function AllIssues(){
         const getAllIssues = async()=>{
             try {
                 const response = await getAndDeleteReq(`/api/issue/allissues/${projectId}` , "GET");
-                console.log("response from AllIssues page! " , response);
+                // console.log("response from AllIssues page! " , response);
                 if(response.success){
                     setAllIssues(response.issues || []);
                 }

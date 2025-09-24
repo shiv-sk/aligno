@@ -32,7 +32,7 @@ export default function ReviewIssue(){
             try {
                 const response = await getAndDeleteReq(`/api/issuereview/${issueReviewId}` , "GET");
                 if(response.success){
-                    console.log("response from issueReview Page! " , response);
+                    // console.log("response from issueReview Page! " , response);
                     setIssueReviewData(response.data);
                 }
             } catch (error: any) {
