@@ -102,6 +102,7 @@ password - 123456
 ![Alt text](public/images/Aligno-task-overview.png)
 ![Alt text](public/images/Aligno-task-assignment-request.png)
 ### Demo
-Coming Soon!
+[Click here to see demo](https://vimeo.com/1122580952?share=copy)
+
 ### Live
-Coming Soon!
+[Click here to view Aligno](https://aligno-green.vercel.app)
