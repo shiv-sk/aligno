@@ -104,5 +104,9 @@ password - 123456
 ### Demo
 [Click here to see demo](https://vimeo.com/1122580952?share=copy)
 
+### Alt-Demo
+[Click here to see Alt-demo](https://drive.google.com/file/d/1zvYFvbZrsYb3DQLZ6Lq1pIsUF-AWWkPt/view?usp=sharing)
+
+
 ### Live
 [Click here to view Aligno](https://aligno-green.vercel.app)
