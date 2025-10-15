@@ -19,7 +19,7 @@ export async function POST(req: NextRequest){
                 errors:validation.errors
             } , {status:400})
         }
-        const { name , description , duedate , projectId , priority } = validation.data;
+        const { name , description , duedate , projectId , priority , links } = validation.data;
         const authorizedUser = await authorizeRole(["Manager"])(projectId);
         if("status" in authorizedUser){
             return authorizedUser;
@@ -47,7 +47,8 @@ export async function POST(req: NextRequest){
             createdBy,
             duedate,
             projectId,
-            priority
+            priority,
+            links
         })
         if(!newIssue){
             return NextResponse.json({

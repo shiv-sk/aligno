@@ -2,6 +2,7 @@
 "use client";
 
 import { postAndPatchReq } from "@/apiCalls/apiCalls";
+import { allowedDomains } from "@/constents/domainconstants";
 import { useAuth } from "@/context/authcontext";
 import { useParams, useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
@@ -12,7 +13,7 @@ export default function CreateIssue(){
     const {user, isLoading:authLoading} = useAuth();
     const router = useRouter();
     const [isLoading , setIsLoading] = useState(false);
-    // const [links , setLinks] = useState<string[]>([]);
+    const [links , setLinks] = useState<string[]>([]);
     const [link , setLink] = useState("");
     const [issueData , setIssueData] = useState({
         name:"",
@@ -20,6 +21,7 @@ export default function CreateIssue(){
         duedate:"",
         projectId:projectId ? projectId : null,
         priority:"",
+        links
     });
 
     useEffect(()=>{
@@ -36,6 +38,9 @@ export default function CreateIssue(){
         }
         setIsLoading(true);
         try {
+            if(links.length > 0){
+                issueData.links = links
+            }
             const response = await postAndPatchReq(`/api/issue` , "POST" , issueData);
             if(response.success){
                 // console.log("response from createIssue page! " , response);
@@ -59,23 +64,37 @@ export default function CreateIssue(){
         return tomorrowDate.toISOString().split("T")[0];
     }
     const addLinks = ()=>{
-        // if(!link.trim()){
-        //     toast.warning("please add valid links");
-        //     return;
-        // }
-        // const duplicateLink = links.some((val)=>(val === link));
-        // if(duplicateLink){
-        //     toast.warning("link is already added!");
-        //     return;
-        // }
-        // setLinks([...links , link]);
-        // setLink("");
-        toast.warning("please avoid links work is in progress");
+        if(!link.trim()){
+            toast.warning("please add valid links");
+            return;
+        }
+        let parsedUrl;
+        try {
+            parsedUrl = new URL(link);
+        } catch (error) {
+            toast.warning("Invalid URL format!");
+            return;
+        }
+        const hostname = parsedUrl.hostname;
+        console.log("the hostname: " , hostname)
+        const isAllowed = allowedDomains.some((domain)=>hostname.includes(domain));
+        if(!isAllowed){
+            toast.warning("Only Google Drive, Docs, Sheets, Slides, Gitlab, Figma, Notion, GitHub,  links are allowed!");
+            return;
+        }
+        const duplicateLink = links.some((val)=>(val === link));
+        if(duplicateLink){
+            toast.warning("link is already added!");
+            return;
+        }
+        setLinks([...links , link]);
+        setLink("");
+        // toast.warning("please avoid links work is in progress");
     }
-    // const removeLink = (link: string)=>{
-    //     const updatedLinks = links.filter((val)=>(val !== link));
-    //     setLinks(updatedLinks);
-    // } 
+    const removeLink = (link: string)=>{
+        const updatedLinks = links.filter((val)=>(val !== link));
+        setLinks(updatedLinks);
+    } 
     return(
         <div className="flex flex-col justify-center items-center min-h-screen gap-4 py-5 bg-base-200">
             <div className="max-w-sm w-full p-6 rounded-lg shadow-xl bg-base-100">
@@ -134,7 +153,7 @@ export default function CreateIssue(){
                     />
                     <p className="btn btn-primary rounded-2xl w-[50px]" onClick={addLinks}>Add</p>
                     </div>
-                    {/* {
+                    {
                         links && links.length > 0 && (
                             links.map((link , index)=>(
                                 <div key={index} className="flex gap-1.5">
@@ -144,11 +163,12 @@ export default function CreateIssue(){
                                     className="input w-full shadow-md"
                                     value={link}
                                     />
-                                    <p className="btn btn-primary w-[80px]" onClick={()=>removeLink(link)}>remove</p> 
+                                    <p className="btn btn-primary rounded-xl w-[80px]" 
+                                    onClick={()=>removeLink(link)}>remove</p> 
                                 </div>
                             ))
                         )
-                    } */}
+                    }
                         <button 
                         type="submit" 
                         className="btn w-full btn-neutral rounded-2xl text-lg font-semibold shadow-xl" 
