@@ -23,5 +23,7 @@ export interface Issue{
     completedAt:Date,
     assignedAt:Date,
     createdAt:Date,
-    updatedAt:Date
+    updatedAt:Date,
+    links:string[],
+    attachments:[]
 }
