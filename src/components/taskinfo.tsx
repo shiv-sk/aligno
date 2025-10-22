@@ -21,23 +21,6 @@ export default function TaskInfo({issue}: {issue:Issue | null}){
                         {issue?.completedAt ? new Date(issue.completedAt).toDateString():"N/A"}
                     </span>
                 </p>
-                <p className="text-lg">References:{" "} 
-                    <span className="font-medium text-gray-700">
-                        {issue?.links && issue.links.length > 0 ? 
-                        issue.links.map((link)=>(
-                            <span key={link}>
-                                <a 
-                                href={link} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="text-blue-600 underline hover:text-blue-800">
-                                    {link.length > 40 ? link.slice(0, 40) + "..." : link}
-                                </a>
-                            </span>
-                        )) 
-                        : "No References are added"}
-                    </span>
-                </p>
             </div>
         </div>
     )

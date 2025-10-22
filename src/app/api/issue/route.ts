@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import uploadToCloudinary from "@/helpers/uploadoncloudinary";
 import dbConnect from "@/lib/connection.db";
 import { authorizeRole } from "@/lib/middleware/authorizerole";
 import { validateInput } from "@/lib/validate";
@@ -18,6 +19,14 @@ export async function POST(req: NextRequest){
                 message:"Invalid Input",
                 errors:validation.errors
             } , {status:400})
+        }
+
+        const formData = validation.formData;
+        const files = formData?.getAll("files") as File[];
+        let uploadedUrls: string[] = [];
+        if(files.length > 0){
+            const cloudinaryUpload = await uploadToCloudinary(files);
+            uploadedUrls = cloudinaryUpload.map((file: any)=>(file.secure_url))
         }
         const { name , description , duedate , projectId , priority , links } = validation.data;
         const authorizedUser = await authorizeRole(["Manager"])(projectId);
@@ -48,7 +57,8 @@ export async function POST(req: NextRequest){
             duedate,
             projectId,
             priority,
-            links
+            links,
+            files:uploadedUrls
         })
         if(!newIssue){
             return NextResponse.json({

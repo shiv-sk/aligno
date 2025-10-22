@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function GET(){
     await dbConnect();
     try {
-        const userEmail = "userMail@email.com";
+        const userEmail = "shivanandcrew034@gmail.com";
         const userName = "userTwo";
         const projectName = "project1";
         const role = "role1"

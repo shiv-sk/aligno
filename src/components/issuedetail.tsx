@@ -8,6 +8,7 @@ import { postAndPatchReq } from "@/apiCalls/apiCalls";
 import { toast } from "react-toastify";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/context/authcontext";
+import Reference from "./reference";
 
 export default function Issuedetail({issue , role}: {issue:Issue | null , role:string}){
     
@@ -100,6 +101,7 @@ export default function Issuedetail({issue , role}: {issue:Issue | null , role:s
             <TaskInfo issue={issue} />
             <UserInfo issue={issue}/>
             <IssueSummary issue={issue} />
+            <Reference issue={issue} />
             <dialog ref={commentRef} className="modal">
                 <div className="modal-box">
                     <h3 className="font-bold text-lg">Add a Comment</h3>

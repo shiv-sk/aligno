@@ -25,5 +25,5 @@ export interface Issue{
     createdAt:Date,
     updatedAt:Date,
     links:string[],
-    attachments:[]
+    attachments:string[]
 }
