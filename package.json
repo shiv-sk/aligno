@@ -20,7 +20,7 @@
     "frappe-gantt": "^1.0.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.14.2",
-    "next": "15.5.7",
+    "next": "15.5.9",
     "node-cron": "^4.2.1",
     "pdfkit": "^0.17.1",
     "react": "^19.1.2",
